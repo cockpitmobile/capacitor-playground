@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Exercisr</string>
+    <string name="title_activity_main">Exercisr</string>
+    <string name="package_name">io.cockpit.exercisr</string>
+    <string name="custom_url_scheme">io.cockpit.exercisr</string>
+</resources>
