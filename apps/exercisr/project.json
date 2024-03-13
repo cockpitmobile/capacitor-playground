@@ -7,12 +7,12 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular-devkit/build-angular:browser-esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/exercisr",
         "index": "apps/exercisr/src/index.html",
-        "browser": "apps/exercisr/src/main.ts",
+        "main": "apps/exercisr/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/exercisr/tsconfig.app.json",
         "inlineStyleLanguage": "scss",

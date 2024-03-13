@@ -2,7 +2,16 @@
   "name": "@cockpit/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "web:start": "npx nx serve exercisr",
+    "android:start": "npm run web:build && npm run android:sync && npm run android:open",
+    "ios:start": "npm run web:build && npm run ios:sync && npm run ios:open",
+    "android:sync": "npx nx run exercisr:sync:android",
+    "ios:sync": "npx nx run exercisr:sync:ios",
+    "android:open": "npx nx run exercisr:open:android",
+    "ios:open": "npx nx run exercisr:open:ios",
+    "web:build": "npx nx build exercisr"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.1.0",
