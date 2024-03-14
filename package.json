@@ -12,7 +12,7 @@
     "ios:open": "npx nx run exercisr:open:ios",
     "web:build": "npx nx build exercisr",
     "server:start": "npx nx serve app-server",
-    "server:build": "npx nx build app-server",
+    "server:build": "npx nx build app-server"
   },
   "private": true,
   "dependencies": {
