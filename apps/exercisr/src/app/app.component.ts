@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { EventPageComponent } from '@cockpit/event-page';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [EventPageComponent, RouterModule],
   selector: 'cockpit-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
