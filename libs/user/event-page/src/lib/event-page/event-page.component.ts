@@ -19,16 +19,46 @@ export class EventPageComponent {
 
     /// Step 2:  Ready the plugin.
     BackgroundGeolocation.ready({
-      // Geolocation Config
+      backgroundPermissionRationale: {
+        title: `Allow Run Across America access to this device's location in the background?`,
+        message: `In order to track your activities in the background, please enable 'Allow all the time' location permission`,
+        positiveAction: `Change to 'Allow all the time'`,
+        negativeAction: 'Cancel'
+      },
+      reset: true,
+      debug: false,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
       distanceFilter: 1,
-      // Activity Recognition
-      stopTimeout: 5,
-      // Application config
-      debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-      stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
-      startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+      autoSync: false,
+      stopOnTerminate: false,
+      startOnBoot: true,
+      activityType: BackgroundGeolocation.ACTIVITY_TYPE_FITNESS,
+      fastestLocationUpdateInterval: 2000,
+      locationUpdateInterval: 2000,
+      stopOnStationary: false,
+      showsBackgroundLocationIndicator: true,
+      foregroundService: true,
+      notification: {
+        text: 'Run Across America is tracking your activity!',
+        title: 'Run Across America is using your location',
+        sticky: true,
+        smallIcon: 'drawable/notification_icon',
+        largeIcon: 'drawable/notification_icon'
+      },
+      disableElasticity: true,
+      elasticityMultiplier: 1,
+      geofenceProximityRadius: 1000,
+      useSignificantChangesOnly: false,
+      locationTimeout: 30,
+      deferTime: 0,
+      geofenceModeHighAccuracy: true,
+      disableMotionActivityUpdates: false,
+      stopTimeout: 1,
+      motionTriggerDelay: 0,
+      disableStopDetection: true,
+      isMoving: true,
+      disableLocationAuthorizationAlert: true,
     }).then((state) => {
       BackgroundGeolocation.start();
     });
