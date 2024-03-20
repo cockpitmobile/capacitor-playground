@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ApiModelsModule } from '@cockpit/api/models';
+import { ActivitiesControllersModule } from '@cockpit/activities-controllers';
 
 @Module({
-  imports: [],
+  imports: [ApiModelsModule, ActivitiesControllersModule],
   controllers: [AppController],
   providers: [AppService],
 })

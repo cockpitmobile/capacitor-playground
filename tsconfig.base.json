@@ -15,6 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cockpit/activities-controllers": [
+        "libs/api/activities/controllers/src/index.ts"
+      ],
+      "@cockpit/activities-data-access": [
+        "libs/api/activities/data-access/src/index.ts"
+      ],
+      "@cockpit/api/models": ["libs/api/models/src/index.ts"],
       "@cockpit/event-page": ["libs/user/event-page/src/index.ts"]
     }
   },

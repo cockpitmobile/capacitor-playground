@@ -1,0 +1,65 @@
+{
+  "name": "api-models",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/models/src",
+  "projectType": "library",
+  "targets": {
+    "prisma-generate": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma generate --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "migrate-save": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma migrate dev --create-only --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "migrate-up": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma migrate dev --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "migrate-reset": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma migrate reset --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "migrate-deploy": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma migrate deploy --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "migrate-status": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma migrate status --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    },
+    "studio": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx prisma studio --schema ./prisma/schema.prisma",
+        "cwd": "libs/api/models"
+      }
+    }
+  },
+  "tags": []
+}
