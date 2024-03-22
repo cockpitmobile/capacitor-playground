@@ -13,7 +13,11 @@ https://nxext.github.io/nx-extensions-ionic/docs/capacitor/overview.html
 1. Install Node (use nvm - https://formulae.brew.sh/formula/nvm) and use Node v18
 2. Install Android Studio (https://developer.android.com/studio)
 3. Install XCode (https://developer.apple.com/xcode/)
-4. Run `npm install`
+4. Ask for a `.env` file from a team member
+4. Run `npm install --force` (--force is necessary for now, unfortunately)
+5. Run `cd apps/exercisr && npm install`
+6. Run `npm i prisma`
+7. Run `npm run prisma:generate`
 
 ## Web
 
@@ -28,6 +32,10 @@ Run `npm run android:start` to start the android app
 ## iOS
 
 Run `npm run ios:start` to start the iOS app
+
+## API
+
+Run `npm run server:start` to start the server
 
 # Below is the default Nx README
 

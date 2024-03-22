@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cockpit/activities": [
+        "libs/mobile/shared/data-access/activities/src/index.ts"
+      ],
       "@cockpit/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],
@@ -22,7 +25,9 @@
         "libs/api/activities/data-access/src/index.ts"
       ],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
-      "@cockpit/event-page": ["libs/user/event-page/src/index.ts"]
+      "@cockpit/data-models": ["libs/mobile/shared/data-models/src/index.ts"],
+      "@cockpit/event-page": ["libs/mobile/user/event-page/src/index.ts"],
+      "@cockpit/storage": ["libs/mobile/shared/storage/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

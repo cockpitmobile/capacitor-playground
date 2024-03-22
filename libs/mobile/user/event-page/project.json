@@ -1,6 +1,6 @@
 {
   "name": "event-page",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/user/event-page/src",
   "prefix": "cockpit",
   "tags": [],

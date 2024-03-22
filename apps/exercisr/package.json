@@ -1,12 +1,13 @@
 {
   "name": "exercisr",
   "dependencies": {
+    "@capacitor-community/sqlite": "^5.6.3",
     "@transistorsoft/capacitor-background-fetch": "^5.2.2",
     "@transistorsoft/capacitor-background-geolocation": "^5.4.0"
   },
   "devDependencies": {
+    "@capacitor/android": "../../node_modules/@capacitor/android",
     "@capacitor/cli": "^5.0.3",
-    "@capacitor/ios": "../../node_modules/@capacitor/ios",
-    "@capacitor/android": "../../node_modules/@capacitor/android"
+    "@capacitor/ios": "../../node_modules/@capacitor/ios"
   }
 }

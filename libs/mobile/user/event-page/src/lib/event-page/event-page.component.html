@@ -1,0 +1,7 @@
+<button mat-flat-button color="primary" (click)="hello()">Hello</button>
+
+<button mat-flat-button color="primary" (click)="create()">Create Random Activity</button>
+
+<div>
+  {{ activities$ | async | json }}
+</div>

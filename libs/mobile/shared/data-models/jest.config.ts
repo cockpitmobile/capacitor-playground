@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'event-page',
-  preset: '../../../jest.preset.js',
+  displayName: 'data-models',
+  preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/user/event-page',
+  coverageDirectory: '../../../../coverage/libs/mobile/shared/data-models',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

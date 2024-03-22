@@ -8,7 +8,7 @@ export class ActivitiesController {
   constructor(private readonly activities: ActivitiesService) {
   }
 
-  @Get('/')
+  @Get()
   getActivities(): Promise<TestActivity[]> {
     return this.activities.getAll();
   }

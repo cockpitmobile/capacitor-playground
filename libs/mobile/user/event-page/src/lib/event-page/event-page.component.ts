@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocation';
+import { ActivitiesService } from '@cockpit/activities';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'cockpit-event-page',
@@ -11,6 +13,27 @@ import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocat
   styleUrl: './event-page.component.scss',
 })
 export class EventPageComponent {
+  timesPressed = 1;
+
+  activities$ = this.activities.allActivities$.pipe(
+    tap(activities => {
+      this.timesPressed = Math.max(...activities.map(x => x.duration!), this.timesPressed) + 1;
+    })
+  );
+
+  constructor(
+    private readonly activities: ActivitiesService
+  ){}
+
+  create() {
+    this.activities.createTestActivity({
+      duration: this.timesPressed,
+      id: this.timesPressed.toString(),
+      distance: this.timesPressed,
+      image: ''
+    });
+  }
+
   hello() {
     /// Step 1:  Subscribe to BackgroundGeolocation events.
     BackgroundGeolocation.onLocation((location) => {
