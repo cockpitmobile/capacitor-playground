@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TestActivity } from '@cockpit/data-models';
-import { BehaviorSubject } from 'rxjs';
+import { SQLiteService } from '@cockpit/sqlite';
+import { StorageKey } from './constants/storage-key.enum';
+import { Capacitor } from '@capacitor/core';
+
 // import {
 //   createRxDatabase,
 //   addRxPlugin,
@@ -35,42 +37,41 @@ import { BehaviorSubject } from 'rxjs';
 //   return db;
 // }
 
-let initState: null | Promise<any> = null;
-
-/**
- * This is run via APP_INITIALIZER in app.module.ts
- * to ensure the database exists before the angular-app starts up
- */
-export async function initDatabase() {
-  /**
-   * When server side rendering is used,
-   * The database might already be there
-   */
-  if (!initState) {
-    console.log('initDatabase()');
-    initState = Promise.resolve();//_createDb().then(db => database = db);
-  }
-  await initState;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class AppStorageService {
-  // get db(): MyDatabase {
-  //   return database;
-  // }
+  constructor(
+    private readonly sqlite: SQLiteService
+  ) {}
 
-  private _testActivities$$ = new BehaviorSubject<TestActivity[]>([]);
-  public testActivities$ = this._testActivities$$.asObservable();
+  async getData<T>(key: StorageKey): Promise<T | undefined> {
+    const platform = Capacitor.getPlatform();
+    if (platform === 'web') {
+      return Promise.resolve(this._getDataLocalStorage<T>(key));
+    }
+    return await this.sqlite.getData<T>(key);
+  }
 
-  private _testActivities: TestActivity[] = [];
+  async setData<T>(key: StorageKey, value: T): Promise<void> {
+    const platform = Capacitor.getPlatform();
+    if (platform === 'web') {
+      this._setDataLocalStorage<T>(key, value);
+      return Promise.resolve();
+    }
+    return await this.sqlite.storeData(key, value);
+  }
 
-  createTestActivity(activity: TestActivity): TestActivity {
-    this._testActivities.push(activity);
-    this._testActivities$$.next(this._testActivities);
+  private _getDataLocalStorage<T>(key: StorageKey): T | undefined {
+    const data = localStorage.getItem(key);
+    if (data) {
+      return JSON.parse(data);
+    }
+    return undefined;
+  }
 
-    return activity;
+  private _setDataLocalStorage<T>(key: StorageKey, value: T): void {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 }
 

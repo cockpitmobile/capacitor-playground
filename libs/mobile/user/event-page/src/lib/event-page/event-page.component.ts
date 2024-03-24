@@ -23,7 +23,9 @@ export class EventPageComponent {
 
   constructor(
     private readonly activities: ActivitiesService
-  ){}
+  ){
+    this.activities.loadActivities();
+  }
 
   create() {
     this.activities.createTestActivity({
