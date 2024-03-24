@@ -44,7 +44,13 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/exercisr/src/environments/environment.ts",
+              "with": "apps/exercisr/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "optimization": false,

@@ -17,7 +17,7 @@ export class EventPageComponent {
 
   activities$ = this.activities.allActivities$.pipe(
     tap(activities => {
-      this.timesPressed = Math.max(...activities.map(x => x.duration!), this.timesPressed) + 1;
+      this.timesPressed = Math.max(...activities.map(x => x.id), 1) + 1;
     })
   );
 
@@ -30,7 +30,7 @@ export class EventPageComponent {
   create() {
     this.activities.createTestActivity({
       duration: this.timesPressed,
-      id: this.timesPressed.toString(),
+      id: this.timesPressed,
       distance: this.timesPressed,
       image: ''
     });

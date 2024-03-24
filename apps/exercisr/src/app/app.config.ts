@@ -4,6 +4,9 @@ import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SQLiteService } from '@cockpit/sqlite';
 import { Capacitor } from '@capacitor/core';
+import { provideHttpClient } from '@angular/common/http';
+import { ENVIRONMENT } from '@cockpit/environment';
+import { environment } from '../environments/environment';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -29,11 +32,16 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    provideHttpClient(),
     {
       provide: APP_INITIALIZER,
       useFactory: initDatabase,
       multi: true,
       deps: [SQLiteService]
     },
+    {
+      provide: ENVIRONMENT,
+      useValue: environment
+    }
   ],
 };

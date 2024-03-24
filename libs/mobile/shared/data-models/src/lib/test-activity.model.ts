@@ -1,5 +1,5 @@
 export interface TestActivity {
-  id: string;
+  id: number;
   distance: number;
   duration: number;
   image: string;
