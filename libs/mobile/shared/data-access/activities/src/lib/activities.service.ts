@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TestActivity } from '@cockpit/data-models';
 import { AppStorageService } from '@cockpit/storage';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, map, switchMap } from 'rxjs';
 import { HttpService } from '@cockpit/http';
 import { StorageKey } from '@cockpit/constants';
 import { HttpParams } from '@angular/common/http';
+import { addCachedActivities } from './activities.util';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,12 @@ export class ActivitiesService {
       this._allActivities$$.next(activities);
     }
 
-    this._http.get<TestActivity[]>(`/activities`).subscribe(activities => {
+    this._http.get<TestActivity[]>(`/activities`).pipe(
+      switchMap(activities => from(this.storage.getData<TestActivity[]>(StorageKey.ACTIVITIES)).pipe(
+        map(storedActivities => addCachedActivities(activities, storedActivities))
+      ))
+    ).subscribe(activities => {
       this._allActivities$$.next(activities);
-      console.log('activities', activities);
-      this.storage.getData(StorageKey.ACTIVITIES).then(console.log);
-      this.storage.setData(StorageKey.ACTIVITIES, activities);
     });
   }
 }
