@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TestActivity } from '@cockpit/data-models';
-import { AppStorageService, StorageKey } from '@cockpit/storage';
+import { AppStorageService } from '@cockpit/storage';
 import { BehaviorSubject } from 'rxjs';
 import { HttpService } from '@cockpit/http';
+import { StorageKey } from '@cockpit/constants';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,7 @@ export class ActivitiesService {
     this.storage.setData(StorageKey.ACTIVITIES, activities);
 
     // queue up the http request to create this activity (in case of being offline)
-    this._http.post(`/activities`, activity).subscribe();
+    this._http.postWithSync(`/activities`, activity, new HttpParams()).subscribe();
   }
 
   async loadActivities(): Promise<void> {
@@ -35,6 +37,8 @@ export class ActivitiesService {
 
     this._http.get<TestActivity[]>(`/activities`).subscribe(activities => {
       this._allActivities$$.next(activities);
+      console.log('activities', activities);
+      this.storage.getData(StorageKey.ACTIVITIES).then(console.log);
       this.storage.setData(StorageKey.ACTIVITIES, activities);
     });
   }

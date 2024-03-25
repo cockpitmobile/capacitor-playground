@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SQLiteService } from '@cockpit/sqlite';
-import { StorageKey } from './constants/storage-key.enum';
+import { StorageKey } from '@cockpit/constants';
 import { Capacitor } from '@capacitor/core';
 
 // import {

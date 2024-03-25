@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocation';
 import { ActivitiesService } from '@cockpit/activities';
 import { tap } from 'rxjs';
+import { NetworkService } from '@cockpit/network';
 
 @Component({
   selector: 'cockpit-event-page',
@@ -22,8 +23,10 @@ export class EventPageComponent {
   );
 
   constructor(
-    private readonly activities: ActivitiesService
+    private readonly activities: ActivitiesService,
+    private readonly network: NetworkService
   ){
+    this.network.setupNetworkListener();
     this.activities.loadActivities();
   }
 
