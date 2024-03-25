@@ -96,6 +96,7 @@ export class TrackingService {
       disableStopDetection: true,
       isMoving: true,
       disableLocationAuthorizationAlert: true,
+      maxRecordsToPersist: 0
     });
 
     const state = await BackgroundGeolocation.start();

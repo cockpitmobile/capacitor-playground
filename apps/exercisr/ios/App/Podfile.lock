@@ -1,22 +1,67 @@
 PODS:
   - Capacitor (5.7.2):
     - CapacitorCordova
+  - CapacitorCommunitySqlite (5.6.3):
+    - Capacitor
+    - SQLCipher
+    - ZIPFoundation
   - CapacitorCordova (5.7.2)
+  - CapacitorNetwork (5.0.7):
+    - Capacitor
+  - CocoaLumberjack (3.7.4):
+    - CocoaLumberjack/Core (= 3.7.4)
+  - CocoaLumberjack/Core (3.7.4)
+  - SQLCipher (4.5.6):
+    - SQLCipher/standard (= 4.5.6)
+  - SQLCipher/common (4.5.6)
+  - SQLCipher/standard (4.5.6):
+    - SQLCipher/common
+  - TransistorsoftCapacitorBackgroundFetch (5.2.2):
+    - Capacitor
+  - TransistorsoftCapacitorBackgroundGeolocation (5.4.0):
+    - Capacitor
+    - CocoaLumberjack (~> 3.7.2)
+  - ZIPFoundation (0.9.18)
 
 DEPENDENCIES:
   - "Capacitor (from `../../../../node_modules/@capacitor/ios`)"
+  - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../../../node_modules/@capacitor/ios`)"
+  - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
+  - "TransistorsoftCapacitorBackgroundFetch (from `../../node_modules/@transistorsoft/capacitor-background-fetch`)"
+  - "TransistorsoftCapacitorBackgroundGeolocation (from `../../node_modules/@transistorsoft/capacitor-background-geolocation`)"
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
+    - SQLCipher
+    - ZIPFoundation
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../../../node_modules/@capacitor/ios"
+  CapacitorCommunitySqlite:
+    :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
     :path: "../../../../node_modules/@capacitor/ios"
+  CapacitorNetwork:
+    :path: "../../node_modules/@capacitor/network"
+  TransistorsoftCapacitorBackgroundFetch:
+    :path: "../../node_modules/@transistorsoft/capacitor-background-fetch"
+  TransistorsoftCapacitorBackgroundGeolocation:
+    :path: "../../node_modules/@transistorsoft/capacitor-background-geolocation"
 
 SPEC CHECKSUMS:
   Capacitor: fc7ef6d935eafb0df9eaaf109ca69be16c51a2d2
+  CapacitorCommunitySqlite: b21a86bb3fc4e9c301ca0142f003d8c1e83646a5
   CapacitorCordova: 70b13b8fddb6f35d8adcfe06cb5045c07f35f6de
+  CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
+  CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
+  SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
+  TransistorsoftCapacitorBackgroundFetch: da1c937c4eb61a2b5691d003df4a6b830204ca7f
+  TransistorsoftCapacitorBackgroundGeolocation: 60e1f2622d128515c3074c47b4b4a9c5ff1e1e27
+  ZIPFoundation: fa9ae5af13b7cf168245f24d1c672a4fb972e37f
 
-PODFILE CHECKSUM: 2f964e03a1496cd8c91499bbe1a97dc5c247ecd8
+PODFILE CHECKSUM: b56d14cb4c0015c6aa4154fdabdaeef66126dcc7
 
 COCOAPODS: 1.15.2
