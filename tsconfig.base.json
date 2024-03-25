@@ -24,15 +24,20 @@
       "@cockpit/activities-data-access": [
         "libs/api/activities/data-access/src/index.ts"
       ],
+      "@cockpit/activity-tracking-page": [
+        "libs/mobile/user/activity-tracking-page/src/index.ts"
+      ],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
       "@cockpit/constants": ["libs/mobile/shared/constants/src/index.ts"],
       "@cockpit/data-models": ["libs/mobile/shared/data-models/src/index.ts"],
+      "@cockpit/distance": ["libs/mobile/shared/utils/distance/src/index.ts"],
       "@cockpit/environment": ["libs/mobile/shared/environment/src/index.ts"],
       "@cockpit/event-page": ["libs/mobile/user/event-page/src/index.ts"],
       "@cockpit/http": ["libs/mobile/shared/http/src/index.ts"],
       "@cockpit/network": ["libs/mobile/shared/network/src/index.ts"],
       "@cockpit/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
-      "@cockpit/storage": ["libs/mobile/shared/storage/src/index.ts"]
+      "@cockpit/storage": ["libs/mobile/shared/storage/src/index.ts"],
+      "@cockpit/tracking": ["libs/mobile/shared/tracking/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

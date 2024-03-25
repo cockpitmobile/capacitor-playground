@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocation';
 import { ActivitiesService } from '@cockpit/activities';
-import { tap } from 'rxjs';
+import { map } from 'rxjs';
 import { NetworkService } from '@cockpit/network';
+import { TrackingService } from '@cockpit/tracking';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cockpit-event-page',
@@ -14,81 +15,36 @@ import { NetworkService } from '@cockpit/network';
   styleUrl: './event-page.component.scss',
 })
 export class EventPageComponent {
-  timesPressed = 1;
-
   activities$ = this.activities.allActivities$.pipe(
-    tap(activities => {
-      this.timesPressed = Math.max(...activities.map(x => x.id), 1) + 1;
-    })
+    map(activities => activities.sort((a, b) => b.id - a.id))
   );
 
   constructor(
     private readonly activities: ActivitiesService,
-    private readonly network: NetworkService
+    private readonly network: NetworkService,
+    private readonly _tracking: TrackingService,
+    private readonly _router: Router
   ){
     this.network.setupNetworkListener();
     this.activities.loadActivities();
   }
 
   create() {
-    this.activities.createTestActivity({
-      duration: this.timesPressed,
-      id: this.timesPressed,
-      distance: this.timesPressed,
-      image: ''
-    });
+    // this.activities.createTestActivity({
+    //   duration: this.timesPressed,
+    //   id: this.timesPressed,
+    //   distance: this.timesPressed,
+    //   image: ''
+    // });
   }
 
-  hello() {
-    /// Step 1:  Subscribe to BackgroundGeolocation events.
-    BackgroundGeolocation.onLocation((location) => {
-      console.log(JSON.stringify(location));
-    });
-
-    /// Step 2:  Ready the plugin.
-    BackgroundGeolocation.ready({
-      backgroundPermissionRationale: {
-        title: `Allow Run Across America access to this device's location in the background?`,
-        message: `In order to track your activities in the background, please enable 'Allow all the time' location permission`,
-        positiveAction: `Change to 'Allow all the time'`,
-        negativeAction: 'Cancel'
-      },
-      reset: true,
-      debug: false,
-      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-      distanceFilter: 1,
-      autoSync: false,
-      stopOnTerminate: false,
-      startOnBoot: true,
-      activityType: BackgroundGeolocation.ACTIVITY_TYPE_FITNESS,
-      fastestLocationUpdateInterval: 2000,
-      locationUpdateInterval: 2000,
-      stopOnStationary: false,
-      showsBackgroundLocationIndicator: true,
-      foregroundService: true,
-      notification: {
-        text: 'Run Across America is tracking your activity!',
-        title: 'Run Across America is using your location',
-        sticky: true,
-        smallIcon: 'drawable/notification_icon',
-        largeIcon: 'drawable/notification_icon'
-      },
-      disableElasticity: true,
-      elasticityMultiplier: 1,
-      geofenceProximityRadius: 1000,
-      useSignificantChangesOnly: false,
-      locationTimeout: 30,
-      deferTime: 0,
-      geofenceModeHighAccuracy: true,
-      disableMotionActivityUpdates: false,
-      stopTimeout: 1,
-      motionTriggerDelay: 0,
-      disableStopDetection: true,
-      isMoving: true,
-      disableLocationAuthorizationAlert: true,
-    }).then((state) => {
-      BackgroundGeolocation.start();
-    });
+  start() {
+    this._tracking.startTracking().then(isStarted => {
+      if (isStarted) {
+        this._router.navigate(['/track-activity']);
+      } else {
+        alert('Failed to start tracking');
+      }
+    })
   }
 }

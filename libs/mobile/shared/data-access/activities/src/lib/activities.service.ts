@@ -19,8 +19,12 @@ export class ActivitiesService {
     private readonly _http: HttpService
   ) { }
 
-  createTestActivity(activity: TestActivity) {
+  createTestActivity(partActivity: Omit<TestActivity, 'id'>) {
     let activities = this._allActivities$$.value;
+
+    const id = Math.max(...activities.map(x => x.id), 0) + 1;
+    const activity = { ...partActivity, id };
+
     activities = [activity, ...activities];
     this._allActivities$$.next(activities);
 

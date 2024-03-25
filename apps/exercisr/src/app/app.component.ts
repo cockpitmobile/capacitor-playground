@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import 'zone.js/plugins/zone-patch-rxjs';
+import { StorageKey } from '@cockpit/constants';
 
 @Component({
   standalone: true,
@@ -17,6 +18,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.router.navigate(['/test']);
+    this.router.navigate([localStorage.getItem(StorageKey.TRACKED_ACTIVITY) ? 'track-activity' : '/test']);
   }
 }

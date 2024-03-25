@@ -1,7 +1,12 @@
-<button mat-flat-button color="primary" (click)="hello()">Hello</button>
+<div style="display: flex; flex-direction: column; align-items: center">
+  <button mat-flat-button color="primary" (click)="start()" style="width: 50%; margin-top: 16px">Start Tracking</button>
 
-<button mat-flat-button color="primary" (click)="create()">Create Random Activity</button>
+  <!--<button mat-flat-button color="primary" (click)="create()">Create Random Activity</button>-->
 
-<div>
-  {{ activities$ | async | json }}
+  @for (activity of activities$ | async; track activity.id) {
+    <div style="margin-top: 8px;">
+      {{ activity | json }}
+    </div>
+  }
 </div>
+
