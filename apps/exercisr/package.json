@@ -4,7 +4,8 @@
     "@capacitor-community/sqlite": "^5.6.3",
     "@capacitor/network": "^5.0.7",
     "@transistorsoft/capacitor-background-fetch": "^5.2.2",
-    "@transistorsoft/capacitor-background-geolocation": "^5.4.0"
+    "@transistorsoft/capacitor-background-geolocation": "^5.4.0",
+    "@capacitor/camera": "^5.0.9"
   },
   "devDependencies": {
     "@capacitor/android": "../../node_modules/@capacitor/android",
