@@ -5,7 +5,8 @@ import { TrackingService } from '@cockpit/tracking';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { StorageKey } from '@cockpit/constants';
-import { ActivitiesService } from '@cockpit/activities';
+import { Store } from '@ngrx/store';
+import { ActivitiesActions } from '@cockpit/activities-state';
 
 @Component({
   selector: 'cockpit-activity-tracking-page',
@@ -23,7 +24,7 @@ export class ActivityTrackingPageComponent {
   constructor(
     private readonly _tracking: TrackingService,
     private readonly _router: Router,
-    private readonly _activities: ActivitiesService
+    private readonly _store: Store
   ) {}
 
   ngOnInit() {
@@ -35,7 +36,7 @@ export class ActivityTrackingPageComponent {
 
   stop() {
     this._tracking.stopTracking().then(activity => {
-      this._activities.createTestActivity(activity);
+      this._store.dispatch(ActivitiesActions.addActivity({ activity }));
       this._router.navigate(['/test'])
     });
   }

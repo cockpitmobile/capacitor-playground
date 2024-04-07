@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestActivity } from '@cockpit/data-models';
 import { AppStorageService } from '@cockpit/storage';
-import { BehaviorSubject, from, map, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { HttpService } from '@cockpit/http';
 import { StorageKey } from '@cockpit/constants';
 import { HttpParams } from '@angular/common/http';
@@ -11,41 +11,21 @@ import { addCachedActivities } from './activities.util';
   providedIn: 'root'
 })
 export class ActivitiesService {
-  private _allActivities$$ = new BehaviorSubject<TestActivity[]>([]);
-  public allActivities$ = this._allActivities$$.asObservable();
-
   constructor(
     private readonly storage: AppStorageService,
     private readonly _http: HttpService
   ) { }
 
-  createTestActivity(partActivity: Omit<TestActivity, 'id'>) {
-    let activities = this._allActivities$$.value;
-
-    const id = Math.max(...activities.map(x => x.id), 0) + 1;
-    const activity = { ...partActivity, id };
-
-    activities = [activity, ...activities];
-    this._allActivities$$.next(activities);
-
-    this.storage.setData(StorageKey.ACTIVITIES, activities);
-
+  createTestActivity(activity: TestActivity): Observable<TestActivity> {
     // queue up the http request to create this activity (in case of being offline)
-    this._http.postWithSync(`/activities`, activity, new HttpParams()).subscribe();
+    return this._http.postWithSync<TestActivity>(`/activities`, activity, new HttpParams());
   }
 
-  async loadActivities(): Promise<void> {
-    const activities = await this.storage.getData<TestActivity[]>(StorageKey.ACTIVITIES);
-    if (activities) {
-      this._allActivities$$.next(activities);
-    }
-
-    this._http.get<TestActivity[]>(`/activities`).pipe(
+  getActivitesFromAPI(): Observable<TestActivity[]> {
+    return this._http.get<TestActivity[]>(`/activities`).pipe(
       switchMap(activities => from(this.storage.getData<TestActivity[]>(StorageKey.ACTIVITIES)).pipe(
         map(storedActivities => addCachedActivities(activities, storedActivities))
       ))
-    ).subscribe(activities => {
-      this._allActivities$$.next(activities);
-    });
+    );
   }
 }

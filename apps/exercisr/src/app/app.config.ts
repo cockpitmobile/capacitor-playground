@@ -7,6 +7,12 @@ import { Capacitor } from '@capacitor/core';
 import { provideHttpClient } from '@angular/common/http';
 import { ENVIRONMENT } from '@cockpit/environment';
 import { environment } from '../environments/environment';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { activitiesReducer } from '@cockpit/activities-state';
+import { ActivitiesEffects } from '@cockpit/activities-effects';
+import { provideRouterStore } from '@ngrx/router-store';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -33,6 +39,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideRouterStore(),
+    provideStore({
+      activities: activitiesReducer
+    }),
+    provideEffects(ActivitiesEffects),
     {
       provide: APP_INITIALIZER,
       useFactory: initDatabase,
@@ -42,6 +53,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ENVIRONMENT,
       useValue: environment
-    }
+    },
+    !environment.production ? provideStoreDevtools() : []
   ],
 };

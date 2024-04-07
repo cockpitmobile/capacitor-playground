@@ -1,0 +1,9 @@
+{
+  "name": "activities-state",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/activities/state/src",
+  "prefix": "cockpit",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

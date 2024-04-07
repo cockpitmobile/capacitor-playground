@@ -1,0 +1,9 @@
+{
+  "name": "activities-effects",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/effects/activities/src",
+  "prefix": "cockpit",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

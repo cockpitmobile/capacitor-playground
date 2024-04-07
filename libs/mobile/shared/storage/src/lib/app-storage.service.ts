@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SQLiteService } from '@cockpit/sqlite';
 import { StorageKey } from '@cockpit/constants';
 import { Capacitor } from '@capacitor/core';
+import { from, Observable, of } from 'rxjs';
 
 // import {
 //   createRxDatabase,
@@ -45,21 +46,21 @@ export class AppStorageService {
     private readonly sqlite: SQLiteService
   ) {}
 
-  async getData<T>(key: StorageKey): Promise<T | undefined> {
+  getData<T>(key: StorageKey): Observable<T | undefined> {
     const platform = Capacitor.getPlatform();
     if (platform === 'web') {
-      return Promise.resolve(this._getDataLocalStorage<T>(key));
+      return of(this._getDataLocalStorage<T>(key));
     }
-    return await this.sqlite.getData<T>(key);
+    return from(this.sqlite.getData<T>(key));
   }
 
-  async setData<T>(key: StorageKey, value: T): Promise<void> {
+  setData<T>(key: StorageKey, value: T): Observable<void> {
     const platform = Capacitor.getPlatform();
     if (platform === 'web') {
       this._setDataLocalStorage<T>(key, value);
-      return Promise.resolve();
+      return of(void 0);
     }
-    return await this.sqlite.storeData(key, value);
+    return from(this.sqlite.storeData(key, value));
   }
 
   private _getDataLocalStorage<T>(key: StorageKey): T | undefined {

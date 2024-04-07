@@ -24,6 +24,12 @@
       "@cockpit/activities-data-access": [
         "libs/api/activities/data-access/src/index.ts"
       ],
+      "@cockpit/activities-effects": [
+        "libs/mobile/effects/activities/src/index.ts"
+      ],
+      "@cockpit/activities-state": [
+        "libs/mobile/activities/state/src/index.ts"
+      ],
       "@cockpit/activity-tracking-page": [
         "libs/mobile/user/activity-tracking-page/src/index.ts"
       ],

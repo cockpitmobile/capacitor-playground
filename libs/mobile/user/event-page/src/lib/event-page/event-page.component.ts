@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivitiesService } from '@cockpit/activities';
-import { map } from 'rxjs';
 import { NetworkService } from '@cockpit/network';
 import { TrackingService } from '@cockpit/tracking';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ActivitiesApiActions, sortedActivitiesSelector } from '@cockpit/activities-state';
 
 @Component({
   selector: 'cockpit-event-page',
@@ -15,27 +15,16 @@ import { Router } from '@angular/router';
   styleUrl: './event-page.component.scss',
 })
 export class EventPageComponent {
-  activities$ = this.activities.allActivities$.pipe(
-    map(activities => activities.sort((a, b) => b.id - a.id))
-  );
+  activities$ = this._store.select(sortedActivitiesSelector);
 
   constructor(
-    private readonly activities: ActivitiesService,
     private readonly network: NetworkService,
     private readonly _tracking: TrackingService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _store: Store
   ){
-    this.network.setupNetworkListener();
-    this.activities.loadActivities();
-  }
-
-  create() {
-    // this.activities.createTestActivity({
-    //   duration: this.timesPressed,
-    //   id: this.timesPressed,
-    //   distance: this.timesPressed,
-    //   image: ''
-    // });
+    // this.network.setupNetworkListener();
+    this._store.dispatch(ActivitiesApiActions.loadActivities());
   }
 
   start() {
@@ -45,6 +34,6 @@ export class EventPageComponent {
       } else {
         alert('Failed to start tracking');
       }
-    })
+    });
   }
 }
