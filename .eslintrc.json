@@ -4,7 +4,89 @@
   "plugins": ["@nx"],
   "overrides": [
     {
+      "files": ["*.ts", "*.json"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        "no-array-constructor": "warn",
+        "no-await-in-loop": "error",
+        "no-alert": "warn",
+        "no-catch-shadow": "error",
+        "no-const-assign": "error",
+        "no-compare-neg-zero": "error",
+        "no-class-assign": "error",
+        "no-confusing-arrow": "warn",
+        "no-debugger": "warn",
+        "no-console": "warn",
+        "no-delete-var": "warn",
+        "no-dupe-args": "error",
+        "no-duplicate-case": "error",
+        "no-else-return": "error",
+        "no-empty": "error",
+        "no-dupe-keys": "error",
+        "no-duplicate-imports": "error",
+        "no-eq-null": "error",
+        "no-eval": "error",
+        "no-empty-function": "warn",
+        "no-empty-pattern": "error",
+        "no-extra-bind": "error",
+        "no-fallthrough": "error",
+        "no-extra-boolean-cast": "error",
+        "no-extra-semi": "error",
+        "no-extra-label": "error",
+        "no-floating-decimal": "warn",
+        "no-func-assign": "error",
+        "no-implicit-globals": "warn",
+        "no-implied-eval": "error",
+        "no-inline-comments": "warn",
+        "no-invalid-regexp": "error",
+        "no-invalid-this": "error",
+        "no-irregular-whitespace": "error",
+        "no-magic-numbers": "warn",
+        "no-lone-blocks": "warn",
+        "no-lonely-if": "error",
+        "no-loop-func": "error",
+        "no-negated-condition": "error",
+        "no-nested-ternary": "error",
+        "no-multi-assign": "error",
+        "no-multi-spaces": "error",
+        "no-mixed-spaces-and-tabs": "warn",
+        "no-param-reassign": "error",
+        "no-prototype-builtins": "error",
+        "no-return-await": "error",
+        "no-redeclare": "error",
+        "no-self-assign": "error",
+        "no-unneeded-ternary": "error",
+        "no-this-before-super": "error",
+        "no-unreachable": "error",
+        "no-useless-call": "error",
+        "no-useless-return": "error",
+        "no-useless-escape": "error",
+        "no-use-before-define": "error",
+        "no-dupe-class-members": "error",
+        "no-inner-declarations": "error"
+      },
+      "overrides": [
+        {
+          "files": ["*.json"],
+          "parser": "json"
+        }
+      ]
+    },
+    {
+      "files": ["*.html"],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:prettier/recommended"
+      ]
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    },
+    {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": [],
       "rules": {
         "@nx/enforce-module-boundaries": [
           "error",
@@ -15,6 +97,35 @@
               {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"]
+              },
+              {
+                "sourceTag": "type:feature",
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:ui",
+                  "type:util",
+                  "type:data-access"
+                ]
+              },
+              {
+                "sourceTag": "type:ui",
+                "onlyDependOnLibsWithTags": [
+                  "type:ui",
+                  "type:util",
+                  "type:data-access"
+                ]
+              },
+
+              {
+                "sourceTag": "scope:signup",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:signup"
+                ]
+              },
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
               }
             ]
           }

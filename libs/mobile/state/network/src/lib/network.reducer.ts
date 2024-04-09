@@ -4,17 +4,23 @@ import { networkStateChanged, networkSyncingChanged } from './network.actions';
 
 const initialState: NetworkState = {
   isConnected: false,
-  isSyncing: false
-}
+  isSyncing: false,
+};
 
 export const networkReducer = createReducer(
   initialState,
-  on(networkStateChanged, (state, { isConnected }): NetworkState => ({
-    ...state,
-    isConnected
-  })),
-  on(networkSyncingChanged, (state, { syncing }): NetworkState => ({
-    ...state,
-    isSyncing: syncing
-  })),
+  on(
+    networkStateChanged,
+    (state, { isConnected }): NetworkState => ({
+      ...state,
+      isConnected,
+    })
+  ),
+  on(
+    networkSyncingChanged,
+    (state, { syncing }): NetworkState => ({
+      ...state,
+      isSyncing: syncing,
+    })
+  )
 );

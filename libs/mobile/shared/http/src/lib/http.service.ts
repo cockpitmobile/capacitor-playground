@@ -1,31 +1,56 @@
 import { DestroyRef, Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { catchError, concat, EMPTY, map, Observable, of, retry, share, switchMap, tap, throwError, timeout, TimeoutError } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
+import {
+  catchError,
+  concat,
+  EMPTY,
+  map,
+  Observable,
+  of,
+  retry,
+  share,
+  switchMap,
+  tap,
+  throwError,
+  timeout,
+  TimeoutError,
+} from 'rxjs';
 import { ENVIRONMENT, Environment } from '@cockpit/environment';
 import { StorageKey } from '@cockpit/constants';
 import { SyncTask } from './sync-task.class';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import { networkIsConnectedSelector, networkSyncingChanged } from '@cockpit/network-state';
+import {
+  networkIsConnectedSelector,
+  networkSyncingChanged,
+} from '@cockpit/network-state';
 
 const HTTP_TIMEOUT_IN_MS = 5000;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpService {
   isConnected = false;
-  isConnectedChange$ = this._store.select(networkIsConnectedSelector).pipe(
-    takeUntilDestroyed(this._destroyRef),
-    tap(connected => this.isConnected = connected)
-  ).subscribe();
+
+  isConnectedChange$ = this._store
+    .select(networkIsConnectedSelector)
+    .pipe(
+      takeUntilDestroyed(this._destroyRef),
+      tap((connected) => (this.isConnected = connected))
+    )
+    .subscribe();
 
   constructor(
     @Inject(ENVIRONMENT) private readonly _environment: Environment,
     private readonly _http: HttpClient,
     private readonly _destroyRef: DestroyRef,
     private readonly _store: Store
-  ) { }
+  ) {}
 
   get<T>(url: string): Observable<T> {
     return this._http.get<T>(`${this._environment.apiBaseUrl}${url}`);
@@ -44,27 +69,43 @@ export class HttpService {
   }
 
   // Syncing code below
-  postWithSync<T extends { id: number; }>(url: string, payload: T, params: HttpParams): Observable<T> {
+  postWithSync<T extends { id: number }>(
+    url: string,
+    payload: T,
+    params: HttpParams
+  ): Observable<T> {
     return of(true).pipe(
-      switchMap(() => this._http.post<T>(`${this._environment.apiBaseUrl}${url}`, payload, { params }).pipe(
-        timeout(HTTP_TIMEOUT_IN_MS),
-        retry(2),
-        catchError((err: HttpErrorResponse) => this.handleError(err, `${this._environment.apiBaseUrl}${url}`, payload, params)),
-        share()
-      ))
+      switchMap(() =>
+        this._http
+          .post<T>(`${this._environment.apiBaseUrl}${url}`, payload, { params })
+          .pipe(
+            timeout(HTTP_TIMEOUT_IN_MS),
+            retry(2),
+            catchError((err: HttpErrorResponse) =>
+              this.handleError(
+                err,
+                `${this._environment.apiBaseUrl}${url}`,
+                payload,
+                params
+              )
+            ),
+            share()
+          )
+      )
     );
   }
 
   sync(): Observable<any> {
     this._store.dispatch(networkSyncingChanged({ syncing: true }));
-    console.log('TASKS')
+    console.log('TASKS');
     const syncTasks = this.getExistingSyncTasks();
     const requests: Observable<any>[] = [];
 
     syncTasks.forEach((task: SyncTask<any>) => {
       const params = { params: new HttpParams({ fromString: task.params }) };
-      const obs$ = this._http.post(task.url, task.body, params)
-        .pipe(map(_ => task));
+      const obs$ = this._http
+        .post(task.url, task.body, params)
+        .pipe(map((_) => task));
 
       requests.push(obs$);
     });
@@ -72,8 +113,8 @@ export class HttpService {
     if (requests.length) {
       const all$ = concat(...requests).pipe(share());
 
-      all$.subscribe(task => {
-        const index = syncTasks.findIndex(t => t.body.id === task.id);
+      all$.subscribe((task) => {
+        const index = syncTasks.findIndex((t) => t.body.id === task.id);
         syncTasks.splice(index, 1);
         localStorage.setItem(StorageKey.SYNC_TASKS, JSON.stringify(syncTasks));
       });
@@ -84,21 +125,22 @@ export class HttpService {
     return of(null);
   }
 
-  private handleError<T extends { id: number; }>(err: HttpErrorResponse,
+  private handleError<T extends { id: number }>(
+    err: HttpErrorResponse,
     url: string,
     payload: T,
-    params: HttpParams): Observable<any> {
+    params: HttpParams
+  ): Observable<any> {
     if (this.offlineOrBadConnection(err)) {
       console.log('OFFLINE');
       // A client-side or network error occurred. Handle it accordingly.
       this.addOrUpdateSyncTask<T>(url, payload, params);
       return of(null);
-    } else {
-      console.log('A backend error occurred.', err);
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      return throwError(err);
     }
+    console.log('A backend error occurred.', err);
+    // The backend returned an unsuccessful response code.
+    // The response body may contain clues as to what went wrong.
+    return throwError(err);
   }
 
   private offlineOrBadConnection(err: HttpErrorResponse): boolean {
@@ -109,7 +151,11 @@ export class HttpService {
     );
   }
 
-  private addOrUpdateSyncTask<T extends { id: number; }>(url: string, payload: T, params: HttpParams): void {
+  private addOrUpdateSyncTask<T extends { id: number }>(
+    url: string,
+    payload: T,
+    params: HttpParams
+  ): void {
     const tasks = this.getExistingSyncTasks();
 
     const syncTask = new SyncTask(url, payload, params.toString());
@@ -120,8 +166,6 @@ export class HttpService {
   private getExistingSyncTasks(): SyncTask<any>[] {
     const serializedTasks = localStorage.getItem(StorageKey.SYNC_TASKS);
 
-    return (serializedTasks)
-      ? JSON.parse(serializedTasks)
-      : [];
+    return serializedTasks ? JSON.parse(serializedTasks) : [];
   }
 }

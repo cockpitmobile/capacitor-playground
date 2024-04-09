@@ -1,8 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { getRouterSelectors } from '@ngrx/router-store';
 
-export const networkStateChanged = createAction('[Network] State Changed', props<{ isConnected: boolean }>());
-export const networkSyncingChanged = createAction('[Network] Syncing Changed', props<{ syncing: boolean }>());
+export const networkStateChanged = createAction(
+  '[Network] State Changed',
+  props<{ isConnected: boolean }>()
+);
+export const networkSyncingChanged = createAction(
+  '[Network] Syncing Changed',
+  props<{ syncing: boolean }>()
+);
 
 export const {
   selectCurrentRoute, // select the current route
