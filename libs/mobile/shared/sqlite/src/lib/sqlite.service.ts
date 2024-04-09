@@ -59,4 +59,8 @@ export class SQLiteService {
   async storeData(key: string, value: any): Promise<void> {
     await this.database.execute(`INSERT OR REPLACE INTO key_value (key, value) VALUES ('${key}', '${JSON.stringify(value)}');`);
   }
+
+  async removeData(key: string): Promise<void> {
+    await this.database.execute(`DELETE FROM key_value WHERE key = '${key}';`);
+  }
 }

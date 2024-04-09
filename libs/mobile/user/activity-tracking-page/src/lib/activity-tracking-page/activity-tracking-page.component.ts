@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
-import { TrackingService } from '@cockpit/tracking';
-import { map } from 'rxjs';
-import { Router } from '@angular/router';
-import { StorageKey } from '@cockpit/constants';
+import { combineLatest, interval, map, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ActivitiesActions } from '@cockpit/activities-state';
+import { currentTrackingInfoSelector, TrackingActions } from '@cockpit/tracking-state';
 
 @Component({
   selector: 'cockpit-activity-tracking-page',
@@ -16,28 +13,25 @@ import { ActivitiesActions } from '@cockpit/activities-state';
   styleUrl: './activity-tracking-page.component.scss',
 })
 export class ActivityTrackingPageComponent {
-  trackedActivity$ = this._tracking.trackedActivity$;
-  duration$ = this.trackedActivity$.pipe(
-    map(activity => activity && activity.startTime ? Math.floor((new Date().getTime() - new Date(activity.startTime).getTime()) / 1000) : 0)
+  stopTracking$ = new Subject();
+
+  trackedActivity$ = this._store.select(currentTrackingInfoSelector);
+  duration$ = combineLatest([
+    interval(1000).pipe(
+      takeUntil(this.stopTracking$)
+    ),
+    this.trackedActivity$
+  ]).pipe(
+    map(([_, activity]) => activity && activity.startTime ? Math.floor((new Date().getTime() - new Date(activity.startTime).getTime()) / 1000) : 0)
   );
 
   constructor(
-    private readonly _tracking: TrackingService,
-    private readonly _router: Router,
     private readonly _store: Store
   ) {}
 
-  ngOnInit() {
-    const trackedActivity = localStorage.getItem(StorageKey.TRACKED_ACTIVITY);
-    if (trackedActivity) {
-      this._tracking.setTrackedActivity(JSON.parse(trackedActivity) as any);
-    }
-  }
-
   stop() {
-    this._tracking.stopTracking().then(activity => {
-      this._store.dispatch(ActivitiesActions.addActivity({ activity }));
-      this._router.navigate(['/test'])
-    });
+    this.stopTracking$.next(null);
+    this.stopTracking$.complete();
+    this._store.dispatch(TrackingActions.stopTracking());
   }
 }

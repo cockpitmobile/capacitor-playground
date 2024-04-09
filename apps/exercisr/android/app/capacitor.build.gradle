@@ -13,6 +13,7 @@ dependencies {
     implementation project(':capacitor-network')
     implementation project(':transistorsoft-capacitor-background-fetch')
     implementation project(':transistorsoft-capacitor-background-geolocation')
+    implementation project(':capacitor-camera')
 
 }
 

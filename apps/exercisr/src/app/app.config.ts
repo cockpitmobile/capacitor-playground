@@ -11,8 +11,11 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { activitiesReducer } from '@cockpit/activities-state';
+import { trackingReducer } from '@cockpit/tracking-state';
 import { ActivitiesEffects } from '@cockpit/activities-effects';
 import { provideRouterStore } from '@ngrx/router-store';
+import { AppInitEffect } from '@cockpit/app-init-effects';
+import { TrackingEffects } from '@cockpit/tracking-effects';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -41,9 +44,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideRouterStore(),
     provideStore({
-      activities: activitiesReducer
+      activities: activitiesReducer,
+      tracking: trackingReducer
     }),
-    provideEffects(ActivitiesEffects),
+    provideEffects(AppInitEffect, ActivitiesEffects, TrackingEffects),
     {
       provide: APP_INITIALIZER,
       useFactory: initDatabase,

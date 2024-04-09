@@ -3,8 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { ActivitiesApiActions } from './activities.actions';
 
 const initialState: ActivitiesState = {
-  activities: [],
-  currentlyTrackedActivity: null
+  activities: []
 };
 
 export const activitiesReducer = createReducer(

@@ -1,0 +1,9 @@
+{
+  "name": "app-lifecycle-state",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/state/app-lifecycle/src",
+  "prefix": "cockpit",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

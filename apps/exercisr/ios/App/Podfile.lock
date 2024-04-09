@@ -1,6 +1,8 @@
 PODS:
   - Capacitor (5.7.2):
     - CapacitorCordova
+  - CapacitorCamera (5.0.9):
+    - Capacitor
   - CapacitorCommunitySqlite (5.6.3):
     - Capacitor
     - SQLCipher
@@ -25,6 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - "Capacitor (from `../../../../node_modules/@capacitor/ios`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../../../node_modules/@capacitor/ios`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
@@ -40,6 +43,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../../../node_modules/@capacitor/ios"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
@@ -53,6 +58,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Capacitor: fc7ef6d935eafb0df9eaaf109ca69be16c51a2d2
+  CapacitorCamera: 4892c5c392f60039d853dde78bc50ba19fbd113e
   CapacitorCommunitySqlite: b21a86bb3fc4e9c301ca0142f003d8c1e83646a5
   CapacitorCordova: 70b13b8fddb6f35d8adcfe06cb5045c07f35f6de
   CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
@@ -62,6 +68,6 @@ SPEC CHECKSUMS:
   TransistorsoftCapacitorBackgroundGeolocation: 60e1f2622d128515c3074c47b4b4a9c5ff1e1e27
   ZIPFoundation: fa9ae5af13b7cf168245f24d1c672a4fb972e37f
 
-PODFILE CHECKSUM: b56d14cb4c0015c6aa4154fdabdaeef66126dcc7
+PODFILE CHECKSUM: 683becf896068e22dd6a074cae31a1c6e775ef4e
 
 COCOAPODS: 1.15.2

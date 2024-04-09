@@ -63,6 +63,15 @@ export class AppStorageService {
     return from(this.sqlite.storeData(key, value));
   }
 
+  removeData<T>(key: StorageKey): Observable<void> {
+    const platform = Capacitor.getPlatform();
+    if (platform === 'web') {
+      localStorage.removeItem(key);
+      return of(void 0);
+    }
+    return from(this.sqlite.removeData(key));
+  }
+
   private _getDataLocalStorage<T>(key: StorageKey): T | undefined {
     const data = localStorage.getItem(key);
     if (data) {

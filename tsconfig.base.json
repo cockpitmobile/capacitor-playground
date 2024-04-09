@@ -34,6 +34,12 @@
         "libs/mobile/user/activity-tracking-page/src/index.ts"
       ],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
+      "@cockpit/app-init-effects": [
+        "libs/mobile/effects/app-init/src/index.ts"
+      ],
+      "@cockpit/app-lifecycle-state": [
+        "libs/mobile/state/app-lifecycle/src/index.ts"
+      ],
       "@cockpit/constants": ["libs/mobile/shared/constants/src/index.ts"],
       "@cockpit/data-models": ["libs/mobile/shared/data-models/src/index.ts"],
       "@cockpit/distance": ["libs/mobile/shared/utils/distance/src/index.ts"],
@@ -43,7 +49,11 @@
       "@cockpit/network": ["libs/mobile/shared/network/src/index.ts"],
       "@cockpit/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
       "@cockpit/storage": ["libs/mobile/shared/storage/src/index.ts"],
-      "@cockpit/tracking": ["libs/mobile/shared/tracking/src/index.ts"]
+      "@cockpit/tracking": ["libs/mobile/shared/tracking/src/index.ts"],
+      "@cockpit/tracking-effects": [
+        "libs/mobile/effects/tracking/src/index.ts"
+      ],
+      "@cockpit/tracking-state": ["libs/mobile/state/tracking/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
