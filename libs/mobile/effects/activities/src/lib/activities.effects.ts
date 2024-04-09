@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ActivitiesActions, ActivitiesApiActions, activitiesSelector } from '@cockpit/activities-state';
 import { AppStorageService } from '@cockpit/storage';
-import { map, switchMap, withLatestFrom } from 'rxjs';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { TestActivity } from '@cockpit/data-models';
 import { StorageKey } from '@cockpit/constants';
 import { ActivitiesService } from '@cockpit/activities';
@@ -41,6 +41,7 @@ export class ActivitiesEffects {
     withLatestFrom(this._store.select(activitiesSelector)),
     switchMap(([{ activity }, activities]) => this._storage.setData(StorageKey.ACTIVITIES, activities).pipe(
       switchMap(() => this._activitiesService.createTestActivity(activity).pipe(
+        tap(() => console.log('ACTIVITY!!', activity)),
         map(() => ActivitiesApiActions.createActivitySuccess({ activity })),
       ))
     )),

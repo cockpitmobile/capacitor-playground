@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { currentTrackingInfoSelector, TrackingActions } from '@cockpit/tracking-state';
-import { filter, map, switchMap, withLatestFrom } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { TrackingService } from '@cockpit/tracking';
 import { AppStorageService } from '@cockpit/storage';
 import { StorageKey } from '@cockpit/constants';
@@ -26,7 +26,9 @@ export class TrackingEffects {
 
   stopTracking$ = createEffect(() => this._actions$.pipe(
     ofType(TrackingActions.stopTracking),
+    tap(() => console.log('STOPPING TRACKING')),
     switchMap(() => this._storage.removeData(StorageKey.TRACKED_ACTIVITY).pipe(
+      tap(() => console.log('REMOVED DATA')),
       switchMap(() => this._tracking.stopTracking().pipe(
         map(enabled => !enabled ? TrackingActions.stopTrackingSuccess() : TrackingActions.stopTrackingFailure({ error: 'Could not stop tracking services' }))
       ))
@@ -62,6 +64,7 @@ export class TrackingEffects {
   storeActivity$ = createEffect(() => this._actions$.pipe(
     ofType(TrackingActions.startTrackingSuccess, TrackingActions.addLocation),
     withLatestFrom(this._store.select(currentTrackingInfoSelector)),
+    tap(() => console.log('STORING DATA')),
     switchMap(([_, activity]) => this._storage.setData(StorageKey.TRACKED_ACTIVITY, activity))
   ), { dispatch: false });
 

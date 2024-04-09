@@ -1,7 +1,14 @@
+<div style="display: flex; justify-content: space-between">
+  <span>Is Connected: {{ isConnected$ | async }}</span>
+  <div style="display: flex">
+    @if (isSyncing$ | async) {
+      <span>Syncing Changes</span>
+      <mat-spinner diameter="5"></mat-spinner>
+    }
+  </div>
+</div>
 <div style="display: flex; flex-direction: column; align-items: center">
   <button mat-flat-button color="primary" (click)="start()" style="width: 50%; margin-top: 16px">Start Tracking</button>
-
-  <!--<button mat-flat-button color="primary" (click)="create()">Create Random Activity</button>-->
 
   @for (activity of activities$ | async; track activity.id) {
     <div style="margin-top: 8px;">

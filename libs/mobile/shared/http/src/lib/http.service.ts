@@ -1,11 +1,12 @@
 import { DestroyRef, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { catchError, concat, EMPTY, map, Observable, retry, share, switchMap, throwError, timeout, TimeoutError } from 'rxjs';
+import { catchError, concat, EMPTY, map, Observable, of, retry, share, switchMap, tap, throwError, timeout, TimeoutError } from 'rxjs';
 import { ENVIRONMENT, Environment } from '@cockpit/environment';
 import { StorageKey } from '@cockpit/constants';
 import { SyncTask } from './sync-task.class';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NetworkService } from '@cockpit/network';
+import { Store } from '@ngrx/store';
+import { networkIsConnectedSelector, networkSyncingChanged } from '@cockpit/network-state';
 
 const HTTP_TIMEOUT_IN_MS = 5000;
 
@@ -13,16 +14,17 @@ const HTTP_TIMEOUT_IN_MS = 5000;
   providedIn: 'root'
 })
 export class HttpService {
-  processQueue$ = this._network.networkStatus$.pipe(
-    switchMap(connected => connected ? this.sync() : EMPTY),
-    takeUntilDestroyed(this._destroyRef)
+  isConnected = false;
+  isConnectedChange$ = this._store.select(networkIsConnectedSelector).pipe(
+    takeUntilDestroyed(this._destroyRef),
+    tap(connected => this.isConnected = connected)
   ).subscribe();
 
   constructor(
     @Inject(ENVIRONMENT) private readonly _environment: Environment,
     private readonly _http: HttpClient,
-    private readonly _network: NetworkService,
-    private readonly _destroyRef: DestroyRef
+    private readonly _destroyRef: DestroyRef,
+    private readonly _store: Store
   ) { }
 
   get<T>(url: string): Observable<T> {
@@ -43,15 +45,18 @@ export class HttpService {
 
   // Syncing code below
   postWithSync<T extends { id: number; }>(url: string, payload: T, params: HttpParams): Observable<T> {
-    return this._http.post<T>(`${this._environment.apiBaseUrl}${url}`, payload, { params }).pipe(
-      timeout(HTTP_TIMEOUT_IN_MS),
-      retry(2),
-      catchError((err: HttpErrorResponse) => this.handleError(err, `${this._environment.apiBaseUrl}${url}`, payload, params)),
-      share()
+    return of(true).pipe(
+      switchMap(() => this._http.post<T>(`${this._environment.apiBaseUrl}${url}`, payload, { params }).pipe(
+        timeout(HTTP_TIMEOUT_IN_MS),
+        retry(2),
+        catchError((err: HttpErrorResponse) => this.handleError(err, `${this._environment.apiBaseUrl}${url}`, payload, params)),
+        share()
+      ))
     );
   }
 
   sync(): Observable<any> {
+    this._store.dispatch(networkSyncingChanged({ syncing: true }));
     console.log('TASKS')
     const syncTasks = this.getExistingSyncTasks();
     const requests: Observable<any>[] = [];
@@ -64,15 +69,19 @@ export class HttpService {
       requests.push(obs$);
     });
 
-    const all$ = concat(...requests).pipe(share());
+    if (requests.length) {
+      const all$ = concat(...requests).pipe(share());
 
-    all$.subscribe(task => {
-      const index = syncTasks.findIndex(t => t.body.id === task.id);
-      syncTasks.splice(index, 1);
-      localStorage.setItem(StorageKey.SYNC_TASKS, JSON.stringify(syncTasks));
-    });
+      all$.subscribe(task => {
+        const index = syncTasks.findIndex(t => t.body.id === task.id);
+        syncTasks.splice(index, 1);
+        localStorage.setItem(StorageKey.SYNC_TASKS, JSON.stringify(syncTasks));
+      });
 
-    return all$;
+      return all$;
+    }
+
+    return of(null);
   }
 
   private handleError<T extends { id: number; }>(err: HttpErrorResponse,
@@ -80,9 +89,10 @@ export class HttpService {
     payload: T,
     params: HttpParams): Observable<any> {
     if (this.offlineOrBadConnection(err)) {
+      console.log('OFFLINE');
       // A client-side or network error occurred. Handle it accordingly.
       this.addOrUpdateSyncTask<T>(url, payload, params);
-      return EMPTY;
+      return of(null);
     } else {
       console.log('A backend error occurred.', err);
       // The backend returned an unsuccessful response code.
@@ -95,7 +105,7 @@ export class HttpService {
     return (
       err instanceof TimeoutError ||
       err.error instanceof ErrorEvent ||
-      !this._network.isConnected
+      !this.isConnected
     );
   }
 

@@ -16,6 +16,8 @@ import { ActivitiesEffects } from '@cockpit/activities-effects';
 import { provideRouterStore } from '@ngrx/router-store';
 import { AppInitEffect } from '@cockpit/app-init-effects';
 import { TrackingEffects } from '@cockpit/tracking-effects';
+import { networkReducer } from '@cockpit/network-state';
+import { NetworkSyncEffect } from '@cockpit/network-sync';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -45,9 +47,10 @@ export const appConfig: ApplicationConfig = {
     provideRouterStore(),
     provideStore({
       activities: activitiesReducer,
-      tracking: trackingReducer
+      tracking: trackingReducer,
+      network: networkReducer
     }),
-    provideEffects(AppInitEffect, ActivitiesEffects, TrackingEffects),
+    provideEffects(AppInitEffect, ActivitiesEffects, TrackingEffects, NetworkSyncEffect),
     {
       provide: APP_INITIALIZER,
       useFactory: initDatabase,

@@ -8,6 +8,7 @@ import { StorageKey } from '@cockpit/constants';
 import { TrackingActions } from '@cockpit/tracking-state';
 import { CurrentTrackedActivity } from '@cockpit/data-models';
 import { TrackingService } from '@cockpit/tracking';
+import { NetworkService } from '@cockpit/network';
 
 @Injectable()
 export class AppInitEffect {
@@ -34,11 +35,17 @@ export class AppInitEffect {
     map(() => this._router.navigate(['/test']))
   ), { dispatch: false });
 
+  startNetworkListening$ = createEffect(() => this._actions$.pipe(
+    ofType(appReady),
+    switchMap(() => this._network.setupNetworkListener())
+  ), { dispatch: false });
+
 
   constructor(
     private readonly _actions$: Actions,
     private readonly _router: Router,
     private readonly _storage: AppStorageService,
-    private readonly _tracking: TrackingService
+    private readonly _tracking: TrackingService,
+    private readonly _network: NetworkService
   ) {}
 }
