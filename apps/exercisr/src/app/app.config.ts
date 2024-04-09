@@ -1,4 +1,8 @@
-import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  importProvidersFrom,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -18,6 +22,8 @@ import { AppInitEffect } from '@cockpit/app-init-effects';
 import { TrackingEffects } from '@cockpit/tracking-effects';
 import { networkReducer } from '@cockpit/network-state';
 import { NetworkSyncEffect } from '@cockpit/network-sync';
+import { SelfiesEffects } from '@cockpit/selfies-effects';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -29,18 +35,19 @@ export function initDatabase(sqlite: SQLiteService) {
   if (platform === 'web') {
     return async () => {
       await Promise.resolve();
-    }
+    };
   }
 
   return async () => {
     sqlite.initializePlugin();
     await sqlite.openDatabase(false, 'no-encryption', 1, false);
     await sqlite.initializeDatabase();
-  }
+  };
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    importProvidersFrom(MatBottomSheetModule),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
     provideHttpClient(),
@@ -48,19 +55,25 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       activities: activitiesReducer,
       tracking: trackingReducer,
-      network: networkReducer
+      network: networkReducer,
     }),
-    provideEffects(AppInitEffect, ActivitiesEffects, TrackingEffects, NetworkSyncEffect),
+    provideEffects(
+      AppInitEffect,
+      ActivitiesEffects,
+      TrackingEffects,
+      NetworkSyncEffect,
+      SelfiesEffects
+    ),
     {
       provide: APP_INITIALIZER,
       useFactory: initDatabase,
       multi: true,
-      deps: [SQLiteService]
+      deps: [SQLiteService],
     },
     {
       provide: ENVIRONMENT,
-      useValue: environment
+      useValue: environment,
     },
-    !environment.production ? provideStoreDevtools() : []
+    environment.production ? [] : provideStoreDevtools(),
   ],
 };

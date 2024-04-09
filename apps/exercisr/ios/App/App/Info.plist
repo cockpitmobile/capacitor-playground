@@ -26,12 +26,18 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Exercisr requires access to your camera to take a selfie</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Exercisr requires access to your photo library to choose an image for a selfie</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Exercisr requires access to your photo library to choose an image for a selfie</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

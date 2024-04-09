@@ -1,0 +1,9 @@
+{
+  "name": "selfie-modal",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/modals/selfie-modal/src",
+  "prefix": "cockpit",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

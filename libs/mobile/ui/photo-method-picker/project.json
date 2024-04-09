@@ -1,0 +1,9 @@
+{
+  "name": "photo-method-picker",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/ui/photo-method-picker/src",
+  "prefix": "cockpit",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

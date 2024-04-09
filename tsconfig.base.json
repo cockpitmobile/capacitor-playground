@@ -51,6 +51,12 @@
       "@cockpit/network-sync": [
         "libs/mobile/effects/network-sync/src/index.ts"
       ],
+      "@cockpit/photo-method-picker": [
+        "libs/mobile/ui/photo-method-picker/src/index.ts"
+      ],
+      "@cockpit/selfie-modal": ["libs/mobile/modals/selfie-modal/src/index.ts"],
+      "@cockpit/selfies-effects": ["libs/mobile/effects/selfies/src/index.ts"],
+      "@cockpit/selfies-state": ["libs/mobile/state/selfies/src/index.ts"],
       "@cockpit/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
       "@cockpit/storage": ["libs/mobile/shared/storage/src/index.ts"],
       "@cockpit/tracking": ["libs/mobile/shared/tracking/src/index.ts"],

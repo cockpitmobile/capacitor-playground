@@ -8,12 +8,24 @@
   </div>
 </div>
 <div style="display: flex; flex-direction: column; align-items: center">
-  <button mat-flat-button color="primary" (click)="start()" style="width: 50%; margin-top: 16px">Start Tracking</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="requestPhoto()"
+    style="width: 50%; margin-top: 16px">
+    Request Photo
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="start()"
+    style="width: 50%; margin-top: 16px">
+    Start Tracking
+  </button>
 
   @for (activity of activities$ | async; track activity.id) {
-    <div style="margin-top: 8px;">
+    <div style="margin-top: 8px">
       {{ activity | json }}
     </div>
   }
 </div>
-
