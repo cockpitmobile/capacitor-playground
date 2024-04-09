@@ -1,1 +1,220 @@
-<p>selfie-modal works!</p>
+<image-cropper
+  *ngIf="savedImage"
+  [backgroundColor]="'rgb(241, 241, 241)'"
+  [imageFile]="file"
+  [autoCrop]="false"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="1"
+  [resizeToWidth]="1024"
+  [cropperMinWidth]="0"
+  [onlyScaleDown]="true"
+  [roundCropper]="false"
+  format="png"
+  (imageLoaded)="imageLoaded($event)"
+  (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"
+  (imageCropped)="imageCropped($event)"
+  [alignImage]="'center'"
+  [style.maxHeight]="height">
+</image-cropper>
+
+<button mat-button (click)="crop()">Crop</button>
+
+<img *ngIf="croppedImage" [src]="croppedImage" width="400px" height="400px" />
+
+<!--&lt;!&ndash;  [style.opacity]="this.mainUtil.isLoading ? 0 : 1"&ndash;&gt;-->
+<!--<div-->
+<!--  *ngIf="cropImage || styleImage"-->
+<!--  fxLayout="column"-->
+<!--  fxLayoutAlign="space-between stretch"-->
+<!--  class="editSelfieContainer">-->
+<!--  <div-->
+<!--    fxLayout="row"-->
+<!--    fxLayoutAlign="space-between stretch"-->
+<!--    class="topButtonContainer">-->
+<!--    <div>-->
+<!--      <button-->
+<!--        mat-button-->
+<!--        *ngIf="cropImage"-->
+<!--        class="greyOutline smallButton"-->
+<!--        (click)="retake()"-->
+<!--        style="width: 97px">-->
+<!--        Back-->
+<!--      </button>-->
+<!--      <button-->
+<!--        mat-button-->
+<!--        *ngIf="!cropImage"-->
+<!--        class="greyOutline smallButton"-->
+<!--        (click)="switchButton()"-->
+<!--        style="width: 97px">-->
+<!--        Back-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <div fxLayout="row" fxLayoutAlign="end stretch">-->
+<!--      &lt;!&ndash;      [style.backgroundColor]="mainUtil.headerBackgroundColor"&ndash;&gt;-->
+<!--      &lt;!&ndash;      [style.borderColor]="mainUtil.headerBackgroundColor"&ndash;&gt;-->
+<!--      <button-->
+<!--        mat-button-->
+<!--        *ngIf="cropImage"-->
+<!--        class="primaryFilled smallButton"-->
+<!--        [style.color]="'white'"-->
+<!--        (click)="this.data.eventResult ? switchButton() : submit()"-->
+<!--        style="width: 97px">-->
+<!--        {{ this.data.eventResult ? 'Next' : 'Save' }}-->
+<!--      </button>-->
+<!--      &lt;!&ndash;      [style.backgroundColor]="mainUtil.headerBackgroundColor"&ndash;&gt;-->
+<!--      &lt;!&ndash;      [style.borderColor]="mainUtil.headerBackgroundColor"&ndash;&gt;-->
+<!--      <button-->
+<!--        mat-button-->
+<!--        *ngIf="!cropImage"-->
+<!--        class="primaryFilled smallButton"-->
+<!--        [style.color]="'white'"-->
+<!--        (click)="submit()"-->
+<!--        style="width: 97px">-->
+<!--        Save-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div-->
+<!--    *ngIf="cropImage"-->
+<!--    [style.maxHeight]="height"-->
+<!--    class="cropImageContainer"></div>-->
+<!--  <div-->
+<!--    *ngIf="styleImage"-->
+<!--    class="styleImageContainer"-->
+<!--    [style.width]="width"-->
+<!--    [style.height]="width">-->
+<!--    <canvas #imageCanvas [style.width]="width" [style.height]="width"></canvas>-->
+<!--    <canvas-->
+<!--      #frameCanvas-->
+<!--      class="frameCanvas"-->
+<!--      [style.width]="selfieFilterWidth"-->
+<!--      [style.height]="width"></canvas>-->
+<!--    <canvas-->
+<!--      #drawingCanvas-->
+<!--      (touchstart)="startDrawing($event)"-->
+<!--      (touchmove)="moveDrawing($event)"-->
+<!--      (touchend)="endDrawing($event)"-->
+<!--      class="drawingCanvas"-->
+<!--      [style.width]="width"-->
+<!--      [style.height]="width"></canvas>-->
+<!--  </div>-->
+<!--  <div-->
+<!--    fxLayout="row"-->
+<!--    fxLayoutAlign="space-between"-->
+<!--    class="bottomButtonContainer">-->
+<!--    <div *ngIf="styleImage" fxLayout="row">-->
+<!--      <div fxLayout="{{ data.distance ? 'column' : 'row' }}">-->
+<!--        <div fxLayout="row">-->
+<!--          &lt;!&ndash;          <button&ndash;&gt;-->
+<!--          &lt;!&ndash;            mat-button&ndash;&gt;-->
+<!--          &lt;!&ndash;            (click)="addLogo('frame')"&ndash;&gt;-->
+<!--          &lt;!&ndash;            class="frameToggle"&ndash;&gt;-->
+<!--          &lt;!&ndash;            [style.backgroundColor]="this.frameChecked ? '#737373' : 'white'">&ndash;&gt;-->
+<!--          &lt;!&ndash;            <mat-icon&ndash;&gt;-->
+<!--          &lt;!&ndash;              fxFlexAlign="center"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.color]="this.frameChecked ? 'white' : '#737373'"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.backgroundColor]="this.frameChecked ? '#737373' : 'white'">&ndash;&gt;-->
+<!--          &lt;!&ndash;              filter_frames&ndash;&gt;-->
+<!--          &lt;!&ndash;            </mat-icon>&ndash;&gt;-->
+<!--          &lt;!&ndash;          </button>&ndash;&gt;-->
+<!--          &lt;!&ndash;          <div&ndash;&gt;-->
+<!--          &lt;!&ndash;            *ngIf="this.frameChecked && data.distance"&ndash;&gt;-->
+<!--          &lt;!&ndash;            class="frameTypeToggleContainer">&ndash;&gt;-->
+<!--          &lt;!&ndash;            <div&ndash;&gt;-->
+<!--          &lt;!&ndash;              (click)="this.addLogo('distance')"&ndash;&gt;-->
+<!--          &lt;!&ndash;              fxLayout="row"&ndash;&gt;-->
+<!--          &lt;!&ndash;              fxLayoutAlign="center"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.color]="this.isDistance ? '#737373' : 'white'"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.backgroundColor]="this.isDistance ? 'white' : '#737373'">&ndash;&gt;-->
+<!--          &lt;!&ndash;              <mat-icon fxFlexAlign="center" class="frameTypeIcon"&ndash;&gt;-->
+<!--          &lt;!&ndash;                >timer&ndash;&gt;-->
+<!--          &lt;!&ndash;              </mat-icon>&ndash;&gt;-->
+<!--          &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <div class="toggleDivider"></div>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <div&ndash;&gt;-->
+<!--          &lt;!&ndash;              (click)="this.addLogo('distance')"&ndash;&gt;-->
+<!--          &lt;!&ndash;              fxLayout="row"&ndash;&gt;-->
+<!--          &lt;!&ndash;              fxLayoutAlign="center"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.color]="this.isDistance ? 'white' : '#737373'"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [style.backgroundColor]="this.isDistance ? '#737373' : 'white'">&ndash;&gt;-->
+<!--          &lt;!&ndash;              <mat-icon fxFlexAlign="center" class="frameTypeIcon"&ndash;&gt;-->
+<!--          &lt;!&ndash;                >straighten&ndash;&gt;-->
+<!--          &lt;!&ndash;              </mat-icon>&ndash;&gt;-->
+<!--          &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--          &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--        &lt;!&ndash;        <div&ndash;&gt;-->
+<!--        &lt;!&ndash;          *ngIf="this.frameChecked"&ndash;&gt;-->
+<!--        &lt;!&ndash;          fxLayout="row"&ndash;&gt;-->
+<!--        &lt;!&ndash;          [style.marginTop]="data.distance ? '10px' : '0px'">&ndash;&gt;-->
+<!--        &lt;!&ndash;          <button&ndash;&gt;-->
+<!--        &lt;!&ndash;            mat-button&ndash;&gt;-->
+<!--        &lt;!&ndash;            (click)="incrementSelfieFilter(-1)"&ndash;&gt;-->
+<!--        &lt;!&ndash;            class="frameToggle"&ndash;&gt;-->
+<!--        &lt;!&ndash;            [style.backgroundColor]="'#737373'">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <mat-icon&ndash;&gt;-->
+<!--        &lt;!&ndash;              fxFlexAlign="center"&ndash;&gt;-->
+<!--        &lt;!&ndash;              [style.color]="'white'"&ndash;&gt;-->
+<!--        &lt;!&ndash;              [style.backgroundColor]="'#737373'">&ndash;&gt;-->
+<!--        &lt;!&ndash;              arrow_back_ios&ndash;&gt;-->
+<!--        &lt;!&ndash;            </mat-icon>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </button>&ndash;&gt;-->
+<!--        &lt;!&ndash;          <button&ndash;&gt;-->
+<!--        &lt;!&ndash;            mat-button&ndash;&gt;-->
+<!--        &lt;!&ndash;            (click)="incrementSelfieFilter(1)"&ndash;&gt;-->
+<!--        &lt;!&ndash;            class="frameToggle"&ndash;&gt;-->
+<!--        &lt;!&ndash;            [style.backgroundColor]="'#737373'">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <mat-icon&ndash;&gt;-->
+<!--        &lt;!&ndash;              fxFlexAlign="center"&ndash;&gt;-->
+<!--        &lt;!&ndash;              [style.color]="'white'"&ndash;&gt;-->
+<!--        &lt;!&ndash;              [style.backgroundColor]="'#737373'">&ndash;&gt;-->
+<!--        &lt;!&ndash;              arrow_forward_ios&ndash;&gt;-->
+<!--        &lt;!&ndash;            </mat-icon>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </button>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div *ngIf="styleImage" fxLayout="row">-->
+<!--      <div fxLayout="row" fxFlexAlign="end" class="drawingButtonsContainer">-->
+<!--        <button-->
+<!--          mat-icon-button-->
+<!--          (click)="undoLastDrawing()"-->
+<!--          class="drawingButton"-->
+<!--          [style.opacity]="this.undoList.length ? 1 : 0"-->
+<!--          [style.pointerEvents]="this.undoList.length ? 'all' : 'none'">-->
+<!--          <mat-icon class="drawingIcon">undo</mat-icon>-->
+<!--        </button>-->
+<!--        <div class="colorPickerOuterContainer">-->
+<!--          <div-->
+<!--            *ngIf="showPicker"-->
+<!--            class="colorPickerInnerContainer"-->
+<!--            fxLayout="column">-->
+<!--            <div (click)="changeBrushColor('red')" class="circle red"></div>-->
+<!--            <div (click)="changeBrushColor('blue')" class="circle blue"></div>-->
+<!--            <div (click)="changeBrushColor('green')" class="circle green"></div>-->
+<!--            <div-->
+<!--              (click)="changeBrushColor('purple')"-->
+<!--              class="circle purple"></div>-->
+<!--            <div (click)="changeBrushColor('pink')" class="circle pink"></div>-->
+<!--          </div>-->
+<!--          <button-->
+<!--            fxFlexAlign="end"-->
+<!--            mat-icon-button-->
+<!--            (click)="showPicker = !showPicker"-->
+<!--            class="drawingButton">-->
+<!--            <mat-icon [style.color]="brushColor" class="brushIcon"-->
+<!--              >brush-->
+<!--            </mat-icon>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <button-->
+<!--          mat-icon-button-->
+<!--          (click)="clearCanvas(this.drawingCanvas)"-->
+<!--          class="drawingButton">-->
+<!--          <mat-icon class="drawingIcon">clear</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
