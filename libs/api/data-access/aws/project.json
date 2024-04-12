@@ -1,0 +1,8 @@
+{
+  "name": "aws",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/aws/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

@@ -4,9 +4,7 @@ import { TestActivity } from '@prisma/client';
 
 @Injectable()
 export class ActivitiesService {
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   getAll(): Promise<TestActivity[]> {
     return this.prisma.testActivity.findMany();
@@ -15,8 +13,19 @@ export class ActivitiesService {
   create(activity: TestActivity): Promise<TestActivity> {
     return this.prisma.testActivity.create({
       data: {
-        ...activity
-      }
+        ...activity,
+      },
+    });
+  }
+
+  update(id: number, activity: Partial<TestActivity>): Promise<TestActivity> {
+    return this.prisma.testActivity.update({
+      where: {
+        id,
+      },
+      data: {
+        ...activity,
+      },
     });
   }
 }

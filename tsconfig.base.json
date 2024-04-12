@@ -10,22 +10,21 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cockpit/mobile/activities": [
-        "libs/mobile/shared/data-access/activities/src/index.ts"
-      ],
       "@cockpit/api/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],
       "@cockpit/api/activities-data-access": [
         "libs/api/activities/data-access/src/index.ts"
+      ],
+      "@cockpit/api/aws": ["libs/api/data-access/aws/src/index.ts"],
+      "@cockpit/api/models": ["libs/api/models/src/index.ts"],
+      "@cockpit/mobile/activities": [
+        "libs/mobile/shared/data-access/activities/src/index.ts"
       ],
       "@cockpit/mobile/activities-effects": [
         "libs/mobile/effects/activities/src/index.ts"
@@ -35,9 +34,6 @@
       ],
       "@cockpit/mobile/activity-tracking-page": [
         "libs/mobile/user/activity-tracking-page/src/index.ts"
-      ],
-      "@cockpit/api/models": [
-        "libs/api/models/src/index.ts"
       ],
       "@cockpit/mobile/app-init-effects": [
         "libs/mobile/effects/app-init/src/index.ts"
@@ -60,12 +56,8 @@
       "@cockpit/mobile/event-page": [
         "libs/mobile/user/event-page/src/index.ts"
       ],
-      "@cockpit/mobile/http": [
-        "libs/mobile/shared/http/src/index.ts"
-      ],
-      "@cockpit/mobile/network": [
-        "libs/mobile/shared/network/src/index.ts"
-      ],
+      "@cockpit/mobile/http": ["libs/mobile/shared/http/src/index.ts"],
+      "@cockpit/mobile/network": ["libs/mobile/shared/network/src/index.ts"],
       "@cockpit/mobile/network-state": [
         "libs/mobile/state/network/src/index.ts"
       ],
@@ -84,15 +76,9 @@
       "@cockpit/mobile/selfies-state": [
         "libs/mobile/state/selfies/src/index.ts"
       ],
-      "@cockpit/mobile/sqlite": [
-        "libs/mobile/shared/sqlite/src/index.ts"
-      ],
-      "@cockpit/mobile/storage": [
-        "libs/mobile/shared/storage/src/index.ts"
-      ],
-      "@cockpit/mobile/tracking": [
-        "libs/mobile/shared/tracking/src/index.ts"
-      ],
+      "@cockpit/mobile/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
+      "@cockpit/mobile/storage": ["libs/mobile/shared/storage/src/index.ts"],
+      "@cockpit/mobile/tracking": ["libs/mobile/shared/tracking/src/index.ts"],
       "@cockpit/mobile/tracking-effects": [
         "libs/mobile/effects/tracking/src/index.ts"
       ],
@@ -101,8 +87,5 @@
       ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
