@@ -4,5 +4,7 @@
   "sourceRoot": "libs/api/activities/data-access/src",
   "projectType": "library",
   "targets": {},
-  "tags": []
+  "tags": [
+    "scope:backend"
+  ]
 }

@@ -4,7 +4,9 @@
   "projectType": "application",
   "prefix": "cockpit",
   "sourceRoot": "apps/exercisr/src",
-  "tags": [],
+  "tags": [
+    "scope:frontend"
+  ],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",

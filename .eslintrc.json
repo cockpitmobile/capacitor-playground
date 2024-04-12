@@ -1,11 +1,20 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "ignorePatterns": [
+    "**/*"
+  ],
+  "plugins": [
+    "@nx"
+  ],
   "overrides": [
     {
-      "files": ["*.ts", "*.json"],
-      "extends": ["plugin:prettier/recommended"],
+      "files": [
+        "*.ts",
+        "*.json"
+      ],
+      "extends": [
+        "plugin:prettier/recommended"
+      ],
       "rules": {
         "no-array-constructor": "warn",
         "no-await-in-loop": "error",
@@ -67,13 +76,17 @@
       },
       "overrides": [
         {
-          "files": ["*.json"],
+          "files": [
+            "*.json"
+          ],
           "parser": "json"
         }
       ]
     },
     {
-      "files": ["*.html"],
+      "files": [
+        "*.html"
+      ],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
         "plugin:prettier/recommended"
@@ -85,7 +98,12 @@
       "rules": {}
     },
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
       "extends": [],
       "rules": {
         "@nx/enforce-module-boundaries": [
@@ -96,7 +114,9 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               },
               {
                 "sourceTag": "type:feature",
@@ -115,7 +135,6 @@
                   "type:data-access"
                 ]
               },
-
               {
                 "sourceTag": "scope:signup",
                 "onlyDependOnLibsWithTags": [
@@ -125,7 +144,23 @@
               },
               {
                 "sourceTag": "scope:shared",
-                "onlyDependOnLibsWithTags": ["scope:shared"]
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared"
+                ]
+              },
+              {
+                "sourceTag": "scope:backend",
+                "onlyDependOnLibsWithTags": [
+                  "scope:backend",
+                  "scope:shared"
+                ]
+              },
+              {
+                "sourceTag": "scope:frontend",
+                "onlyDependOnLibsWithTags": [
+                  "scope:frontend",
+                  "scope:shared"
+                ]
               }
             ]
           }
@@ -133,17 +168,32 @@
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "plugin:@nx/typescript"
+      ],
       "rules": {}
     },
     {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nx/javascript"
+      ],
       "rules": {}
     },
     {
-      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "files": [
+        "*.spec.ts",
+        "*.spec.tsx",
+        "*.spec.js",
+        "*.spec.jsx"
+      ],
       "env": {
         "jest": true
       },

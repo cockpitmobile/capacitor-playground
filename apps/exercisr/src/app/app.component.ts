@@ -15,9 +15,7 @@ import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocat
 export class AppComponent implements OnInit {
   title = 'exercisr';
 
-  constructor(
-    private readonly _store: Store
-  ) {}
+  constructor(private readonly _store: Store) {}
 
   ngOnInit() {
     BackgroundGeolocation.ready({
@@ -25,7 +23,7 @@ export class AppComponent implements OnInit {
         title: `Allow Run Across America access to this device's location in the background?`,
         message: `In order to track your activities in the background, please enable 'Allow all the time' location permission`,
         positiveAction: `Change to 'Allow all the time'`,
-        negativeAction: 'Cancel'
+        negativeAction: 'Cancel',
       },
       reset: true,
       debug: false,
@@ -46,7 +44,7 @@ export class AppComponent implements OnInit {
         title: 'Run Across America is using your location',
         sticky: true,
         smallIcon: 'drawable/notification_icon',
-        largeIcon: 'drawable/notification_icon'
+        largeIcon: 'drawable/notification_icon',
       },
       disableElasticity: true,
       elasticityMultiplier: 1,
@@ -61,11 +59,14 @@ export class AppComponent implements OnInit {
       disableStopDetection: true,
       isMoving: true,
       disableLocationAuthorizationAlert: true,
-      maxRecordsToPersist: 0
-    }).then(() => {
-      console.log('BackgroundGeolocation ready');
-    }).catch((err) => {
-      console.log('BackgroundGeolocation error', err);
-    }).finally(() => this._store.dispatch(appReady()));
+      maxRecordsToPersist: 0,
+    })
+      .then(() => {
+        console.log('BackgroundGeolocation ready');
+      })
+      .catch((err) => {
+        console.log('BackgroundGeolocation error', err);
+      })
+      .finally(() => this._store.dispatch(appReady()));
   }
 }

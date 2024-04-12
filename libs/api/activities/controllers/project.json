@@ -4,5 +4,7 @@
   "sourceRoot": "libs/api/activities/controllers/src",
   "projectType": "library",
   "targets": {},
-  "tags": []
+  "tags": [
+    "scope:backend"
+  ]
 }
