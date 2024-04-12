@@ -19,15 +19,15 @@ import {
   timeout,
   TimeoutError,
 } from 'rxjs';
-import { ENVIRONMENT, Environment } from '@cockpit/environment';
-import { StorageKey } from '@cockpit/constants';
+import { ENVIRONMENT, Environment } from '@cockpit/mobile/environment';
+import { StorageKey } from '@cockpit/mobile/constants';
 import { SyncTask } from './sync-task.class';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import {
   networkIsConnectedSelector,
   networkSyncingChanged,
-} from '@cockpit/network-state';
+} from '@cockpit/mobile/network-state';
 
 const HTTP_TIMEOUT_IN_MS = 5000;
 

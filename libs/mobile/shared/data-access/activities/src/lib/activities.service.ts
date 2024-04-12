@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { TestActivity } from '@cockpit/data-models';
-import { AppStorageService } from '@cockpit/storage';
+import { TestActivity } from '@cockpit/mobile/data-models';
+import { AppStorageService } from '@cockpit/mobile/storage';
 import { from, map, Observable, switchMap } from 'rxjs';
-import { HttpService } from '@cockpit/http';
-import { StorageKey } from '@cockpit/constants';
+import { HttpService } from '@cockpit/mobile/http';
+import { StorageKey } from '@cockpit/mobile/constants';
 import { HttpParams } from '@angular/common/http';
 import { addCachedActivities } from './activities.util';
 

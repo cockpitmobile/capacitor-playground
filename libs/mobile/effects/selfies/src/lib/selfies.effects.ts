@@ -7,12 +7,12 @@ import {
   selfieMethodPickedCamera,
   selfieMethodPickedGallery,
   selfieRequested,
-} from '@cockpit/selfies-state';
+} from '@cockpit/mobile/selfies-state';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { PhotoMethodPickerComponent } from '@cockpit/photo-method-picker';
+import { PhotoMethodPickerComponent } from '@cockpit/mobile/photo-method-picker';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { MatDialog } from '@angular/material/dialog';
-import { SelfieModalComponent } from '@cockpit/selfie-modal';
+import { SelfieModalComponent } from '@cockpit/mobile/selfie-modal';
 
 @Injectable()
 export class SelfiesEffects {

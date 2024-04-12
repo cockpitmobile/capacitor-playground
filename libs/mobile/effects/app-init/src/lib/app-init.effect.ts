@@ -1,45 +1,66 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { AppStorageService } from '@cockpit/storage';
-import { appReady } from '@cockpit/app-lifecycle-state';
+import { AppStorageService } from '@cockpit/mobile/storage';
+import { appReady } from '@cockpit/mobile/app-lifecycle-state';
 import { map, switchMap, tap } from 'rxjs';
-import { StorageKey } from '@cockpit/constants';
-import { TrackingActions } from '@cockpit/tracking-state';
-import { CurrentTrackedActivity } from '@cockpit/data-models';
-import { TrackingService } from '@cockpit/tracking';
-import { NetworkService } from '@cockpit/network';
+import { StorageKey } from '@cockpit/mobile/constants';
+import { TrackingActions } from '@cockpit/mobile/tracking-state';
+import { CurrentTrackedActivity } from '@cockpit/mobile/data-models';
+import { TrackingService } from '@cockpit/mobile/tracking';
+import { NetworkService } from '@cockpit/mobile/network';
 
 @Injectable()
 export class AppInitEffect {
+  checkForTrackedActivity$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(appReady),
+      switchMap(() =>
+        this._storage
+          .getData<CurrentTrackedActivity>(StorageKey.TRACKED_ACTIVITY)
+          .pipe(
+            map((activity) =>
+              activity
+                ? TrackingActions.trackedActivityFoundInStorage({
+                    activity: {
+                      ...activity,
+                      startTime: new Date(activity.startTime),
+                    },
+                  })
+                : TrackingActions.trackedActivityNotFoundInStorage()
+            )
+          )
+      )
+    )
+  );
 
-  checkForTrackedActivity$ = createEffect(() => this._actions$.pipe(
-    ofType(appReady),
-    switchMap(() => this._storage.getData<CurrentTrackedActivity>(StorageKey.TRACKED_ACTIVITY).pipe(
-      map(activity => activity ? TrackingActions.trackedActivityFoundInStorage({ activity: {
-        ...activity,
-          startTime: new Date(activity.startTime)
-        }
-      }) : TrackingActions.trackedActivityNotFoundInStorage())
-    ))
-  ));
+  routeToTrackActivity$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(TrackingActions.trackedActivityFoundInStorage),
+        tap(() => this._tracking.setupLocationTracking()),
+        map(() => this._router.navigate(['/track-activity']))
+      ),
+    { dispatch: false }
+  );
 
-  routeToTrackActivity$ = createEffect(() => this._actions$.pipe(
-    ofType(TrackingActions.trackedActivityFoundInStorage),
-    tap(() => this._tracking.setupLocationTracking()),
-    map(() => this._router.navigate(['/track-activity']))
-  ), { dispatch: false });
+  routeWithNoTrackedActivity$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(TrackingActions.trackedActivityNotFoundInStorage),
+        map(() => this._router.navigate(['/test']))
+      ),
+    { dispatch: false }
+  );
 
-  routeWithNoTrackedActivity$ = createEffect(() => this._actions$.pipe(
-    ofType(TrackingActions.trackedActivityNotFoundInStorage),
-    map(() => this._router.navigate(['/test']))
-  ), { dispatch: false });
-
-  startNetworkListening$ = createEffect(() => this._actions$.pipe(
-    ofType(appReady),
-    switchMap(() => this._network.setupNetworkListener())
-  ), { dispatch: false });
-
+  startNetworkListening$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(appReady),
+        switchMap(() => this._network.setupNetworkListener())
+      ),
+    { dispatch: false }
+  );
 
   constructor(
     private readonly _actions$: Actions,

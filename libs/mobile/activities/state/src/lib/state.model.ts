@@ -1,4 +1,4 @@
-import { TestActivity } from '@cockpit/data-models';
+import { TestActivity } from '@cockpit/mobile/data-models';
 
 export interface ActivitiesState {
   activities: TestActivity[];

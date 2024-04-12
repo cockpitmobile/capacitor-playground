@@ -5,14 +5,14 @@ import { Store } from '@ngrx/store';
 import {
   ActivitiesApiActions,
   sortedActivitiesSelector,
-} from '@cockpit/activities-state';
-import { TrackingActions } from '@cockpit/tracking-state';
+} from '@cockpit/mobile/activities-state';
+import { TrackingActions } from '@cockpit/mobile/tracking-state';
 import {
   networkIsConnectedSelector,
   networkIsSyncingSelector,
-} from '@cockpit/network-state';
+} from '@cockpit/mobile/network-state';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { selfieRequested } from '@cockpit/selfies-state';
+import { selfieRequested } from '@cockpit/mobile/selfies-state';
 
 @Component({
   selector: 'cockpit-event-page',

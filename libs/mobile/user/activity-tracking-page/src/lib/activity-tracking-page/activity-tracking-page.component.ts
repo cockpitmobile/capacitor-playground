@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { combineLatest, interval, map, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { currentTrackingInfoSelector, TrackingActions } from '@cockpit/tracking-state';
+import {
+  currentTrackingInfoSelector,
+  TrackingActions,
+} from '@cockpit/mobile/tracking-state';
 
 @Component({
   selector: 'cockpit-activity-tracking-page',
@@ -17,17 +20,20 @@ export class ActivityTrackingPageComponent {
 
   trackedActivity$ = this._store.select(currentTrackingInfoSelector);
   duration$ = combineLatest([
-    interval(1000).pipe(
-      takeUntil(this.stopTracking$)
-    ),
-    this.trackedActivity$
+    interval(1000).pipe(takeUntil(this.stopTracking$)),
+    this.trackedActivity$,
   ]).pipe(
-    map(([_, activity]) => activity && activity.startTime ? Math.floor((new Date().getTime() - new Date(activity.startTime).getTime()) / 1000) : 0)
+    map(([_, activity]) =>
+      activity && activity.startTime
+        ? Math.floor(
+            (new Date().getTime() - new Date(activity.startTime).getTime()) /
+              1000
+          )
+        : 0
+    )
   );
 
-  constructor(
-    private readonly _store: Store
-  ) {}
+  constructor(private readonly _store: Store) {}
 
   stop() {
     this.stopTracking$.next(null);

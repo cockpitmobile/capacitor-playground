@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SQLiteService } from '@cockpit/sqlite';
-import { StorageKey } from '@cockpit/constants';
+import { SQLiteService } from '@cockpit/mobile/sqlite';
+import { StorageKey } from '@cockpit/mobile/constants';
 import { Capacitor } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
 
@@ -14,8 +14,7 @@ import { from, Observable, of } from 'rxjs';
 // } from 'rxdb';
 // import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 // import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
-// import { TestActivityCollection, testActivitySchema } from '@cockpit/data-models';
-
+// import { TestActivityCollection, testActivitySchema } from '@cockpit/mobile/data-models';
 
 // let database: MyDatabase;
 
@@ -39,12 +38,10 @@ import { from, Observable, of } from 'rxjs';
 // }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppStorageService {
-  constructor(
-    private readonly sqlite: SQLiteService
-  ) {}
+  constructor(private readonly sqlite: SQLiteService) {}
 
   getData<T>(key: StorageKey): Observable<T | undefined> {
     const platform = Capacitor.getPlatform();

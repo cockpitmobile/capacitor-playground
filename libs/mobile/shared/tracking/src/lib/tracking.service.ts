@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
-import BackgroundGeolocation, { Subscription as GeolocationSubscription } from '@transistorsoft/capacitor-background-geolocation';
+import BackgroundGeolocation, {
+  Subscription as GeolocationSubscription,
+} from '@transistorsoft/capacitor-background-geolocation';
 import { from, map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TrackingActions } from '@cockpit/tracking-state';
+import { TrackingActions } from '@cockpit/mobile/tracking-state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrackingService {
   private locationTrackingSub?: GeolocationSubscription;
 
-  constructor(
-    private readonly _store: Store
-  ) {}
+  constructor(private readonly _store: Store) {}
 
   setupLocationTracking(): void {
     if (!this.locationTrackingSub) {
-      this.locationTrackingSub = BackgroundGeolocation.onLocation(location => {
-        this._store.dispatch(TrackingActions.addLocation({ location }));
-      });
+      this.locationTrackingSub = BackgroundGeolocation.onLocation(
+        (location) => {
+          this._store.dispatch(TrackingActions.addLocation({ location }));
+        }
+      );
     }
   }
 
@@ -31,13 +33,13 @@ export class TrackingService {
     this.setupLocationTracking();
 
     return from(BackgroundGeolocation.start()).pipe(
-      map(state => state.enabled)
+      map((state) => state.enabled)
     );
   }
 
   stopTracking(): Observable<boolean> {
     return from(BackgroundGeolocation.stop()).pipe(
-      map(state => state.enabled)
+      map((state) => state.enabled)
     );
   }
 }

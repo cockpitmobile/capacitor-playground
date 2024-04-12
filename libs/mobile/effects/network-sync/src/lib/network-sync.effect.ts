@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@cockpit/http';
+import { HttpService } from '@cockpit/mobile/http';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import {
@@ -7,7 +7,7 @@ import {
   networkStateChanged,
   networkSyncingChanged,
   selectUrl,
-} from '@cockpit/network-state';
+} from '@cockpit/mobile/network-state';
 import { Store } from '@ngrx/store';
 import { routerNavigatedAction } from '@ngrx/router-store';
 

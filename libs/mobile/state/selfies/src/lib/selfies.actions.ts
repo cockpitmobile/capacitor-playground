@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PhotoInfo } from '@cockpit/data-models';
+import { PhotoInfo } from '@cockpit/mobile/data-models';
 
 export const selfieRequested = createAction(
   '[Selfies] Selfie Requested',

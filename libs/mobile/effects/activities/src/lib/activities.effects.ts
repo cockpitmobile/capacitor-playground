@@ -4,12 +4,12 @@ import {
   ActivitiesActions,
   ActivitiesApiActions,
   activitiesSelector,
-} from '@cockpit/activities-state';
-import { AppStorageService } from '@cockpit/storage';
+} from '@cockpit/mobile/activities-state';
+import { AppStorageService } from '@cockpit/mobile/storage';
 import { map, switchMap, tap, withLatestFrom } from 'rxjs';
-import { TestActivity } from '@cockpit/data-models';
-import { StorageKey } from '@cockpit/constants';
-import { ActivitiesService } from '@cockpit/activities';
+import { TestActivity } from '@cockpit/mobile/data-models';
+import { StorageKey } from '@cockpit/mobile/constants';
+import { ActivitiesService } from '@cockpit/mobile/activities';
 import { Store } from '@ngrx/store';
 
 @Injectable()

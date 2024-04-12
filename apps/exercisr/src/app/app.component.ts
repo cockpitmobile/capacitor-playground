@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import 'zone.js/plugins/zone-patch-rxjs';
 import { Store } from '@ngrx/store';
-import { appReady } from '@cockpit/app-lifecycle-state';
+import { appReady } from '@cockpit/mobile/app-lifecycle-state';
 import BackgroundGeolocation from '@transistorsoft/capacitor-background-geolocation';
 
 @Component({

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import {
   selfieMethodPickedCamera,
   selfieMethodPickedGallery,
-} from '@cockpit/selfies-state';
+} from '@cockpit/mobile/selfies-state';
 import {
   MAT_BOTTOM_SHEET_DATA,
   MatBottomSheetRef,
