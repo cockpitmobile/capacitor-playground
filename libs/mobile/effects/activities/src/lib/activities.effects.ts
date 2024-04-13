@@ -6,15 +6,24 @@ import {
   activitiesSelector,
 } from '@cockpit/mobile/activities-state';
 import { AppStorageService } from '@cockpit/mobile/storage';
-import { map, switchMap, tap, withLatestFrom } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { TestActivity } from '@cockpit/mobile/data-models';
 import { StorageKey } from '@cockpit/mobile/constants';
 import { ActivitiesService } from '@cockpit/mobile/activities';
 import { Store } from '@ngrx/store';
 import { selfieUploaded } from '@cockpit/mobile/selfies-state';
+import { networkSyncingChanged } from '@cockpit/mobile/network-state';
 
 @Injectable()
 export class ActivitiesEffects {
+  loadOnSyncSuccess$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(networkSyncingChanged),
+      filter(({ syncing }) => !syncing),
+      map(() => ActivitiesApiActions.loadActivities())
+    )
+  );
+
   loadActivitiesFromStorage$ = createEffect(() =>
     this._actions$.pipe(
       ofType(ActivitiesApiActions.loadActivities),
