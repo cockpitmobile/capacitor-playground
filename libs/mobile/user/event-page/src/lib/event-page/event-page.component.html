@@ -11,15 +11,8 @@
   <button
     mat-flat-button
     color="primary"
-    (click)="requestPhoto()"
-    style="width: 50%; margin-top: 16px">
-    Request Photo
-  </button>
-  <button
-    mat-flat-button
-    color="primary"
     (click)="start()"
-    style="width: 50%; margin-top: 16px">
+    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
     Start Tracking
   </button>
 
@@ -27,5 +20,21 @@
     <div style="margin-top: 8px">
       {{ activity | json }}
     </div>
+
+    @if (activity.image) {
+      <img
+        [src]="activity.image"
+        style="width: 100px; height: 100px; margin: 8px 0px" />
+    }
+
+    @if (!activity.image) {
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="requestPhoto(activity.id)"
+        style="width: 50%; margin-top: 16px">
+        Request Photo For Activity {{ activity.id }}
+      </button>
+    }
   }
 </div>

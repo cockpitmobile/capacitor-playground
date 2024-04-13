@@ -2,10 +2,12 @@
   "name": "exercisr",
   "dependencies": {
     "@capacitor-community/sqlite": "^5.6.3",
+    "@capacitor/camera": "^5.0.9",
+    "@capacitor/filesystem": "^5.2.1",
     "@capacitor/network": "^5.0.7",
     "@transistorsoft/capacitor-background-fetch": "^5.2.2",
     "@transistorsoft/capacitor-background-geolocation": "^5.4.0",
-    "@capacitor/camera": "^5.0.9"
+    "capacitor-blob-writer": "^1.1.16"
   },
   "devDependencies": {
     "@capacitor/android": "../../node_modules/@capacitor/android",

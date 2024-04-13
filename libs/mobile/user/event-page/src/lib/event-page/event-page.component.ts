@@ -34,7 +34,9 @@ export class EventPageComponent {
     this._store.dispatch(TrackingActions.startTracking());
   }
 
-  requestPhoto() {
-    this._store.dispatch(selfieRequested({ title: '' }));
+  requestPhoto(id: number) {
+    this._store.dispatch(
+      selfieRequested({ title: '', id, image_type: 'selfie' })
+    );
   }
 }

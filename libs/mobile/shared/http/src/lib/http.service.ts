@@ -7,7 +7,7 @@ import {
 import {
   catchError,
   concat,
-  EMPTY,
+  from,
   map,
   Observable,
   of,
@@ -28,6 +28,11 @@ import {
   networkIsConnectedSelector,
   networkSyncingChanged,
 } from '@cockpit/mobile/network-state';
+import * as uuid from 'uuid';
+import write_blob from 'capacitor-blob-writer';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { blobToFile } from '@cockpit/mobile/file-utils';
+import { Capacitor } from '@capacitor/core';
 
 const HTTP_TIMEOUT_IN_MS = 5000;
 
@@ -68,6 +73,27 @@ export class HttpService {
     return this._http.delete<T>(`${this._environment.apiBaseUrl}${url}`);
   }
 
+  postImageWithSync(url: string, image: Blob): Observable<{ link: string }> {
+    const formData = new FormData();
+    formData.append('file', blobToFile(image, 'file'));
+
+    return this._http
+      .post<{ link: string }>(`${this._environment.apiBaseUrl}${url}`, formData)
+      .pipe(
+        timeout(HTTP_TIMEOUT_IN_MS),
+        retry(2),
+        catchError((err: HttpErrorResponse) =>
+          this.handleErrorImage(
+            err,
+            url,
+            { id: uuid.v4(), image },
+            new HttpParams()
+          )
+        ),
+        share()
+      );
+  }
+
   // Syncing code below
   postWithSync<T extends { id: number }>(
     url: string,
@@ -103,9 +129,44 @@ export class HttpService {
 
     syncTasks.forEach((task: SyncTask<any>) => {
       const params = { params: new HttpParams({ fromString: task.params }) };
-      const obs$ = this._http
-        .post(task.url, task.body, params)
-        .pipe(map((_) => task));
+      let obs$: Observable<SyncTask<any>>;
+      if (task.body.sync_type === 'image') {
+        obs$ =
+          Capacitor.getPlatform() === 'web'
+            ? from(
+                Filesystem.readFile({
+                  path: task.body.url,
+                  directory: Directory.Data,
+                })
+              ).pipe(
+                switchMap(({ data }) => {
+                  const formData = new FormData();
+                  formData.append('file', blobToFile(data as Blob, 'file'));
+                  return this._http
+                    .post<{
+                      link: string;
+                    }>(task.url, formData, params)
+                    .pipe(map(() => task));
+                })
+              )
+            : from(fetch(task.body.link)).pipe(
+                switchMap((response) =>
+                  from(response.blob()).pipe(
+                    switchMap((blob) => {
+                      const formData = new FormData();
+                      formData.append('file', blobToFile(blob, 'file'));
+                      return this._http
+                        .post<{ link: string }>(task.url, formData, params)
+                        .pipe(map((_) => task));
+                    })
+                  )
+                )
+              );
+      } else {
+        obs$ = this._http
+          .post(task.url, task.body, params)
+          .pipe(map(() => task));
+      }
 
       requests.push(obs$);
     });
@@ -125,7 +186,77 @@ export class HttpService {
     return of(null);
   }
 
-  private handleError<T extends { id: number }>(
+  private handleErrorImage<
+    T extends {
+      id: number | string;
+      image: Blob;
+    },
+  >(
+    err: HttpErrorResponse,
+    url: string,
+    payload: T,
+    params: HttpParams
+  ): Observable<{ link: string }> {
+    // TODO: THIS NEEDS ERROR HANDLING!!!
+    return from(
+      write_blob({
+        blob: payload.image,
+        directory: Directory.Data,
+        path: url,
+        recursive: true,
+        fast_mode: true,
+      })
+    ).pipe(
+      switchMap((path) =>
+        Capacitor.getPlatform() === 'web'
+          ? from(
+              Filesystem.readFile({
+                path: url,
+                directory: Directory.Data,
+              })
+            ).pipe(
+              switchMap(({ data }) =>
+                this.handleError(
+                  err,
+                  `${this._environment.apiBaseUrl}${url}`,
+                  {
+                    id: payload.id,
+                    link: URL.createObjectURL(data as Blob),
+                    url,
+                    sync_type: 'image',
+                  },
+                  params
+                ).pipe(
+                  map(() => ({
+                    link: URL.createObjectURL(data as Blob),
+                  }))
+                )
+              )
+            )
+          : from(
+              Filesystem.getUri({ directory: Directory.Data, path: url })
+            ).pipe(
+              map(({ uri }) => Capacitor.convertFileSrc(uri)),
+              map((uri) => ({ link: uri })),
+              switchMap(({ link }) =>
+                this.handleError(
+                  err,
+                  `${this._environment.apiBaseUrl}${url}`,
+                  {
+                    id: payload.id,
+                    link,
+                    url,
+                    sync_type: 'image',
+                  },
+                  params
+                ).pipe(map(() => ({ link })))
+              )
+            )
+      )
+    );
+  }
+
+  private handleError<T extends { id: number | string }>(
     err: HttpErrorResponse,
     url: string,
     payload: T,
@@ -151,7 +282,7 @@ export class HttpService {
     );
   }
 
-  private addOrUpdateSyncTask<T extends { id: number }>(
+  private addOrUpdateSyncTask<T extends { id: number | string }>(
     url: string,
     payload: T,
     params: HttpParams

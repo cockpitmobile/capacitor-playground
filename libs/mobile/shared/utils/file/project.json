@@ -1,0 +1,9 @@
+{
+  "name": "file-utils",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/shared/utils/file/src",
+  "prefix": "cockpit",
+  "tags": ["scope:frontend"],
+  "projectType": "library",
+  "targets": {}
+}

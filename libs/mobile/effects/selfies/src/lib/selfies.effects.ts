@@ -2,38 +2,51 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { filter, from, map, switchMap, tap } from 'rxjs';
 import {
+  photoCropped,
   selfieImageCapturedFromCamera,
   selfieImagePickedFromCallery,
   selfieMethodPickedCamera,
   selfieMethodPickedGallery,
   selfieRequested,
+  selfieUploaded,
 } from '@cockpit/mobile/selfies-state';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PhotoMethodPickerComponent } from '@cockpit/mobile/photo-method-picker';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { MatDialog } from '@angular/material/dialog';
 import { SelfieModalComponent } from '@cockpit/mobile/selfie-modal';
+import { HttpService } from '@cockpit/mobile/http';
 
 @Injectable()
 export class SelfiesEffects {
-  requestSelfie$ = createEffect(
-    () =>
-      this._actions.pipe(
-        ofType(selfieRequested),
-        tap(({ title }) =>
-          this._bottomSheet.open(PhotoMethodPickerComponent, {
+  requestSelfie$ = createEffect(() =>
+    this._actions.pipe(
+      ofType(selfieRequested),
+      switchMap(({ title, id, image_type }) =>
+        this._bottomSheet
+          .open(PhotoMethodPickerComponent, {
             data: { title },
           })
-        )
-      ),
-    { dispatch: false }
+          .afterDismissed()
+          .pipe(
+            map(({ type }) =>
+              type === 'camera'
+                ? selfieMethodPickedCamera({
+                    id,
+                    image_type,
+                  })
+                : selfieMethodPickedGallery({ id, image_type })
+            )
+          )
+      )
+    )
   );
 
   // TODO: We don't need to separate these on mobile, just on web
   pickFromGallery$ = createEffect(() =>
     this._actions.pipe(
       ofType(selfieMethodPickedGallery),
-      switchMap(() =>
+      switchMap(({ id, image_type }) =>
         from(
           Camera.pickImages({
             quality: 50,
@@ -45,7 +58,6 @@ export class SelfiesEffects {
         ).pipe(
           filter(({ photos }) => photos.length > 0),
           map(({ photos }) => photos[0]),
-          tap((photo) => console.log(photo)),
           map((photo) =>
             selfieImagePickedFromCallery({
               photo: {
@@ -54,6 +66,8 @@ export class SelfiesEffects {
                 path: photo.path!,
                 webPath: photo.webPath,
               },
+              id,
+              image_type,
             })
           )
         )
@@ -64,7 +78,7 @@ export class SelfiesEffects {
   takePhoto$ = createEffect(() =>
     this._actions.pipe(
       ofType(selfieMethodPickedCamera),
-      switchMap(() =>
+      switchMap(({ id, image_type }) =>
         from(
           Camera.getPhoto({
             quality: 50,
@@ -83,6 +97,8 @@ export class SelfiesEffects {
                 path: photo.path!,
                 webPath: photo.webPath!,
               },
+              id,
+              image_type,
             })
           )
         )
@@ -90,25 +106,44 @@ export class SelfiesEffects {
     )
   );
 
-  showEditModal$ = createEffect(
-    () =>
-      this._actions.pipe(
-        ofType(selfieImageCapturedFromCamera, selfieImagePickedFromCallery),
-        switchMap(({ photo }) =>
-          from(fetch(photo.webPath!)).pipe(
-            switchMap((response) =>
-              from(response.blob()).pipe(
-                tap((blob) =>
-                  this._dialog.open(SelfieModalComponent, {
+  showEditModal$ = createEffect(() =>
+    this._actions.pipe(
+      ofType(selfieImageCapturedFromCamera, selfieImagePickedFromCallery),
+      switchMap(({ photo, id, image_type }) =>
+        from(fetch(photo.webPath!)).pipe(
+          switchMap((response) =>
+            from(response.blob()).pipe(
+              switchMap((blob) =>
+                this._dialog
+                  .open(SelfieModalComponent, {
                     data: { src: blob, file: blob },
                   })
-                )
+                  .afterClosed()
+                  .pipe(
+                    map((result) =>
+                      photoCropped({ photo: result, id, image_type })
+                    )
+                  )
               )
             )
           )
         )
-      ),
-    { dispatch: false }
+      )
+    )
+  );
+
+  // TODO: THIS is the actual selfie effect, everything above should have everything renamed from selfie to photo (for generic)
+  // TODO: replace _http with a service for abstracting the http calls
+  saveSelfie$ = createEffect(() =>
+    this._actions.pipe(
+      ofType(photoCropped),
+      filter(({ image_type }) => image_type === 'selfie'),
+      switchMap(({ photo, id }) =>
+        this._http
+          .postImageWithSync(`/activities/${id}/selfie`, photo)
+          .pipe(map(({ link }) => selfieUploaded({ id, link })))
+      )
+    )
   );
 
   // CODE to process a file
@@ -203,6 +238,7 @@ export class SelfiesEffects {
   constructor(
     private readonly _actions: Actions,
     private readonly _bottomSheet: MatBottomSheet,
-    private readonly _dialog: MatDialog
+    private readonly _dialog: MatDialog,
+    private readonly _http: HttpService
   ) {}
 }

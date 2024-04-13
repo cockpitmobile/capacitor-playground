@@ -11,6 +11,7 @@ import { TestActivity } from '@cockpit/mobile/data-models';
 import { StorageKey } from '@cockpit/mobile/constants';
 import { ActivitiesService } from '@cockpit/mobile/activities';
 import { Store } from '@ngrx/store';
+import { selfieUploaded } from '@cockpit/mobile/selfies-state';
 
 @Injectable()
 export class ActivitiesEffects {
@@ -73,18 +74,33 @@ export class ActivitiesEffects {
       ofType(ActivitiesApiActions.createActivity),
       withLatestFrom(this._store.select(activitiesSelector)),
       switchMap(([{ activity }, activities]) =>
-        this._storage.setData(StorageKey.ACTIVITIES, activities).pipe(
-          switchMap(() =>
-            this._activitiesService.createTestActivity(activity).pipe(
-              tap(() => console.log('ACTIVITY!!', activity)),
-              map(() =>
-                ActivitiesApiActions.createActivitySuccess({ activity })
-              )
+        this._storage
+          .setData(StorageKey.ACTIVITIES, activities)
+          .pipe(
+            switchMap(() =>
+              this._activitiesService
+                .createTestActivity(activity)
+                .pipe(
+                  map(() =>
+                    ActivitiesApiActions.createActivitySuccess({ activity })
+                  )
+                )
             )
           )
-        )
       )
     )
+  );
+
+  selfieUploaded$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(selfieUploaded),
+        withLatestFrom(this._store.select(activitiesSelector)),
+        switchMap(([, activities]) =>
+          this._storage.setData(StorageKey.ACTIVITIES, activities)
+        )
+      ),
+    { dispatch: false }
   );
 
   constructor(

@@ -56,6 +56,9 @@
       "@cockpit/mobile/event-page": [
         "libs/mobile/user/event-page/src/index.ts"
       ],
+      "@cockpit/mobile/file-utils": [
+        "libs/mobile/shared/utils/file/src/index.ts"
+      ],
       "@cockpit/mobile/http": ["libs/mobile/shared/http/src/index.ts"],
       "@cockpit/mobile/network": ["libs/mobile/shared/network/src/index.ts"],
       "@cockpit/mobile/network-state": [

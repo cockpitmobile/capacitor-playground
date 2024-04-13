@@ -25,6 +25,8 @@ import { MatButton } from '@angular/material/button';
 })
 export class SelfieModalComponent {
   croppedImage?: string;
+  croppedBlob?: Blob;
+
   savedImage?: string;
   cropImage = true;
   styleImage = false;
@@ -157,7 +159,9 @@ export class SelfieModalComponent {
     const croppedImage = await this.imageCropper?.crop();
 
     this.croppedImage = croppedImage!.objectUrl!;
-    console.log(croppedImage);
+    this.croppedBlob = croppedImage!.blob!;
+
+    setTimeout(() => this.submit(), 3000);
   }
 
   // incrementSelfieFilter(index: number) {
@@ -434,11 +438,8 @@ export class SelfieModalComponent {
     });
   }
 
-  async submit() {
-    await this.setSavedImage();
-    this.dialog.close({
-      data: this.savedImage,
-      blob: this.savedFile,
-    });
+  submit() {
+    // await this.setSavedImage();
+    this.dialog.close(this.croppedBlob);
   }
 }
