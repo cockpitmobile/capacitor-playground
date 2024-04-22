@@ -1,9 +1,45 @@
-<div style="display: flex; flex-direction: column; height: 100%; justify-content: center; align-items: center;">
-    <button mat-flat-button color="primary" style="width: 50%" (click)="stop()">Stop Tracking</button>
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: stretch;
+    align-items: center;
+  ">
+  <div style="display: flex; flex-direction: column; height: 20%">
+    <button mat-flat-button color="primary" style="width: 50%" (click)="stop()">
+      Stop Tracking
+    </button>
 
-  <div>
-    Duration: {{ duration$ | async }}
+    <div>Duration: {{ duration$ | async }}</div>
   </div>
+  <mgl-map
+    class="route-map"
+    [style]="
+      'https://api.maptiler.com/maps/streets/style.json?key=nYtRANnR0Ne0JbArMCyP'
+    "
+    [center]="(currentPosition$ | async)!"
+    [zoom]="zoom"
+    [centerWithPanTo]="true"
+    [pitch]="pitch"
+    movingMethod="jumpTo"
+    [preserveDrawingBuffer]="true">
+    <mgl-geojson-source
+      id="route"
+      [data]="(geometry$ | async)!"></mgl-geojson-source>
 
-  <div>{{ trackedActivity$ | async | json }}</div>
+    <mgl-layer
+      type="line"
+      source="route"
+      id="route-line"
+      [layout]="{
+        'line-join': 'round',
+        'line-cap': 'round'
+      }"
+      [paint]="{
+        'line-color': 'yellow',
+        'line-width': 8,
+        'line-opacity': 0.8
+      }"></mgl-layer>
+  </mgl-map>
 </div>
