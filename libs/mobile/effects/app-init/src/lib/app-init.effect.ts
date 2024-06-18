@@ -48,7 +48,7 @@ export class AppInitEffect {
     () =>
       this._actions$.pipe(
         ofType(TrackingActions.trackedActivityNotFoundInStorage),
-        map(() => this._router.navigate(['/test']))
+        map(() => this._router.navigate(['/login']))
       ),
     { dispatch: false }
   );

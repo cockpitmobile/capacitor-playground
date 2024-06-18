@@ -69,6 +69,7 @@ const addLocation = (
         location.coords.longitude
       );
 
+      // TODO: Put this back
       // if (distanceBetween < 0.001) {
       //   return {
       //     ...currentInfo

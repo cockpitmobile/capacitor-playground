@@ -1,0 +1,165 @@
+<ng-container>
+  <div id="login-container" [style.backgroundColor]="primaryColor$ | async">
+    <!-- CASE: Project login -->
+    @switch (currentStep()) {
+      @case ('projectLogin') {
+        <ng-container>
+          <img id="onboarding-image" [src]="onboardingImage$ | async" />
+
+          <div class="flex-col align-center justify-center w-100 h-100">
+            <div class="flex align-center text" style="font-size: 20px">
+              {{ welcomeText$ | async }}
+            </div>
+            <div class="flex align-center text" style="font-size: 18px">
+              Sign up or sign in:
+            </div>
+            <input
+              class="white-input"
+              [formControl]="emailFormCtrl"
+              placeholder="Enter your email"
+              id="email-ctrl"
+              type="email"
+              required
+              (keydown)="keydown($event, 'email')" />
+            <button
+              id="submit"
+              class="buttonFilled big-button"
+              mat-button
+              [style.backgroundColor]="secondaryColor$ | async"
+              [style.borderColor]="secondaryColor$ | async"
+              style="font-size: 18px; width: 50%; margin-bottom: 32px"
+              (click)="checkEmail()">
+              <div style="margin-top: -3px">Continue</div>
+            </button>
+          </div>
+        </ng-container>
+      }
+      @case ('hasEmail') {
+        <ng-container>
+          <div class="login-section-header">
+            <p class="text" style="font-size: 24px; text-align: left">
+              Welcome, {{ emailFormCtrl.value }}!
+            </p>
+            <p class="text" style="font-size: 24px; text-align: left">
+              Let's get you logged in.
+            </p>
+          </div>
+
+          <div class="w-100 h-100">
+            <button
+              class="buttonFilled big-button"
+              mat-button
+              [style.backgroundColor]="secondaryColor$ | async"
+              [style.borderColor]="secondaryColor$ | async"
+              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              <div style="margin-top: -3px" (click)="emailCode()">
+                Email me a login code
+              </div>
+            </button>
+
+            <button
+              class="buttonFilled big-button"
+              mat-button
+              id="have-login-code-btn">
+              <div style="margin-top: -3px" (click)="hasLoginCode()">
+                I have a login code
+              </div>
+            </button>
+
+            <a (click)="backToLogin()" class="accountSeason">Cancel</a>
+          </div>
+        </ng-container>
+      }
+      @case ('noEmail') {
+        <ng-container>
+          <div id="termsCheckbox" class="login-section-header">
+            <p class="text" style="font-size: 24px; text-align: left">
+              Create new account
+            </p>
+            <p class="text" style="font-size: 18px; text-align: left">
+              Welcome, {{ emailFormCtrl.value }}. We'll create a new account for
+              you.
+            </p>
+            <mat-checkbox
+              id="event-updates-ctrl"
+              [formControl]="sendEventUpdatesCtrl"
+              >Send me event updates
+            </mat-checkbox>
+          </div>
+
+          <div class="w-100 h-100" fxLayout="column" fxLayoutAlign="center">
+            <button
+              class="buttonFilled big-button"
+              mat-button
+              [style.backgroundColor]="secondaryColor$ | async"
+              [style.borderColor]="secondaryColor$ | async"
+              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              <div style="margin-top: -3px" (click)="createNewAccount()">
+                Create new account
+              </div>
+            </button>
+
+            <a (click)="backToLogin()" class="accountSeason"
+              >Try a different email</a
+            >
+          </div>
+        </ng-container>
+      }
+      @case ('code') {
+        <ng-container>
+          <div class="login-section-header">
+            <p class="text" style="font-size: 24px; text-align: left">
+              Enter your code to login
+            </p>
+            <a
+              (click)="sendCodeForNewFlow()"
+              class="accountSeason"
+              style="text-align: left; margin-left: 10px"
+              >Send a new code</a
+            >
+            <p
+              *ngIf="hasEmailedCode"
+              class="text"
+              style="font-size: 18px; text-align: left">
+              We've just sent a code to {{ emailFormCtrl.value }}. It may take a
+              few minutes to arrive. Don't see it? Check your spam folder.
+            </p>
+          </div>
+
+          <div class="w-100 h-100" fxLayout="column" fxLayoutAlign="center">
+            <input
+              class="white-input"
+              [(ngModel)]="code"
+              placeholder="Enter your code"
+              id="code-ctrl"
+              required
+              (keydown)="keydown($event, 'code')" />
+
+            <button
+              class="buttonFilled big-button"
+              mat-button
+              [style.backgroundColor]="secondaryColor$ | async"
+              [style.borderColor]="secondaryColor$ | async"
+              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              <div style="margin-top: -3px" (click)="checkCode()">Login</div>
+            </button>
+
+            <a (click)="backToLogin()" class="accountSeason">Cancel</a>
+          </div>
+        </ng-container>
+      }
+    }
+
+    <div id="login-footer">
+      <div style="display: flex">
+        <div id="privacy-link" class="accountSeason" (click)="privacyPolicy()">
+          Privacy Policy
+        </div>
+        <span style="margin: 0 4px">|</span>
+        <a id="help-link" class="accountSeason" [href]="helpHref">
+          Contact Us</a
+        >
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,8 @@
+{
+  "name": "api-admin-users-controllers",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/admin/controllers/users/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

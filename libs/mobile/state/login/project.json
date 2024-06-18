@@ -1,0 +1,11 @@
+{
+  "name": "login-state",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/state/login/src",
+  "prefix": "cockpit",
+  "tags": [
+    "scope:frontend"
+  ],
+  "projectType": "library",
+  "targets": {}
+}

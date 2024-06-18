@@ -15,6 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cockpit/api-admin-users-controllers": [
+        "libs/api/admin/controllers/users/src/index.ts"
+      ],
+      "@cockpit/api-data-access-users": [
+        "libs/api/data-access/users/src/index.ts"
+      ],
       "@cockpit/api/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],
@@ -60,6 +66,7 @@
         "libs/mobile/shared/utils/file/src/index.ts"
       ],
       "@cockpit/mobile/http": ["libs/mobile/shared/http/src/index.ts"],
+      "@cockpit/mobile/login-page": ["libs/mobile/pages/login/src/index.ts"],
       "@cockpit/mobile/network": ["libs/mobile/shared/network/src/index.ts"],
       "@cockpit/mobile/network-state": [
         "libs/mobile/state/network/src/index.ts"
@@ -80,6 +87,7 @@
         "libs/mobile/state/selfies/src/index.ts"
       ],
       "@cockpit/mobile/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
+      "@cockpit/mobile/state/login": ["libs/mobile/state/login/src/index.ts"],
       "@cockpit/mobile/storage": ["libs/mobile/shared/storage/src/index.ts"],
       "@cockpit/mobile/tracking": ["libs/mobile/shared/tracking/src/index.ts"],
       "@cockpit/mobile/tracking-effects": [
@@ -87,6 +95,9 @@
       ],
       "@cockpit/mobile/tracking-state": [
         "libs/mobile/state/tracking/src/index.ts"
+      ],
+      "@cockpit/mobile/util/constants": [
+        "libs/mobile/util/constants/src/index.ts"
       ]
     }
   },

@@ -1,0 +1,11 @@
+{
+  "name": "constant-utils",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/util/constants/src",
+  "prefix": "cockpit",
+  "tags": [
+    "scope:frontend"
+  ],
+  "projectType": "library",
+  "targets": {}
+}
