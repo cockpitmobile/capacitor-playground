@@ -18,10 +18,16 @@
       "@cockpit/api-admin-users-controllers": [
         "libs/api/admin/controllers/users/src/index.ts"
       ],
+      "@cockpit/api-data-access-email": [
+        "libs/api/data-access/email/src/index.ts"
+      ],
       "@cockpit/api-data-access-users": [
         "libs/api/data-access/users/src/index.ts"
       ],
       "@cockpit/api-users": ["libs/api/users/controllers/users/src/index.ts"],
+      "@cockpit/api-util-access-code": [
+        "libs/api/util/access-code/src/index.ts"
+      ],
       "@cockpit/api/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],
@@ -112,7 +118,8 @@
       ],
       "@cockpit/state-in-app-browser": [
         "libs/mobile/state/in-app-browser/src/index.ts"
-      ]
+      ],
+      "@cockpit/util-device": ["libs/mobile/util/device/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

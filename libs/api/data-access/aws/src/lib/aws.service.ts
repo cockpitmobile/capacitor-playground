@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
-import { from, map } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 
 const accessKey = process.env['AWS_ACCESS_KEY_ID'] as string;
 const secretAccessKey = process.env['AWS_SECRET_ACCESS_KEY'] as string;
@@ -15,8 +15,52 @@ export class AwsService {
     },
   });
 
+  ses = new AWS.SES({
+    credentials: {
+      secretAccessKey,
+      accessKeyId: accessKey,
+    },
+    region: 'us-east-1',
+  });
+
   public uploadExercisrFile(key: string, file: Buffer, fileType: string) {
     return this._uploadFile(exercisrBucket, key, file, fileType);
+  }
+
+  public sendEmail(
+    email: string,
+    emailText: string,
+    subject: string
+  ): Observable<boolean> {
+    return from(
+      this.ses
+        .sendEmail({
+          Destination: {
+            ToAddresses: [email],
+          },
+          Message: {
+            Body: {
+              Text: {
+                Data: emailText,
+              },
+            },
+            Subject: {
+              Data: subject,
+            },
+          },
+          Source: 'Run Across America <dev@cockpitmobile.com>',
+          ReplyToAddresses: ['hello@nationwiderun.org'],
+        })
+        .promise()
+    ).pipe(
+      map((response) => {
+        if (response.$response.error) {
+          console.error(response.$response.error);
+          return false;
+        }
+        return true;
+      })
+    );
   }
 
   private _uploadFile(

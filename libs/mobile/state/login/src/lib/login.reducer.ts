@@ -30,5 +30,26 @@ export const loginReducer = createReducer(
       ...state,
       loginStep: 'noEmail',
     })
+  ),
+  on(
+    LoginActions.backToLoginClicked,
+    (state: LoginState): LoginState => ({
+      ...state,
+      loginStep: 'projectLogin',
+    })
+  ),
+  on(
+    LoginActions.hasLoginCodeClicked,
+    (state: LoginState): LoginState => ({
+      ...state,
+      loginStep: 'code',
+    })
+  ),
+  on(
+    LoginActions.sendNewAccessCodeSuccess,
+    (state: LoginState): LoginState => ({
+      ...state,
+      loginStep: 'code',
+    })
   )
 );

@@ -7,9 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UsersService {
-  private readonly _usersService = inject(HttpService);
+  private readonly _http = inject(HttpService);
 
   getUserByEmailAddress(email: string): Observable<User[]> {
-    return this._usersService.get<User[]>(`/users?email=${email}`);
+    return this._http.get<User[]>(`/users?email=${email}`);
+  }
+
+  sendResetAccessCodeEmail(email: string): Observable<boolean> {
+    return this._http.post<{ email: string }, boolean>(
+      `/users/access-code/reset`,
+      { email }
+    );
   }
 }

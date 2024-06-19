@@ -1,0 +1,8 @@
+{
+  "name": "api-util-access-code",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/util/access-code/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

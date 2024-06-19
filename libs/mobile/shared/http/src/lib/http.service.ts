@@ -61,8 +61,8 @@ export class HttpService {
     return this._http.get<T>(`${this._environment.apiBaseUrl}${url}`);
   }
 
-  post<T>(url: string, body: T): Observable<T> {
-    return this._http.post<T>(`${this._environment.apiBaseUrl}${url}`, body);
+  post<T, K>(url: string, body: T): Observable<K> {
+    return this._http.post<K>(`${this._environment.apiBaseUrl}${url}`, body);
   }
 
   put<T>(url: string, body: T): Observable<T> {

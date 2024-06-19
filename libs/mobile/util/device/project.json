@@ -1,0 +1,9 @@
+{
+  "name": "util-device",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/util/device/src",
+  "prefix": "cockpit",
+  "tags": ["scope:frontend"],
+  "projectType": "library",
+  "targets": {}
+}

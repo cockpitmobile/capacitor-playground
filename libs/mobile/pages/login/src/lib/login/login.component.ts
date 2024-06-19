@@ -1,8 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
-  currentSeasonNewUserSignUpLink,
   currentSeasonOnboardingImageLink,
   currentSeasonPrimaryColor,
   currentSeasonSecondaryColor,
@@ -11,7 +10,6 @@ import {
   loginStep,
 } from '@cockpit/mobile/state/login';
 import {
-  FormBuilder,
   FormControl,
   FormsModule,
   ReactiveFormsModule,
@@ -19,9 +17,11 @@ import {
 } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton } from '@angular/material/button';
-import { firstValueFrom } from 'rxjs';
 import { SnackbarService } from '@cockpit/snackbar-service';
 import { InAppBrowserActions } from '@cockpit/state-in-app-browser';
+import { Device } from '@capacitor/device';
+import { App } from '@capacitor/app';
+import { getHelpLinkFromDeviceAndAppInfo } from '@cockpit/util-device';
 
 @Component({
   selector: 'cockpit-login',
@@ -36,9 +36,8 @@ import { InAppBrowserActions } from '@cockpit/state-in-app-browser';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private readonly _store = inject(Store);
-  private readonly _fb = inject(FormBuilder);
   private readonly _snackbar = inject(SnackbarService);
 
   readonly primaryColor$ = this._store.select(currentSeasonPrimaryColor);
@@ -47,7 +46,6 @@ export class LoginComponent {
   readonly onboardingImage$ = this._store.select(
     currentSeasonOnboardingImageLink
   );
-  readonly newAccountLink$ = this._store.select(currentSeasonNewUserSignUpLink);
   readonly currentStep$ = this._store.select(loginStep);
 
   helpHref = signal('');
@@ -57,25 +55,14 @@ export class LoginComponent {
   emailFormCtrl = new FormControl('', [Validators.required, Validators.email]);
   sendEventUpdatesCtrl = new FormControl(true);
 
-  form = this._fb.group({
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
-
-  async ngOnInit() {
+  ngOnInit() {
     // this.mainUtil.showSafeArea = false;
     // this.statusBar.show();
-    //
-    // let device;
-    // if (this.device.model && this.device.manufacturer) {
-    //   device = `${this.device.model} ${this.device.manufacturer}`;
-    //   while (device.includes(' ')) {
-    //     device = device.replace(' ', '-');
-    //   }
-    // }
-    // this.helpHref = 'mailto:hello@nationwiderun.org?subject=Need help&body=Info for our team: app version ' + (this.mainUtil.isIOS ? WebVersion.iosVersion : WebVersion.androidVersion) + (this.mainUtil.buildVersion ? ' build ' + this.mainUtil.buildVersion : '') + (this.deviceDetectorService.device ? ' os ' + this.deviceDetectorService.device : '') + (device ? ' device ' + device : '');
 
-    this.loadSeasonSignIn();
+    // TODO: Apple privacy manifest requirements: https://capacitorjs.com/docs/apis/device#deviceinfo
+    Promise.all([Device.getInfo(), App.getInfo()]).then(([device, app]) =>
+      this.helpHref.set(getHelpLinkFromDeviceAndAppInfo(device, app))
+    );
   }
 
   loadSeasonSignIn() {
@@ -102,7 +89,7 @@ export class LoginComponent {
       this.code = '';
     }
 
-    // this.currentStep.set('projectLogin');
+    this._store.dispatch(LoginActions.backToLoginClicked());
   }
 
   keydown(event: any, type: string) {
@@ -119,22 +106,23 @@ export class LoginComponent {
     }
   }
 
-  async emailCode() {
+  emailCode() {
     this.hasEmailedCode = true;
-    await this.sendCodeForNewFlow();
-    // this.currentStep.set('code');
+    this.sendCodeForNewFlow();
   }
 
-  async createNewAccount() {
-    const newAccountLink = await firstValueFrom(this.newAccountLink$);
-    const url = `${newAccountLink}?email=${this.emailFormCtrl.value}&agreeEventUpdates=${this.sendEventUpdatesCtrl.value}`;
-
+  createNewAccount() {
     this.backToLogin(true);
-    // this.mainUtil.openWebpage(url, false);
+    this._store.dispatch(
+      LoginActions.createNewAccount({
+        email: this.emailFormCtrl.value as string,
+        sendEmailUpdates: this.sendEventUpdatesCtrl.value as boolean,
+      })
+    );
   }
 
   hasLoginCode() {
-    // this.currentStep.set('code');
+    this._store.dispatch(LoginActions.hasLoginCodeClicked());
   }
 
   checkEmail() {
@@ -151,32 +139,10 @@ export class LoginComponent {
         })
       );
     }
-
-    // this.mainUtil.isLoading = { message: 'Checking Email' };
-    //       this.mainUtil.isLoading = false;
-    //     },
-    //     error: (error) => {
-    //       this.mainUtil.showSnackbar(
-    //         'There was an error checking the email. Please try again.'
-    //       );
-    //       this.mainUtil.isLoading = false;
-    //     },
   }
 
   login() {
     // let response;
-    // if (this.form.valid) {
-    //   this.mainUtil.isLoading = { message: 'Signing In' };
-    //   response = await this.userService.authenticate(this.form.value.email.toLowerCase().trim(), this.form.value.password)
-    //     .pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
-    //       this.mainUtil.handleError(error);
-    //     });
-    //
-    //   if (!response || !response.user) {
-    //     this.mainUtil.isLoading = false;
-    //     return false;
-    //   }
-    // } else {
     //   if (this.code) {
     //     response = await this.userService.authenticate('', this.code.toUpperCase().trim())
     //       .pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
@@ -192,6 +158,90 @@ export class LoginComponent {
     //     }
     //     return false;
     //   }
+    // this.userService.currentUser = response.user;
+    //
+    // if (this.userService.currentUser.is_participant) {
+    //   try {
+    //     const x = await forkJoin([
+    //       this.userService.getAppSwitches(),
+    //       this.petService.getPetsForOwner(this.userService.currentUser.id),
+    //       this.userService.getUsersUpcomingPlans(this.userService.currentUser.id),
+    //       this.userService.getUnreadNotifications(this.userService.currentUser.id),
+    //       this.userService.getUserUnlockedBadges(this.userService.currentUser.id),
+    //       this.userService.getUserTickets(this.userService.currentUser.id),
+    //     ]).pipe(timeout(this.mainUtil.timeoutLimit)).toPromise();
+    //     const userInfo = x[0];
+    //     const plans = x[2];
+    //     this.raceTeamService.userPlans = plans.user_plans;
+    //     this.raceTeamService.userPlans.forEach(element => {
+    //       element.RaceTeamMember = plans.race_team_members.find(r => r.race_team_id === element.race_team_id);
+    //     });
+    //     const notifications = x[3];
+    //     this.userService.currentUser.unread_notifications = notifications.notifications;
+    //     this.userService.currentUser.unlocked_badges = x[4].unlocked_badges;
+    //     this.userUtil.setCurrentUserTickets(x[5].tickets);
+    //     this.userService.currentUser.appSwitch = userInfo;
+    //     this.userService.currentUser.worker_projects = response.projects;
+    //     await this.mainUtil.sortProjects();
+    //     await this.mainUtil.setParticipantAndDates();
+    //     this.mainUtil.setProjectTimesAccordingToTimezones();
+    //
+    //     try {
+    //       (window as any).plugins.appsFlyer.logEvent('af_login', { email: this.userService.currentUser.email, user_id: this.userService.currentUser.id, isProduction: environment.production }, () => { console.log('SUCCESS!!'); }, (err) => { console.log('ERROR'); console.log(err); });
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //
+    //     try {
+    //       (window as any).facebookConnectPlugin.logEvent('login', {}, 0, () => console.log('FB EVENT SUCCESS'), fbErr => { console.log('FB EVENT ERROR'); console.error(fbErr); });
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   } catch (error) {
+    //     this.mainUtil.handleError(error);
+    //     this.mainUtil.isLoading = false;
+    //     return false;
+    //   }
+    // } else {
+    //   let companyId = localStorage.getItem(this.userService.currentUser.id + '-companyId');
+    //   if (!companyId || companyId.length === 0) {
+    //     companyId = this.userService.currentUser.companies[0].id;
+    //     localStorage.setItem(this.userService.currentUser.id + '-companyId', companyId);
+    //   }
+    //   const userInfo = await forkJoin([
+    //     this.companyService.getCompany(companyId),
+    //     this.projectService.getProjectsForCompanyUser(this.userService.currentUser.id, companyId),
+    //     this.userService.getUserUnlockedBadges(this.userService.currentUser.id)
+    //   ]).pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
+    //     this.mainUtil.handleError(error);
+    //   });
+    //   if (!userInfo) {
+    //     this.mainUtil.isLoading = false;
+    //     return false;
+    //   }
+    //
+    //   this.companyService.currentCompany = userInfo[0];
+    //   this.userService.currentUser.worker_projects = userInfo[1].projects;
+    //   await this.mainUtil.setParticipantAndDates();
+    //   await this.localDbService.storeCompanyInformation(this.companyService.currentCompany);
+    // }
+    // let savedCompanyId = localStorage.getItem(this.userService.currentUser.id + '-companyId');
+    // if (!savedCompanyId) {
+    //   savedCompanyId = this.userService.currentUser.companies.length ? this.userService.currentUser.companies[0].id : '0000';
+    // }
+    // await this.localDbService.storeProjects(this.userService.currentUser.worker_projects, savedCompanyId);
+    // await this.localDbService.storeUserInformation(this.userService.currentUser);
+    //
+    // this.mainUtil.sendGoogleAnalyticsEvent('SignIn_Login');
+    // document.getElementById('body').classList.add('dailyDistanceInputs');
+    // this.router.navigateByUrl('user').then(() => {
+    //   this.mainUtil.isLoading = false;
+    //   this.dialogsUtil.checkNotifications();
+    //   this.mainUtil.showSafeArea = true;
+    // }).catch(() => {
+    //   this.mainUtil.isLoading = false;
+    // });
+    // return true;
   }
 
   checkCode() {
@@ -230,24 +280,12 @@ export class LoginComponent {
     //   }
   }
 
-  async sendCodeForNewFlow() {
-    // this.mainUtil.isLoading = { message: 'Sending Code' };
-    // try {
-    //   await this.userService
-    //     .resetUserPasscode(this.emailFormCtrl.value.trim(), undefined)
-    //     .pipe(timeout(this.mainUtil.timeoutLimit))
-    //     .toPromise();
-    // } catch (error) {
-    //   this.mainUtil.handleError(error);
-    //   this.dialogsUtil.showConfirmationDialog(
-    //     'Code failed to send, please try again.',
-    //     'Code send failed',
-    //     'Okay',
-    //     'Cancel',
-    //     true
-    //   );
-    // }
-    // this.mainUtil.isLoading = false;
+  sendCodeForNewFlow() {
+    this._store.dispatch(
+      LoginActions.sendNewAccessCode({
+        email: this.emailFormCtrl.value as string,
+      })
+    );
   }
 
   privacyPolicy() {
