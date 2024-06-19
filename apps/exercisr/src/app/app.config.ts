@@ -25,6 +25,8 @@ import { NetworkSyncEffect } from '@cockpit/mobile/network-sync';
 import { SelfiesEffects } from '@cockpit/mobile/selfies-effects';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { loginReducer } from '@cockpit/mobile/state/login';
+import { LoginEffects } from '@cockpit/effects-login';
+import { InAppBrowserEffects } from '@cockpit/effects-in-app-browser';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -64,7 +66,9 @@ export const appConfig: ApplicationConfig = {
       ActivitiesEffects,
       TrackingEffects,
       NetworkSyncEffect,
-      SelfiesEffects
+      SelfiesEffects,
+      LoginEffects,
+      InAppBrowserEffects
     ),
     {
       provide: APP_INITIALIZER,

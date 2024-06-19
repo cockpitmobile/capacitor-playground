@@ -1,7 +1,7 @@
 <ng-container>
   <div id="login-container" [style.backgroundColor]="primaryColor$ | async">
     <!-- CASE: Project login -->
-    @switch (currentStep()) {
+    @switch (currentStep$ | async) {
       @case ('projectLogin') {
         <ng-container>
           <img id="onboarding-image" [src]="onboardingImage$ | async" />
@@ -45,7 +45,7 @@
             </p>
           </div>
 
-          <div class="w-100 h-100">
+          <div class="w-100 h-100 flex flex-col align-center">
             <button
               class="buttonFilled big-button"
               mat-button
@@ -81,13 +81,14 @@
               you.
             </p>
             <mat-checkbox
+              class="w-100"
               id="event-updates-ctrl"
               [formControl]="sendEventUpdatesCtrl"
               >Send me event updates
             </mat-checkbox>
           </div>
 
-          <div class="w-100 h-100" fxLayout="column" fxLayoutAlign="center">
+          <div class="w-100 h-100 flex flex-col align-center">
             <button
               class="buttonFilled big-button"
               mat-button
@@ -126,7 +127,7 @@
             </p>
           </div>
 
-          <div class="w-100 h-100" fxLayout="column" fxLayoutAlign="center">
+          <div class="w-100 h-100 flex flex-col align-center">
             <input
               class="white-input"
               [(ngModel)]="code"
@@ -156,7 +157,7 @@
           Privacy Policy
         </div>
         <span style="margin: 0 4px">|</span>
-        <a id="help-link" class="accountSeason" [href]="helpHref">
+        <a id="help-link" class="accountSeason" [href]="helpHref()">
           Contact Us</a
         >
       </div>

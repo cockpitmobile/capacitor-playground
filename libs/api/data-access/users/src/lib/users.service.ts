@@ -6,14 +6,18 @@ import { User } from '@prisma/client';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  getAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+  getAll(options?: Partial<User>): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: {
+        ...options,
+      },
+    });
   }
 
-  create(activity: User): Promise<User> {
+  create(user: User): Promise<User> {
     return this.prisma.user.create({
       data: {
-        ...activity,
+        ...user,
       },
     });
   }

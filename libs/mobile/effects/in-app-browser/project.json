@@ -1,0 +1,9 @@
+{
+  "name": "effects-in-app-browser",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/effects/in-app-browser/src",
+  "prefix": "cockpit",
+  "tags": ["scope:frontend"],
+  "projectType": "library",
+  "targets": {}
+}

@@ -39,3 +39,7 @@ export const currentSeasonNewUserSignUpLink = createSelector(
   currentSeason,
   (season) => season?.new_account_link || DEFAULT_NEW_USER_SIGN_UP_LINK
 );
+
+export const loginStep = createSelector(loginState, (state) => state.loginStep);
+
+export const foundUser = createSelector(loginState, (state) => state.foundUser);

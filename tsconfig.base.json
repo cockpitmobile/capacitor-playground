@@ -21,6 +21,7 @@
       "@cockpit/api-data-access-users": [
         "libs/api/data-access/users/src/index.ts"
       ],
+      "@cockpit/api-users": ["libs/api/users/controllers/users/src/index.ts"],
       "@cockpit/api/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],
@@ -29,6 +30,13 @@
       ],
       "@cockpit/api/aws": ["libs/api/data-access/aws/src/index.ts"],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
+      "@cockpit/effects-in-app-browser": [
+        "libs/mobile/effects/in-app-browser/src/index.ts"
+      ],
+      "@cockpit/effects-login": ["libs/mobile/effects/login/src/index.ts"],
+      "@cockpit/mobile-data-access-users": [
+        "libs/mobile/shared/data-access/users/src/index.ts"
+      ],
       "@cockpit/mobile/activities": [
         "libs/mobile/shared/data-access/activities/src/index.ts"
       ],
@@ -98,6 +106,12 @@
       ],
       "@cockpit/mobile/util/constants": [
         "libs/mobile/util/constants/src/index.ts"
+      ],
+      "@cockpit/snackbar-service": [
+        "libs/mobile/shared/data-access/snackbar/src/index.ts"
+      ],
+      "@cockpit/state-in-app-browser": [
+        "libs/mobile/state/in-app-browser/src/index.ts"
       ]
     }
   },

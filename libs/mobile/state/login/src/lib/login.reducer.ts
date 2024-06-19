@@ -4,6 +4,7 @@ import { LoginActions } from './login.actions';
 
 const initialState: LoginState = {
   currentSeason: undefined,
+  loginStep: 'projectLogin',
 };
 
 export const loginReducer = createReducer(
@@ -13,6 +14,21 @@ export const loginReducer = createReducer(
     (state: LoginState, { currentSeason }): LoginState => ({
       ...state,
       currentSeason,
+    })
+  ),
+  on(
+    LoginActions.userFoundWithEmail,
+    (state: LoginState, { user }): LoginState => ({
+      ...state,
+      foundUser: user,
+      loginStep: 'hasEmail',
+    })
+  ),
+  on(
+    LoginActions.userNotFoundWithEmail,
+    (state: LoginState): LoginState => ({
+      ...state,
+      loginStep: 'noEmail',
     })
   )
 );

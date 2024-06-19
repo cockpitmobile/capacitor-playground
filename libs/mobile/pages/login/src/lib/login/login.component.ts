@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
@@ -7,6 +7,8 @@ import {
   currentSeasonPrimaryColor,
   currentSeasonSecondaryColor,
   currentSeasonWelcomeText,
+  LoginActions,
+  loginStep,
 } from '@cockpit/mobile/state/login';
 import {
   FormBuilder,
@@ -18,8 +20,8 @@ import {
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton } from '@angular/material/button';
 import { firstValueFrom } from 'rxjs';
-
-type LoginStep = 'projectLogin' | 'hasEmail' | 'noEmail' | 'code';
+import { SnackbarService } from '@cockpit/snackbar-service';
+import { InAppBrowserActions } from '@cockpit/state-in-app-browser';
 
 @Component({
   selector: 'cockpit-login',
@@ -35,6 +37,10 @@ type LoginStep = 'projectLogin' | 'hasEmail' | 'noEmail' | 'code';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private readonly _store = inject(Store);
+  private readonly _fb = inject(FormBuilder);
+  private readonly _snackbar = inject(SnackbarService);
+
   readonly primaryColor$ = this._store.select(currentSeasonPrimaryColor);
   readonly secondaryColor$ = this._store.select(currentSeasonSecondaryColor);
   readonly welcomeText$ = this._store.select(currentSeasonWelcomeText);
@@ -42,8 +48,8 @@ export class LoginComponent {
     currentSeasonOnboardingImageLink
   );
   readonly newAccountLink$ = this._store.select(currentSeasonNewUserSignUpLink);
+  readonly currentStep$ = this._store.select(loginStep);
 
-  currentStep = signal<LoginStep>('projectLogin');
   helpHref = signal('');
   code = '';
 
@@ -55,11 +61,6 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
-
-  constructor(
-    private readonly _store: Store,
-    private readonly _fb: FormBuilder
-  ) {}
 
   async ngOnInit() {
     // this.mainUtil.showSafeArea = false;
@@ -73,10 +74,6 @@ export class LoginComponent {
     //   }
     // }
     // this.helpHref = 'mailto:hello@nationwiderun.org?subject=Need help&body=Info for our team: app version ' + (this.mainUtil.isIOS ? WebVersion.iosVersion : WebVersion.androidVersion) + (this.mainUtil.buildVersion ? ' build ' + this.mainUtil.buildVersion : '') + (this.deviceDetectorService.device ? ' os ' + this.deviceDetectorService.device : '') + (device ? ' device ' + device : '');
-    // if (!this.mainUtil.isMobile) {
-    //   this.step = 'oldLogin';
-    //   return;
-    // }
 
     this.loadSeasonSignIn();
   }
@@ -105,7 +102,7 @@ export class LoginComponent {
       this.code = '';
     }
 
-    this.currentStep.set('projectLogin');
+    // this.currentStep.set('projectLogin');
   }
 
   keydown(event: any, type: string) {
@@ -114,9 +111,6 @@ export class LoginComponent {
       switch (type) {
         case 'code':
           this.checkCode();
-          break;
-        case 'sendCode':
-          this.sendNewCode();
           break;
         case 'email':
           this.checkEmail();
@@ -128,7 +122,7 @@ export class LoginComponent {
   async emailCode() {
     this.hasEmailedCode = true;
     await this.sendCodeForNewFlow();
-    this.currentStep.set('code');
+    // this.currentStep.set('code');
   }
 
   async createNewAccount() {
@@ -140,21 +134,26 @@ export class LoginComponent {
   }
 
   hasLoginCode() {
-    this.currentStep.set('code');
+    // this.currentStep.set('code');
   }
 
   checkEmail() {
+    const email = this.emailFormCtrl.value;
     if (!this.emailFormCtrl.valid) {
-      // this.mainUtil.showSnackbar('Please enter a valid email address');
+      this._snackbar.open('Please enter a valid email address');
+      return;
+    }
+
+    if (email) {
+      this._store.dispatch(
+        LoginActions.loadUserWithEmail({
+          email: email.trim().toLowerCase(),
+        })
+      );
     }
 
     // this.mainUtil.isLoading = { message: 'Checking Email' };
-    // this.userService
-    //   .getUserByEmail(this.emailFormCtrl.value.trim().toLowerCase())
-    //   .subscribe({
-    //     next: (response) => {
     //       this.mainUtil.isLoading = false;
-    //       this.step = response.length ? 'hasEmail' : 'noEmail';
     //     },
     //     error: (error) => {
     //       this.mainUtil.showSnackbar(
@@ -162,44 +161,73 @@ export class LoginComponent {
     //       );
     //       this.mainUtil.isLoading = false;
     //     },
-    //   });
   }
 
-  async checkCode() {
-    if (this.code) {
-      // this.mainUtil.isLoading = { message: 'Checking code' };
-      // const isLoggingIn = await this.login();
-      // if (!isLoggingIn) {
-      //   const passcodeInformation = await this.userService
-      //     .getPasscodeInformation(this.code.toUpperCase().trim())
-      //     .pipe(timeout(this.mainUtil.timeoutLimit))
-      //     .toPromise()
-      //     .catch((error) => {
-      //       this.mainUtil.handleError(error);
-      //     });
-      //   if (!passcodeInformation) {
-      //     this.mainUtil.isLoading = false;
-      //     return;
-      //   }
-      //   if (passcodeInformation.isUserCode) {
-      //     this.router
-      //       .navigate(['UserSetup', passcodeInformation.userId])
-      //       .then(() => {
-      //         this.mainUtil.showSafeArea = true;
-      //         this.mainUtil.isLoading = false;
-      //       })
-      //       .catch(() => {
-      //         this.mainUtil.isLoading = false;
-      //       });
-      //     this.mainUtil.sendGoogleAnalyticsEvent('Passcode_SubmitUserCode');
-      //   } else {
-      //     this.mainUtil.isLoading = false;
-      //     this.mainUtil.showSnackbar(
-      //       `That passcode does not exist. If you don't have a code or you don't have an account, select the corresponding option.`
-      //     );
-      //   }
-      // }
+  login() {
+    // let response;
+    // if (this.form.valid) {
+    //   this.mainUtil.isLoading = { message: 'Signing In' };
+    //   response = await this.userService.authenticate(this.form.value.email.toLowerCase().trim(), this.form.value.password)
+    //     .pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
+    //       this.mainUtil.handleError(error);
+    //     });
+    //
+    //   if (!response || !response.user) {
+    //     this.mainUtil.isLoading = false;
+    //     return false;
+    //   }
+    // } else {
+    //   if (this.code) {
+    //     response = await this.userService.authenticate('', this.code.toUpperCase().trim())
+    //       .pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
+    //         console.log(error);
+    //         this.mainUtil.handleError(error);
+    //       });
+    //   }
+    //   if (!response || !response.user || !response.user.has_authenticated) {
+    //     this.mainUtil.isLoading = false;
+    //     if (response.user && response.projects && !response.user.has_authenticated) {
+    //       this.userService.currentUser = response.user;
+    //       this.userService.currentUser.worker_projects = response.projects;
+    //     }
+    //     return false;
+    //   }
+  }
+
+  checkCode() {
+    if (!this.code) {
+      this._snackbar.open('Please enter an access code');
     }
+
+    // this.mainUtil.isLoading = { message: 'Checking code' };
+    //   const passcodeInformation = await this.userService
+    //     .getPasscodeInformation(this.code.toUpperCase().trim())
+    //     .pipe(timeout(this.mainUtil.timeoutLimit))
+    //     .toPromise()
+    //     .catch((error) => {
+    //       this.mainUtil.handleError(error);
+    //     });
+    //   if (!passcodeInformation) {
+    //     this.mainUtil.isLoading = false;
+    //     return;
+    //   }
+    //   if (passcodeInformation.isUserCode) {
+    //     this.router
+    //       .navigate(['UserSetup', passcodeInformation.userId])
+    //       .then(() => {
+    //         this.mainUtil.showSafeArea = true;
+    //         this.mainUtil.isLoading = false;
+    //       })
+    //       .catch(() => {
+    //         this.mainUtil.isLoading = false;
+    //       });
+    //     this.mainUtil.sendGoogleAnalyticsEvent('Passcode_SubmitUserCode');
+    //   } else {
+    //     this.mainUtil.isLoading = false;
+    //     this.mainUtil.showSnackbar(
+    //       `That passcode does not exist. If you don't have a code or you don't have an account, select the corresponding option.`
+    //     );
+    //   }
   }
 
   async sendCodeForNewFlow() {
@@ -222,35 +250,12 @@ export class LoginComponent {
     // this.mainUtil.isLoading = false;
   }
 
-  async sendNewCode() {
-    // this.mainUtil.isLoading = { message: 'Resending Code' };
-    // try {
-    //   await this.userService
-    //     .resetUserPasscode(this.email.trim(), undefined)
-    //     .pipe(timeout(this.mainUtil.timeoutLimit))
-    //     .toPromise();
-    //   this.mainUtil.showSnackbar('Your code is on its way');
-    //   this.email = null;
-    //   this.backToLogin();
-    // } catch (error) {
-    //   this.mainUtil.handleError(error);
-    //   console.error(error);
-    //   this.dialogsUtil.showConfirmationDialog(
-    //     'Couldn’t find a registration with that email.  Double-check ' +
-    //       'the info to make sure it matches your order confirmation.  If you haven’t registered yet, head to ',
-    //     'No Matches',
-    //     'Okay',
-    //     'Cancel',
-    //     true
-    //   );
-    // }
-    // this.mainUtil.isLoading = false;
-  }
-
   privacyPolicy() {
-    // this.mainUtil.openWebpage(
-    //   'https://nationwiderun.org/policies/privacy-policy',
-    //   false
-    // );
+    this._store.dispatch(
+      InAppBrowserActions.openWebPage({
+        url: 'https://nationwiderun.org/policies/privacy-policy',
+        inApp: false,
+      })
+    );
   }
 }
