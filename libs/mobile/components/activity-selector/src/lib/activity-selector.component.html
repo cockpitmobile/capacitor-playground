@@ -1,0 +1,77 @@
+<!--<div fxLayout="column" style="height: 100%; width: 100%;">-->
+<!--  <div style="position: sticky; top: 0; background-color: #f6f6f6; border-bottom: 1px solid #dedede; padding: 15px; width: 100%; z-index: 2;">-->
+<!--    <div fxLayout="row" fxLayoutAlign="space-between center">-->
+<!--      <div fxLayout="row" fxFlex="33.33" fxLayoutAlign="start stretch">-->
+<!--        <button mat-button class="greyOutline smallButton" (click)="closeDialog()" style="width: 97px;">-->
+<!--          <div fxLayout="row" fxLayoutAlign="center">-->
+<!--            <div fxFlexAlign="center">Cancel</div>-->
+<!--          </div>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div fxFlexAlign="center" fxFlex="33.33" style="font-weight: 600; font-size: 15px; margin: auto; text-align: center">-->
+<!--        <div fxLayout="row" fxLayoutAlign="center">-->
+<!--          Select Activity-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div fxFlex="33.33"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<div class="flex-col" style="overflow-y: auto; height: 100%; width: 100%">
+  @if (featuredActivityTypes()!.length) {
+    <div>
+      <!--      [style.backgroundColor]="mainUtil.headerBackgroundColor"-->
+      <!--      [style.borderColor]="mainUtil.headerBackgroundColor"-->
+      <div class="flex-row categoryDivider">
+        <div style="margin: 5px 20px">Popular</div>
+      </div>
+      @for (activity of featuredActivityTypes(); track $index) {
+        <div class="flex-col">
+          <div
+            (click)="selectActivity(activity)"
+            class="flex-row justify-space-between align-center"
+            style="height: 65px; width: 100%; padding: 10px 25px">
+            <cockpit-activity-icon
+              [svgSource]="activity.imageUrl"
+              [width]="'25'"
+              [height]="'25'"
+              style="margin-right: 25px"></cockpit-activity-icon>
+            <div style="width: 100%">{{ activity.name }}</div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      }
+    </div>
+  }
+
+  @for (activity of allActivityTypes(); track $index) {
+    <div class="flex-col">
+      @if (
+        $index === 0 ||
+        allActivityTypes()![$index - 1].name.charAt(0) !==
+          allActivityTypes()![$index].name.charAt(0)
+      ) {
+        <!--        [style.backgroundColor]="mainUtil.headerBackgroundColor"-->
+        <!--          [style.borderColor]="mainUtil.headerBackgroundColor"-->
+        <div class="flex-row categoryDivider">
+          <div style="margin: 5px 20px">
+            {{ activity.name.charAt(0) }}
+          </div>
+        </div>
+      }
+
+      <div
+        (click)="selectActivity(activity)"
+        class="flex-row justify-space-between align-center"
+        style="height: 65px; width: 100%; padding: 10px 25px">
+        <cockpit-activity-icon
+          [svgSource]="activity.imageUrl"
+          [width]="'25'"
+          [height]="'25'"
+          style="margin-right: 25px"></cockpit-activity-icon>
+        <div style="width: 100%">{{ activity.name }}</div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  }
+</div>
+<!--</div>-->

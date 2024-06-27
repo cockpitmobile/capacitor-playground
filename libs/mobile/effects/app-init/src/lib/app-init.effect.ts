@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { AppStorageService } from '@cockpit/mobile/storage';
@@ -9,9 +9,14 @@ import { TrackingActions } from '@cockpit/mobile/tracking-state';
 import { CurrentTrackedActivity } from '@cockpit/mobile/data-models';
 import { TrackingService } from '@cockpit/mobile/tracking';
 import { NetworkService } from '@cockpit/mobile/network';
+import { ActivityTypesService } from '@cockpit/mobile/data-access/activity-types';
+import { GlobalActions } from '@cockpit/mobile/state/global';
+import { ActivityType } from '@prisma/client';
 
 @Injectable()
 export class AppInitEffect {
+  private readonly _activityTypes = inject(ActivityTypesService);
+
   checkForTrackedActivity$ = createEffect(() =>
     this._actions$.pipe(
       ofType(appReady),
@@ -34,6 +39,42 @@ export class AppInitEffect {
     )
   );
 
+  loadActivityTypesFromStorage$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(appReady),
+      switchMap(() =>
+        this._storage.getData<ActivityType[]>(StorageKey.ACTIVITY_TYPES).pipe(
+          map((activityTypes) =>
+            GlobalActions.activityTypesLoadedFromStorage({
+              activityTypes: activityTypes || [],
+            })
+          )
+        )
+      )
+    )
+  );
+
+  loadActivityTypes$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(GlobalActions.activityTypesLoadedFromStorage),
+      switchMap(() =>
+        this._activityTypes
+          .getAll()
+          .pipe(
+            switchMap((activityTypes) =>
+              this._storage
+                .setData(StorageKey.ACTIVITY_TYPES, activityTypes)
+                .pipe(
+                  map(() =>
+                    GlobalActions.loadActivityTypesSuccess({ activityTypes })
+                  )
+                )
+            )
+          )
+      )
+    )
+  );
+
   routeToTrackActivity$ = createEffect(
     () =>
       this._actions$.pipe(
@@ -48,7 +89,7 @@ export class AppInitEffect {
     () =>
       this._actions$.pipe(
         ofType(TrackingActions.trackedActivityNotFoundInStorage),
-        map(() => this._router.navigate(['/login']))
+        map(() => this._router.navigate(['/test']))
       ),
     { dispatch: false }
   );

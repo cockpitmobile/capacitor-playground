@@ -6,6 +6,8 @@ import { ApiModelsModule } from '@cockpit/api/models';
 import { ActivitiesControllersModule } from '@cockpit/api/activities-controllers';
 import { ApiAdminUsersControllersModule } from '@cockpit/api-admin-users-controllers';
 import { ApiUsersModule } from '@cockpit/api-users';
+import { ApiControllersActivityTypesModule } from '@cockpit/api-controllers-activity-types';
+import { ApiControllersAdminActivityTypesModule } from '@cockpit/api-controllers-admin-activity-types';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { ApiUsersModule } from '@cockpit/api-users';
     ActivitiesControllersModule,
     ApiAdminUsersControllersModule,
     ApiUsersModule,
+    ApiControllersActivityTypesModule,
+    ApiControllersAdminActivityTypesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

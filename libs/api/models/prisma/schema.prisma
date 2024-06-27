@@ -34,3 +34,12 @@ model User {
   accessCode String?
   createdAt  DateTime @default(now())
 }
+
+model ActivityType {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  name       String
+  imageUrl   String
+  value      String
+  isFeatured Boolean  @default(false)
+}

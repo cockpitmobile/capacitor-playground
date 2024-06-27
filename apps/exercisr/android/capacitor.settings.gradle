@@ -3,22 +3,31 @@ include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../../../node_modules/@capacitor/android/capacitor')
 
 include ':capacitor-community-sqlite'
-project(':capacitor-community-sqlite').projectDir = new File('../node_modules/@capacitor-community/sqlite/android')
+project(':capacitor-community-sqlite').projectDir = new File('../../../node_modules/@capacitor-community/sqlite/android')
+
+include ':capacitor-app'
+project(':capacitor-app').projectDir = new File('../../../node_modules/@capacitor/app/android')
+
+include ':capacitor-browser'
+project(':capacitor-browser').projectDir = new File('../../../node_modules/@capacitor/browser/android')
 
 include ':capacitor-camera'
-project(':capacitor-camera').projectDir = new File('../node_modules/@capacitor/camera/android')
+project(':capacitor-camera').projectDir = new File('../../../node_modules/@capacitor/camera/android')
+
+include ':capacitor-device'
+project(':capacitor-device').projectDir = new File('../../../node_modules/@capacitor/device/android')
 
 include ':capacitor-filesystem'
-project(':capacitor-filesystem').projectDir = new File('../node_modules/@capacitor/filesystem/android')
+project(':capacitor-filesystem').projectDir = new File('../../../node_modules/@capacitor/filesystem/android')
 
 include ':capacitor-network'
-project(':capacitor-network').projectDir = new File('../node_modules/@capacitor/network/android')
-
-include ':transistorsoft-capacitor-background-fetch'
-project(':transistorsoft-capacitor-background-fetch').projectDir = new File('../node_modules/@transistorsoft/capacitor-background-fetch/android')
-
-include ':transistorsoft-capacitor-background-geolocation'
-project(':transistorsoft-capacitor-background-geolocation').projectDir = new File('../node_modules/@transistorsoft/capacitor-background-geolocation/android')
+project(':capacitor-network').projectDir = new File('../../../node_modules/@capacitor/network/android')
 
 include ':capacitor-blob-writer'
-project(':capacitor-blob-writer').projectDir = new File('../node_modules/capacitor-blob-writer/android')
+project(':capacitor-blob-writer').projectDir = new File('../../../node_modules/capacitor-blob-writer/android')
+
+include ':transistorsoft-capacitor-background-fetch'
+project(':transistorsoft-capacitor-background-fetch').projectDir = new File('../../../node_modules/@transistorsoft/capacitor-background-fetch/android')
+
+include ':transistorsoft-capacitor-background-geolocation'
+project(':transistorsoft-capacitor-background-geolocation').projectDir = new File('../../../node_modules/@transistorsoft/capacitor-background-geolocation/android')

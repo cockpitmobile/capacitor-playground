@@ -18,6 +18,15 @@
       "@cockpit/api-admin-users-controllers": [
         "libs/api/admin/controllers/users/src/index.ts"
       ],
+      "@cockpit/api-controllers-activity-types": [
+        "libs/api/controllers/activity-types/src/index.ts"
+      ],
+      "@cockpit/api-controllers-admin-activity-types": [
+        "libs/api/admin/controllers/activity-types/src/index.ts"
+      ],
+      "@cockpit/api-data-access-activity-types": [
+        "libs/api/data-access/activity-types/src/index.ts"
+      ],
       "@cockpit/api-data-access-email": [
         "libs/api/data-access/email/src/index.ts"
       ],
@@ -61,8 +70,17 @@
       "@cockpit/mobile/app-lifecycle-state": [
         "libs/mobile/state/app-lifecycle/src/index.ts"
       ],
+      "@cockpit/mobile/components/activity-icon": [
+        "libs/mobile/components/activity-icon/src/index.ts"
+      ],
+      "@cockpit/mobile/components/activity-selector": [
+        "libs/mobile/components/activity-selector/src/index.ts"
+      ],
       "@cockpit/mobile/constants": [
         "libs/mobile/shared/constants/src/index.ts"
+      ],
+      "@cockpit/mobile/data-access/activity-types": [
+        "libs/mobile/shared/data-access/activity-types/src/index.ts"
       ],
       "@cockpit/mobile/data-models": [
         "libs/mobile/shared/data-models/src/index.ts"
@@ -101,14 +119,21 @@
         "libs/mobile/state/selfies/src/index.ts"
       ],
       "@cockpit/mobile/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
+      "@cockpit/mobile/state/global": ["libs/mobile/state/global/src/index.ts"],
       "@cockpit/mobile/state/login": ["libs/mobile/state/login/src/index.ts"],
       "@cockpit/mobile/storage": ["libs/mobile/shared/storage/src/index.ts"],
+      "@cockpit/mobile/svg-cache-pipe": [
+        "libs/mobile/pipes/svg-cache/src/index.ts"
+      ],
       "@cockpit/mobile/tracking": ["libs/mobile/shared/tracking/src/index.ts"],
       "@cockpit/mobile/tracking-effects": [
         "libs/mobile/effects/tracking/src/index.ts"
       ],
       "@cockpit/mobile/tracking-state": [
         "libs/mobile/state/tracking/src/index.ts"
+      ],
+      "@cockpit/mobile/util-filesystem": [
+        "libs/mobile/util/filesystem/src/index.ts"
       ],
       "@cockpit/mobile/util/constants": [
         "libs/mobile/util/constants/src/index.ts"

@@ -5,12 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Exercisr',
   webDir: '../../dist/apps/exercisr',
   bundledWebRuntime: false,
-  server: {
-    androidScheme: 'https',
-  },
   ios: {
-    contentInset: 'always'
-  }
+    contentInset: 'always',
+  },
 };
 
 export default config;

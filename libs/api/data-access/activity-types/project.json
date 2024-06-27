@@ -1,0 +1,8 @@
+{
+  "name": "api-data-access-activity-types",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/activity-types/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

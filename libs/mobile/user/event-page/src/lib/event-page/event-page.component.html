@@ -16,25 +16,33 @@
     Start Tracking
   </button>
 
-  @for (activity of activities$ | async; track activity.id) {
-    <div style="margin-top: 8px">
-      {{ activity | json }}
-    </div>
+  <div style="width: 100%">
+    <cockpit-activity-selector
+      [featuredActivityTypes]="(featuredActivityTypes$ | async)!"
+      [allActivityTypes]="
+        (allActivityTypes$ | async)!
+      "></cockpit-activity-selector>
+  </div>
 
-    @if (activity.image) {
-      <img
-        [src]="activity.image"
-        style="width: 100px; height: 100px; margin: 8px 0px" />
-    }
+  <!--  @for (activity of activities$ | async; track activity.id) {-->
+  <!--    <div style="margin-top: 8px">-->
+  <!--      {{ activity | json }}-->
+  <!--    </div>-->
 
-    @if (!activity.image) {
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="requestPhoto(activity.id)"
-        style="width: 50%; margin-top: 16px">
-        Request Photo For Activity {{ activity.id }}
-      </button>
-    }
-  }
+  <!--    @if (activity.image) {-->
+  <!--      <img-->
+  <!--        [src]="activity.image"-->
+  <!--        style="width: 100px; height: 100px; margin: 8px 0px" />-->
+  <!--    }-->
+
+  <!--    @if (!activity.image) {-->
+  <!--      <button-->
+  <!--        mat-flat-button-->
+  <!--        color="primary"-->
+  <!--        (click)="requestPhoto(activity.id)"-->
+  <!--        style="width: 50%; margin-top: 16px">-->
+  <!--        Request Photo For Activity {{ activity.id }}-->
+  <!--      </button>-->
+  <!--    }-->
+  <!--  }-->
 </div>

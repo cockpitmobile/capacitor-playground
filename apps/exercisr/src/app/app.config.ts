@@ -27,6 +27,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { loginReducer } from '@cockpit/mobile/state/login';
 import { LoginEffects } from '@cockpit/effects-login';
 import { InAppBrowserEffects } from '@cockpit/effects-in-app-browser';
+import { globalReducer } from '@cockpit/mobile/state/global';
+import { provideAngularSvgIcon } from 'angular-svg-icon';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -60,6 +62,7 @@ export const appConfig: ApplicationConfig = {
       tracking: trackingReducer,
       network: networkReducer,
       login: loginReducer,
+      global: globalReducer,
     }),
     provideEffects(
       AppInitEffect,
@@ -80,6 +83,7 @@ export const appConfig: ApplicationConfig = {
       provide: ENVIRONMENT,
       useValue: environment,
     },
-    environment.production ? [] : provideStoreDevtools(),
+    provideStoreDevtools(),
+    provideAngularSvgIcon(),
   ],
 };

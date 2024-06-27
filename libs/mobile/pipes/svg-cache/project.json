@@ -1,0 +1,9 @@
+{
+  "name": "svg-cache-pipe",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/pipes/svg-cache/src",
+  "prefix": "cockpit",
+  "tags": ["scope:frontend"],
+  "projectType": "library",
+  "targets": {}
+}
