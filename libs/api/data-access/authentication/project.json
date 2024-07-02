@@ -1,0 +1,8 @@
+{
+  "name": "api-data-access-authentication",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/authentication/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "api-util-constants",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/util/constants/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

@@ -24,8 +24,14 @@
       "@cockpit/api-controllers-admin-activity-types": [
         "libs/api/admin/controllers/activity-types/src/index.ts"
       ],
+      "@cockpit/api-controllers-authentication": [
+        "libs/api/controllers/authentication/src/index.ts"
+      ],
       "@cockpit/api-data-access-activity-types": [
         "libs/api/data-access/activity-types/src/index.ts"
+      ],
+      "@cockpit/api-data-access-authentication": [
+        "libs/api/data-access/authentication/src/index.ts"
       ],
       "@cockpit/api-data-access-email": [
         "libs/api/data-access/email/src/index.ts"
@@ -33,10 +39,14 @@
       "@cockpit/api-data-access-users": [
         "libs/api/data-access/users/src/index.ts"
       ],
+      "@cockpit/api-guard-authentication": [
+        "libs/api/guards/authentication/src/index.ts"
+      ],
       "@cockpit/api-users": ["libs/api/users/controllers/users/src/index.ts"],
       "@cockpit/api-util-access-code": [
         "libs/api/util/access-code/src/index.ts"
       ],
+      "@cockpit/api-util-constants": ["libs/api/util/constants/src/index.ts"],
       "@cockpit/api/activities-controllers": [
         "libs/api/activities/controllers/src/index.ts"
       ],

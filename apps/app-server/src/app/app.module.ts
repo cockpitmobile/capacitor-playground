@@ -8,6 +8,10 @@ import { ApiAdminUsersControllersModule } from '@cockpit/api-admin-users-control
 import { ApiUsersModule } from '@cockpit/api-users';
 import { ApiControllersActivityTypesModule } from '@cockpit/api-controllers-activity-types';
 import { ApiControllersAdminActivityTypesModule } from '@cockpit/api-controllers-admin-activity-types';
+import { ApiControllersAuthenticationModule } from '@cockpit/api-controllers-authentication';
+import { JwtModule } from '@nestjs/jwt';
+import { JWT_CONSTANTS } from '@cockpit/api-util-constants';
+import { ApiGuardAuthenticationModule } from '@cockpit/api-guard-authentication';
 
 @Module({
   imports: [
@@ -17,6 +21,13 @@ import { ApiControllersAdminActivityTypesModule } from '@cockpit/api-controllers
     ApiUsersModule,
     ApiControllersActivityTypesModule,
     ApiControllersAdminActivityTypesModule,
+    ApiControllersAuthenticationModule,
+    ApiGuardAuthenticationModule,
+    JwtModule.register({
+      global: true,
+      secret: JWT_CONSTANTS.secret,
+      signOptions: { expiresIn: '31d' },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
