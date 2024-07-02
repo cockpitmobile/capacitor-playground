@@ -28,6 +28,16 @@ export class UsersService {
     });
   }
 
+  async signUp(data: User): Promise<User> {
+    const accessCode = await this._getNewUserAccessCode();
+    return this.prisma.user.create({
+      data: {
+        ...data,
+        accessCode,
+      },
+    });
+  }
+
   async sendResetAccessCodeEmail(email: string): Promise<boolean> {
     const user = await this.prisma.user.findUnique({
       where: {

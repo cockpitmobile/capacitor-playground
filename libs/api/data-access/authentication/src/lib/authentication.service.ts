@@ -12,9 +12,10 @@ export class AuthenticationService {
   async authenticate(email: string, passcode: string) {
     const users = await this._users.getAll({ email });
     if (users.length && users[0].accessCode === passcode) {
-      const token = await this._jwt.signAsync({ sub: users[0].id });
+      const { accessCode, ...user } = users[0];
+      const token = await this._jwt.signAsync({ sub: user.id });
       return {
-        user: users[0],
+        user: user,
         token,
       };
     }

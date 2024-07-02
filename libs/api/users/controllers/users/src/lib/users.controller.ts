@@ -15,4 +15,18 @@ export class UsersController {
   async resetAccessCode(@Body('email') email: string): Promise<boolean> {
     return this._usersService.sendResetAccessCodeEmail(email.toLowerCase());
   }
+
+  @Post('sign-up')
+  async signUp(
+    @Body() data: User
+  ): Promise<{ user: Omit<User, 'accessCode'> }> {
+    // TODO: send an email with an accessCode
+    const userData = await this._usersService.signUp(data);
+
+    const { accessCode, ...user } = userData;
+
+    return {
+      user,
+    };
+  }
 }
