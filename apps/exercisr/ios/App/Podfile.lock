@@ -19,7 +19,11 @@ PODS:
     - Capacitor
   - CapacitorFilesystem (6.0.0):
     - Capacitor
+  - CapacitorLocalNotifications (6.0.0):
+    - Capacitor
   - CapacitorNetwork (6.0.1):
+    - Capacitor
+  - CapacitorShare (6.0.1):
     - Capacitor
   - CocoaLumberjack (3.7.4):
     - CocoaLumberjack/Core (= 3.7.4)
@@ -49,7 +53,9 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../../../node_modules/@capacitor/device`)"
   - "CapacitorFilesystem (from `../../../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorLocalNotifications (from `../../../../node_modules/@capacitor/local-notifications`)"
   - "CapacitorNetwork (from `../../../../node_modules/@capacitor/network`)"
+  - "CapacitorShare (from `../../../../node_modules/@capacitor/share`)"
   - "TransistorsoftCapacitorBackgroundFetch (from `../../../../node_modules/@transistorsoft/capacitor-background-fetch`)"
   - "TransistorsoftCapacitorBackgroundGeolocation (from `../../../../node_modules/@transistorsoft/capacitor-background-geolocation`)"
 
@@ -79,8 +85,12 @@ EXTERNAL SOURCES:
     :path: "../../../../node_modules/@capacitor/device"
   CapacitorFilesystem:
     :path: "../../../../node_modules/@capacitor/filesystem"
+  CapacitorLocalNotifications:
+    :path: "../../../../node_modules/@capacitor/local-notifications"
   CapacitorNetwork:
     :path: "../../../../node_modules/@capacitor/network"
+  CapacitorShare:
+    :path: "../../../../node_modules/@capacitor/share"
   TransistorsoftCapacitorBackgroundFetch:
     :path: "../../../../node_modules/@transistorsoft/capacitor-background-fetch"
   TransistorsoftCapacitorBackgroundGeolocation:
@@ -96,7 +106,9 @@ SPEC CHECKSUMS:
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
   CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
+  CapacitorLocalNotifications: 4ab68f0be5f697a579558fadd307d823a9ec1c26
   CapacitorNetwork: 5c94acfdddc22043f2ffaff224ce9b4aa5a179f0
+  CapacitorShare: 02222f2457ff003e642370a9c1ecd101baaa27c8
   CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
@@ -104,6 +116,6 @@ SPEC CHECKSUMS:
   TransistorsoftCapacitorBackgroundGeolocation: e696e0ff6e98d6222a1a3a99fb3b398bdddcad44
   ZIPFoundation: fa9ae5af13b7cf168245f24d1c672a4fb972e37f
 
-PODFILE CHECKSUM: 8a27ef79ef0d3096059303c6429be98be9f97188
+PODFILE CHECKSUM: f8bbdf236d6362e354575c246166ad0196c18003
 
 COCOAPODS: 1.15.2
