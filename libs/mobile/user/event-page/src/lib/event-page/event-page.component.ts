@@ -18,6 +18,8 @@ import {
   allActivityTypesSorted,
   allFeaturedActivityTypes,
 } from '@cockpit/mobile/state/global';
+import { LocalNotificationsActions } from '@cockpit/mobile/state/local-notifications';
+import { ShareActions } from '@cockpit/mobile/state/share';
 
 @Component({
   selector: 'cockpit-event-page',
@@ -44,6 +46,35 @@ export class EventPageComponent {
 
   start() {
     this._store.dispatch(TrackingActions.startTracking());
+  }
+
+  requestLocalNotifications() {
+    this._store.dispatch(
+      LocalNotificationsActions.notificationRequested({
+        options: {
+          notifications: [
+            {
+              id: 1,
+              title: 'TESTING REMINDERS',
+              body: 'This is a test reminder',
+              // schedule: { at: new Date(Date.now() + 1000 * 5) },
+            },
+          ],
+        },
+      })
+    );
+  }
+
+  share() {
+    this._store.dispatch(
+      ShareActions.shareRequested({
+        options: {
+          title: 'Share something',
+          text: 'This is a test share',
+          dialogTitle: 'Share with friends',
+        },
+      })
+    );
   }
 
   requestPhoto(id: number) {

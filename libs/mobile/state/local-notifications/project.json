@@ -1,0 +1,9 @@
+{
+  "name": "mobile-state-local-notifications",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/state/local-notifications/src",
+  "prefix": "cockpit",
+  "tags": ["scope:frontend"],
+  "projectType": "library",
+  "targets": {}
+}

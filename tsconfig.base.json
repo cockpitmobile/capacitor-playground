@@ -98,6 +98,12 @@
       "@cockpit/mobile/distance": [
         "libs/mobile/shared/utils/distance/src/index.ts"
       ],
+      "@cockpit/mobile/effects/local-notifications": [
+        "libs/mobile/effects/local-notifications/src/index.ts"
+      ],
+      "@cockpit/mobile/effects/share": [
+        "libs/mobile/effects/share/src/index.ts"
+      ],
       "@cockpit/mobile/environment": [
         "libs/mobile/shared/environment/src/index.ts"
       ],
@@ -130,7 +136,11 @@
       ],
       "@cockpit/mobile/sqlite": ["libs/mobile/shared/sqlite/src/index.ts"],
       "@cockpit/mobile/state/global": ["libs/mobile/state/global/src/index.ts"],
+      "@cockpit/mobile/state/local-notifications": [
+        "libs/mobile/state/local-notifications/src/index.ts"
+      ],
       "@cockpit/mobile/state/login": ["libs/mobile/state/login/src/index.ts"],
+      "@cockpit/mobile/state/share": ["libs/mobile/state/share/src/index.ts"],
       "@cockpit/mobile/storage": ["libs/mobile/shared/storage/src/index.ts"],
       "@cockpit/mobile/svg-cache-pipe": [
         "libs/mobile/pipes/svg-cache/src/index.ts"

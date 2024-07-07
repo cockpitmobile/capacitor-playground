@@ -16,6 +16,22 @@
     Start Tracking
   </button>
 
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="share()"
+    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
+    Test Share
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="requestLocalNotifications()"
+    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
+    Request Local Notifications
+  </button>
+
   <div style="width: 100%">
     <cockpit-activity-selector
       [featuredActivityTypes]="(featuredActivityTypes$ | async)!"

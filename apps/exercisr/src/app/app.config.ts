@@ -29,6 +29,8 @@ import { LoginEffects } from '@cockpit/effects-login';
 import { InAppBrowserEffects } from '@cockpit/effects-in-app-browser';
 import { globalReducer } from '@cockpit/mobile/state/global';
 import { provideAngularSvgIcon } from 'angular-svg-icon';
+import { LocalNotificationsEffect } from '@cockpit/mobile/effects/local-notifications';
+import { ShareEffects } from '../../../../libs/mobile/effects/share/src/lib/share.effects';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -71,7 +73,9 @@ export const appConfig: ApplicationConfig = {
       NetworkSyncEffect,
       SelfiesEffects,
       LoginEffects,
-      InAppBrowserEffects
+      InAppBrowserEffects,
+      LocalNotificationsEffect,
+      ShareEffects
     ),
     {
       provide: APP_INITIALIZER,
