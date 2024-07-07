@@ -16,6 +16,7 @@
     "web:start:local": "npx nx serve exercisr --configuration=local",
     "web:build": "npx nx build exercisr",
     "web:build:development": "npx nx build exercisr --configuration=development",
+    "web:build:production": "npx nx build exercisr --configuration=production",
     "server:start": "npx nx serve app-server",
     "server:start:cloud": "node ./dist/apps/app-server/main.js",
     "server:start:production": "npx nx serve app-server --prod",
