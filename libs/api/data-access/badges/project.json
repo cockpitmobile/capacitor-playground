@@ -1,0 +1,8 @@
+{
+  "name": "api-data-access-badges",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/badges/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

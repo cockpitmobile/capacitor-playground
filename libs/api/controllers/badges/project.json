@@ -1,0 +1,8 @@
+{
+  "name": "api-controllers-badges",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/controllers/badges/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

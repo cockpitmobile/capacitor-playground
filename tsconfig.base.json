@@ -54,6 +54,15 @@
         "libs/api/activities/data-access/src/index.ts"
       ],
       "@cockpit/api/aws": ["libs/api/data-access/aws/src/index.ts"],
+      "@cockpit/api/controllers/admin/badges": [
+        "libs/api/admin/controllers/badges/src/index.ts"
+      ],
+      "@cockpit/api/controllers/badges": [
+        "libs/api/controllers/badges/src/index.ts"
+      ],
+      "@cockpit/api/data-access/badges": [
+        "libs/api/data-access/badges/src/index.ts"
+      ],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
       "@cockpit/effects-in-app-browser": [
         "libs/mobile/effects/in-app-browser/src/index.ts"

@@ -12,12 +12,16 @@ import { ApiControllersAuthenticationModule } from '@cockpit/api-controllers-aut
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_CONSTANTS } from '@cockpit/api-util-constants';
 import { ApiGuardAuthenticationModule } from '@cockpit/api-guard-authentication';
+import { ApiControllersAdminBadgesModule } from '@cockpit/api/controllers/admin/badges';
+import { ApiControllersBadgesModule } from '@cockpit/api/controllers/badges';
 
 @Module({
   imports: [
     ApiModelsModule,
     ActivitiesControllersModule,
     ApiAdminUsersControllersModule,
+    ApiControllersAdminBadgesModule,
+    ApiControllersBadgesModule,
     ApiUsersModule,
     ApiControllersActivityTypesModule,
     ApiControllersAdminActivityTypesModule,

@@ -29,10 +29,11 @@ model TestActivity {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  email      String   @unique
+  id         String      @id @default(uuid())
+  email      String      @unique
   accessCode String?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime    @default(now())
+  badges     UserBadge[]
 }
 
 model ActivityType {
@@ -42,4 +43,28 @@ model ActivityType {
   imageUrl   String
   value      String
   isFeatured Boolean  @default(false)
+}
+
+model Badge {
+  id                         String      @id @default(uuid())
+  badge_name                 String
+  badge_description          String
+  badge_image_unlocked_url   String
+  badge_image_locked_url     String
+  badge_congrats_description String
+  critera                    Json
+  createdAt                  DateTime    @default(now())
+  updatedAt                  DateTime    @default(now())
+  users                      UserBadge[]
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    String
+  badgeId   String
+  unlocked  Boolean
+  Badge     Badge?   @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
