@@ -1,0 +1,8 @@
+{
+  "name": "api-data-access-habits",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/habits/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

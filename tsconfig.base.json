@@ -63,6 +63,10 @@
       "@cockpit/api/data-access/badges": [
         "libs/api/data-access/badges/src/index.ts"
       ],
+      "@cockpit/api/data-access/habits": [
+        "libs/api/data-access/habits/src/index.ts"
+      ],
+      "@cockpit/api/habits": ["libs/api/controllers/habits/src/index.ts"],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
       "@cockpit/effects-in-app-browser": [
         "libs/mobile/effects/in-app-browser/src/index.ts"

@@ -34,6 +34,7 @@ model User {
   accessCode String?
   createdAt  DateTime    @default(now())
   badges     UserBadge[]
+  Habit      Habit[]
 }
 
 model ActivityType {
@@ -56,6 +57,26 @@ model Badge {
   createdAt                  DateTime    @default(now())
   updatedAt                  DateTime    @default(now())
   users                      UserBadge[]
+}
+
+model HabitCompletedDates {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  userId    String
+  habitId   String
+  date      DateTime @default(now())
+  Habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+}
+
+model Habit {
+  id          String                @id @default(uuid())
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @default(now())
+  userId      String
+  name        String
+  description String?
+  User        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  HabitDates  HabitCompletedDates[]
 }
 
 model UserBadge {

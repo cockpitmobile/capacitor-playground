@@ -1,10 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { UsersService } from '@cockpit/api-data-access-users';
+import { HabitsService } from '@cockpit/api/data-access/habits';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly _usersService: UsersService) {}
+  constructor(
+    private readonly _usersService: UsersService,
+    private readonly _habits: HabitsService
+  ) {}
 
   @Get()
   getAll(@Query() query?: any): Promise<User[]> {
@@ -28,5 +32,15 @@ export class UsersController {
     return {
       user,
     };
+  }
+
+  @Get(':id/habits')
+  getHabitsForUser(@Param('id') id: string) {
+    return this._habits.getHabitsForUser(id);
+  }
+
+  @Get(':id/habits/completed-dates')
+  getCompletedDatesForUser(@Param('id') id: string) {
+    return this._habits.getCompletedDatesForUser(id);
   }
 }

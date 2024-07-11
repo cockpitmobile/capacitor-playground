@@ -1,0 +1,8 @@
+{
+  "name": "api-controllers-habits",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/controllers/habits/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}
