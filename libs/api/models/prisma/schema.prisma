@@ -69,14 +69,15 @@ model HabitCompletedDates {
 }
 
 model Habit {
-  id          String                @id @default(uuid())
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @default(now())
-  userId      String
-  name        String
-  description String?
-  User        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  HabitDates  HabitCompletedDates[]
+  id           String                @id @default(uuid())
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now())
+  userId       String
+  name         String
+  description  String?
+  User         User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  HabitDates   HabitCompletedDates[]
+  habitRewards HabitReward[]
 }
 
 model UserBadge {
@@ -88,4 +89,24 @@ model UserBadge {
   unlocked  Boolean
   Badge     Badge?   @relation(fields: [badgeId], references: [id], onDelete: Cascade)
   User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Reward {
+  id           String        @id @default(uuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  name         String
+  description  String
+  imageUrl     String
+  habitRewards HabitReward[]
+}
+
+model HabitReward {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  habitId   String
+  rewardId  String
+  habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  reward    Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
 }

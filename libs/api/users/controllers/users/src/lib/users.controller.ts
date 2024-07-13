@@ -43,4 +43,9 @@ export class UsersController {
   getCompletedDatesForUser(@Param('id') id: string) {
     return this._habits.getCompletedDatesForUser(id);
   }
+
+  @Get(':id/habits/rewards')
+  getRewardsForUser(@Param('id') id: string) {
+    return this._habits.getHabitRewardsForUser(id);
+  }
 }

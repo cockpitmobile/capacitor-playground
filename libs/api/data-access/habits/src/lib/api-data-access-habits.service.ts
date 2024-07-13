@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@cockpit/api/models';
-import { Habit, HabitCompletedDates } from '@prisma/client';
+import { Habit, HabitCompletedDates, HabitReward } from '@prisma/client';
 
 @Injectable()
 export class HabitsService {
@@ -82,12 +82,17 @@ export class HabitsService {
     });
   }
 
-  updateHabitCompletedDate(id: string, data: Partial<HabitCompletedDates>) {
-    return this._prisma.habitCompletedDates.update({
-      where: {
-        id,
+  getHabitRewardsForUser(userId: string): Promise<HabitReward[]> {
+    return this._prisma
+      .$queryRaw`SELECT "HabitReward".* FROM "HabitReward" JOIN "Habit" ON "Habit".id = "HabitReward"."habitId" AND "Habit"."userId" = ${userId}`;
+  }
+
+  assignRewardToHabit(habitId: string, rewardId: string) {
+    return this._prisma.habitReward.create({
+      data: {
+        habitId,
+        rewardId,
       },
-      data,
     });
   }
 }

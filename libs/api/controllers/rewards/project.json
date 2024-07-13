@@ -1,0 +1,8 @@
+{
+  "name": "api-controllers-rewards",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/controllers/rewards/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:backend"]
+}

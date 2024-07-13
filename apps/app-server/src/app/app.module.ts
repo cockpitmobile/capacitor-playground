@@ -15,6 +15,8 @@ import { ApiGuardAuthenticationModule } from '@cockpit/api-guard-authentication'
 import { ApiControllersAdminBadgesModule } from '@cockpit/api/controllers/admin/badges';
 import { ApiControllersBadgesModule } from '@cockpit/api/controllers/badges';
 import { ApiControllersHabitsModule } from '@cockpit/api/habits';
+import { ApiControllersRewardsModule } from '@cockpit/api-controllers-rewards';
+import { ApiControllersAdminRewardsModule } from '@cockpit/api-controllers-admin-rewards';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { ApiControllersHabitsModule } from '@cockpit/api/habits';
     ApiControllersAuthenticationModule,
     ApiGuardAuthenticationModule,
     ApiControllersHabitsModule,
+    ApiControllersRewardsModule,
+    ApiControllersAdminRewardsModule,
     JwtModule.register({
       global: true,
       secret: JWT_CONSTANTS.secret,

@@ -24,8 +24,14 @@
       "@cockpit/api-controllers-admin-activity-types": [
         "libs/api/admin/controllers/activity-types/src/index.ts"
       ],
+      "@cockpit/api-controllers-admin-rewards": [
+        "libs/api/admin/controllers/rewards/src/index.ts"
+      ],
       "@cockpit/api-controllers-authentication": [
         "libs/api/controllers/authentication/src/index.ts"
+      ],
+      "@cockpit/api-controllers-rewards": [
+        "libs/api/controllers/rewards/src/index.ts"
       ],
       "@cockpit/api-data-access-activity-types": [
         "libs/api/data-access/activity-types/src/index.ts"
@@ -35,6 +41,9 @@
       ],
       "@cockpit/api-data-access-email": [
         "libs/api/data-access/email/src/index.ts"
+      ],
+      "@cockpit/api-data-access-rewards": [
+        "libs/api/data-access/rewards/src/index.ts"
       ],
       "@cockpit/api-data-access-users": [
         "libs/api/data-access/users/src/index.ts"

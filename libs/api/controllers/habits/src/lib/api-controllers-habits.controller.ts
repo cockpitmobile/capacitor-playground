@@ -61,4 +61,12 @@ export class ApiControllersHabitsController {
   ) {
     return this._habits.deleteHabitCompletedDate(completedDateId);
   }
+
+  @Post(':habitId/rewards/:rewardId')
+  assignRewardToHabit(
+    @Param('habitId') habitId: string,
+    @Param('rewardId') rewardId: string
+  ) {
+    return this._habits.assignRewardToHabit(habitId, rewardId);
+  }
 }
