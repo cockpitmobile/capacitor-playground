@@ -72,6 +72,9 @@
       "@cockpit/api/data-access/badges": [
         "libs/api/data-access/badges/src/index.ts"
       ],
+      "@cockpit/api/data-access/cache-service": [
+        "libs/api/data-access/cache/src/index.ts"
+      ],
       "@cockpit/api/data-access/habits": [
         "libs/api/data-access/habits/src/index.ts"
       ],
