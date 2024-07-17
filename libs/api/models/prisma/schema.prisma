@@ -30,9 +30,13 @@ model TestActivity {
 
 model User {
   id         String      @id @default(uuid())
+  firstName  String?
+  lastName   String?
+  phone      String?
   email      String      @unique
   accessCode String?
   createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
   badges     UserBadge[]
   Habit      Habit[]
 }
