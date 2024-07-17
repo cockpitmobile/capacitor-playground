@@ -24,7 +24,8 @@
     "server:build:cloud": "npm run prisma:migrate && npm run prisma:generate && npm run server:build",
     "prisma:migrate:generate": "npx nx run api-models:migrate-save",
     "prisma:migrate": "npx nx run api-models:migrate-deploy",
-    "prisma:generate": "npx nx run api-models:prisma-generate"
+    "prisma:generate": "npx nx run api-models:prisma-generate",
+    "cloud:deploy": "npx capawesome apps:bundles:create --appId \"7e221380-f9d8-4ff7-b9cf-39f042f7d1fb\" --path dist/apps/exercisr"
   },
   "private": true,
   "dependencies": {
@@ -48,6 +49,7 @@
     "@capacitor/local-notifications": "^6.0.0",
     "@capacitor/network": "^6.0.1",
     "@capacitor/share": "^6.0.1",
+    "@capawesome/capacitor-live-update": "^6.1.0",
     "@ionic/pwa-elements": "^3.2.2",
     "@maplibre/ngx-maplibre-gl": "^17.4.3",
     "@nestjs/cache-manager": "^2.2.2",

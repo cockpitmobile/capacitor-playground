@@ -10,6 +10,7 @@
     "@capacitor/local-notifications": "../../node_modules/@capacitor/local-notifications",
     "@capacitor/network": "../../node_modules/@capacitor/network",
     "@capacitor/share": "../../node_modules/@capacitor/share",
+    "@capawesome/capacitor-live-update": "../../node_modules/@capawesome/capacitor-live-update",
     "capacitor-blob-writer": "../../node_modules/capacitor-blob-writer",
     "@transistorsoft/capacitor-background-fetch": "../../node_modules/@transistorsoft/capacitor-background-fetch",
     "@transistorsoft/capacitor-background-geolocation": "../../node_modules/@transistorsoft/capacitor-background-geolocation"

@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.9.1)
   - Capacitor (6.1.0):
     - CapacitorCordova
   - CapacitorApp (6.0.0):
@@ -25,6 +26,10 @@ PODS:
     - Capacitor
   - CapacitorShare (6.0.1):
     - Capacitor
+  - CapawesomeCapacitorLiveUpdate (6.1.0):
+    - Alamofire (~> 5.9.0)
+    - Capacitor
+    - SSZipArchive (~> 2.2)
   - CocoaLumberjack (3.7.4):
     - CocoaLumberjack/Core (= 3.7.4)
   - CocoaLumberjack/Core (3.7.4)
@@ -36,6 +41,7 @@ PODS:
   - SQLCipher/common (4.5.6)
   - SQLCipher/standard (4.5.6):
     - SQLCipher/common
+  - SSZipArchive (2.4.3)
   - TransistorsoftCapacitorBackgroundFetch (6.0.0):
     - Capacitor
   - TransistorsoftCapacitorBackgroundGeolocation (6.0.2):
@@ -56,14 +62,17 @@ DEPENDENCIES:
   - "CapacitorLocalNotifications (from `../../../../node_modules/@capacitor/local-notifications`)"
   - "CapacitorNetwork (from `../../../../node_modules/@capacitor/network`)"
   - "CapacitorShare (from `../../../../node_modules/@capacitor/share`)"
+  - "CapawesomeCapacitorLiveUpdate (from `../../../../node_modules/@capawesome/capacitor-live-update`)"
   - "TransistorsoftCapacitorBackgroundFetch (from `../../../../node_modules/@transistorsoft/capacitor-background-fetch`)"
   - "TransistorsoftCapacitorBackgroundGeolocation (from `../../../../node_modules/@transistorsoft/capacitor-background-geolocation`)"
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - CocoaLumberjack
     - GCDWebServer
     - SQLCipher
+    - SSZipArchive
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -91,12 +100,15 @@ EXTERNAL SOURCES:
     :path: "../../../../node_modules/@capacitor/network"
   CapacitorShare:
     :path: "../../../../node_modules/@capacitor/share"
+  CapawesomeCapacitorLiveUpdate:
+    :path: "../../../../node_modules/@capawesome/capacitor-live-update"
   TransistorsoftCapacitorBackgroundFetch:
     :path: "../../../../node_modules/@transistorsoft/capacitor-background-fetch"
   TransistorsoftCapacitorBackgroundGeolocation:
     :path: "../../../../node_modules/@transistorsoft/capacitor-background-geolocation"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
   CapacitorBlobWriter: 110eeaf80611f19bf01a8a05ff3672149ed0baad
@@ -109,13 +121,15 @@ SPEC CHECKSUMS:
   CapacitorLocalNotifications: 4ab68f0be5f697a579558fadd307d823a9ec1c26
   CapacitorNetwork: 5c94acfdddc22043f2ffaff224ce9b4aa5a179f0
   CapacitorShare: 02222f2457ff003e642370a9c1ecd101baaa27c8
+  CapawesomeCapacitorLiveUpdate: 0c8085fd7a6e63a4518a2a6f04b86b78e7c2afde
   CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   TransistorsoftCapacitorBackgroundFetch: 1700b75a769dba73879dda6059989f22596e22a0
   TransistorsoftCapacitorBackgroundGeolocation: e696e0ff6e98d6222a1a3a99fb3b398bdddcad44
   ZIPFoundation: fa9ae5af13b7cf168245f24d1c672a4fb972e37f
 
-PODFILE CHECKSUM: f8bbdf236d6362e354575c246166ad0196c18003
+PODFILE CHECKSUM: 8b0eca170ef29386d8fd3dd2e7898b3d2051a9f2
 
 COCOAPODS: 1.15.2

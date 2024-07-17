@@ -8,6 +8,12 @@ const config: CapacitorConfig = {
   ios: {
     contentInset: 'always',
   },
+  plugins: {
+    LiveUpdate: {
+      appId: '7e221380-f9d8-4ff7-b9cf-39f042f7d1fb',
+      enabled: false,
+    },
+  },
 };
 
 export default config;

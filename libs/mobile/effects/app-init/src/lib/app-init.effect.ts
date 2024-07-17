@@ -2,8 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { AppStorageService } from '@cockpit/mobile/storage';
-import { appReady } from '@cockpit/mobile/app-lifecycle-state';
-import { map, switchMap, tap } from 'rxjs';
+import {
+  appReady,
+  capCloudReady,
+  capCloudSynced,
+} from '@cockpit/mobile/app-lifecycle-state';
+import { from, map, switchMap, tap } from 'rxjs';
 import { StorageKey } from '@cockpit/mobile/constants';
 import { TrackingActions } from '@cockpit/mobile/tracking-state';
 import { CurrentTrackedActivity } from '@cockpit/mobile/data-models';
@@ -12,6 +16,7 @@ import { NetworkService } from '@cockpit/mobile/network';
 import { ActivityTypesService } from '@cockpit/mobile/data-access/activity-types';
 import { GlobalActions } from '@cockpit/mobile/state/global';
 import { ActivityType } from '@prisma/client';
+import { LiveUpdate } from '@capawesome/capacitor-live-update';
 
 @Injectable()
 export class AppInitEffect {
@@ -36,6 +41,20 @@ export class AppInitEffect {
             )
           )
       )
+    )
+  );
+
+  capCloudAppReady$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(appReady),
+      switchMap(() => from(LiveUpdate.ready()).pipe(map(() => capCloudReady())))
+    )
+  );
+
+  capCloudSync$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(capCloudReady),
+      switchMap(() => from(LiveUpdate.sync()).pipe(map(() => capCloudSynced())))
     )
   );
 
