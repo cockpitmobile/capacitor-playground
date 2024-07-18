@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Exercisr</string>
+	<string>Habit App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -32,22 +32,23 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Exercisr requires access to your camera to take a selfie</string>
+	<string>Habit App requires access to your camera to take a selfie</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
+	<string>Habit App requires location tracking to record your movement while tracking activities using the in-app tracker</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
+	<string>Habit App requires location tracking to record your movement while tracking activities using the in-app tracker</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Exercisr requires location tracking to record your movement while tracking activities using the in-app tracker</string>
+	<string>Habit App requires location tracking to record your movement while tracking activities using the in-app tracker</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Exercisr requires access to your photo library to choose an image for a selfie</string>
+	<string>Habit App requires access to your photo library to choose an image for a selfie</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Exercisr requires access to your photo library to choose an image for a selfie</string>
+	<string>Habit App requires access to your photo library to choose an image for a selfie</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

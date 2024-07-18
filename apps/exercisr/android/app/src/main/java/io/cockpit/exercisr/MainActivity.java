@@ -1,4 +1,4 @@
-package io.cockpit.exercisr;
+package com.cockpit.habitapp;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.cockpit.exercisr',
-  appName: 'Exercisr',
+  appId: 'com.cockpit.habitapp',
+  appName: 'Habit App',
   webDir: '../../dist/apps/exercisr',
   bundledWebRuntime: false,
   ios: {

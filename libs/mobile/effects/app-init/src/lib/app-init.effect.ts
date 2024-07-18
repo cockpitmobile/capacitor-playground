@@ -6,6 +6,8 @@ import {
   appReady,
   capCloudReady,
   capCloudSynced,
+  pushNotificationsRegisteredSuccessfully,
+  pushNotificationsRegistrationFailed,
 } from '@cockpit/mobile/app-lifecycle-state';
 import { from, map, switchMap, tap } from 'rxjs';
 import { StorageKey } from '@cockpit/mobile/constants';
@@ -17,6 +19,7 @@ import { ActivityTypesService } from '@cockpit/mobile/data-access/activity-types
 import { GlobalActions } from '@cockpit/mobile/state/global';
 import { ActivityType } from '@prisma/client';
 import { LiveUpdate } from '@capawesome/capacitor-live-update';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 @Injectable()
 export class AppInitEffect {
@@ -44,6 +47,7 @@ export class AppInitEffect {
     )
   );
 
+  /** Push Notifications */
   capCloudAppReady$ = createEffect(() =>
     this._actions$.pipe(
       ofType(appReady),
@@ -118,6 +122,31 @@ export class AppInitEffect {
       this._actions$.pipe(
         ofType(appReady),
         switchMap(() => this._network.setupNetworkListener())
+      ),
+    { dispatch: false }
+  );
+
+  /** Push Notifications */
+  requestPushNotificationPermissions$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(appReady),
+      switchMap(() =>
+        from(PushNotifications.requestPermissions()).pipe(
+          map((response) =>
+            response.receive === 'granted'
+              ? pushNotificationsRegisteredSuccessfully()
+              : pushNotificationsRegistrationFailed()
+          )
+        )
+      )
+    )
+  );
+
+  pushNotificationTokenRegistered$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(pushNotificationsRegisteredSuccessfully),
+        switchMap(() => from(PushNotifications.register()))
       ),
     { dispatch: false }
   );

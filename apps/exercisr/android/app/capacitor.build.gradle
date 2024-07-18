@@ -18,9 +18,11 @@ dependencies {
     implementation project(':capacitor-local-notifications')
     implementation project(':capacitor-network')
     implementation project(':capacitor-share')
+    implementation project(':capawesome-capacitor-live-update')
     implementation project(':capacitor-blob-writer')
     implementation project(':transistorsoft-capacitor-background-fetch')
     implementation project(':transistorsoft-capacitor-background-geolocation')
+    implementation project(':capacitor-push-notifications')
 
 }
 

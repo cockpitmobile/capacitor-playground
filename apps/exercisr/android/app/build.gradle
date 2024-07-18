@@ -4,10 +4,10 @@ Project background_geolocation = project(':transistorsoft-capacitor-background-g
 apply from: "${background_geolocation.projectDir}/app.gradle"
 
 android {
-    namespace "io.cockpit.exercisr"
+    namespace "com.cockpit.habitapp"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.cockpit.exercisr"
+        applicationId "com.cockpit.habitapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

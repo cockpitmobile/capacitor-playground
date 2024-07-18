@@ -13,7 +13,8 @@
     "@capawesome/capacitor-live-update": "../../node_modules/@capawesome/capacitor-live-update",
     "capacitor-blob-writer": "../../node_modules/capacitor-blob-writer",
     "@transistorsoft/capacitor-background-fetch": "../../node_modules/@transistorsoft/capacitor-background-fetch",
-    "@transistorsoft/capacitor-background-geolocation": "../../node_modules/@transistorsoft/capacitor-background-geolocation"
+    "@transistorsoft/capacitor-background-geolocation": "../../node_modules/@transistorsoft/capacitor-background-geolocation",
+    "@capacitor/push-notifications": "../../node_modules/@capacitor/push-notifications"
   },
   "devDependencies": {
     "@capacitor/android": "../../node_modules/@capacitor/android",

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939567958096",
+    "project_id": "habit-app-21aca",
+    "storage_bucket": "habit-app-21aca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939567958096:android:69fb5ee08a40f717a62955",
+        "android_client_info": {
+          "package_name": "com.cockpit.habitapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRtmqNqKxcKKi8S9t_u9ZNkIXplppoDXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

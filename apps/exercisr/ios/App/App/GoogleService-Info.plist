@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCu570S1Qi43IyWyApNrZa3FHXgE-n2Uj8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>939567958096</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cockpit.habitapp</string>
+	<key>PROJECT_ID</key>
+	<string>habit-app-21aca</string>
+	<key>STORAGE_BUCKET</key>
+	<string>habit-app-21aca.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:939567958096:ios:2eaf8efd6f1fba62a62955</string>
+</dict>
+</plist>

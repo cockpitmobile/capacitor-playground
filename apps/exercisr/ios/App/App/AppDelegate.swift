@@ -1,6 +1,7 @@
 import UIKit
 import Capacitor
 import TSBackgroundFetch
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -10,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // [capacitor-background-fetch]
+        FirebaseApp.configure();
         let fetchManager = TSBackgroundFetch.sharedInstance();
         fetchManager?.didFinishLaunching();
         
@@ -21,6 +23,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("BackgroundFetchPlugin AppDelegate received fetch event");
         let fetchManager = TSBackgroundFetch.sharedInstance();
         fetchManager?.perform(completionHandler: completionHandler, applicationState: application.applicationState);
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      Messaging.messaging().apnsToken = deviceToken
+      Messaging.messaging().token(completion: { (token, error) in
+        if let error = error {
+            NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+        } else if let token = token {
+            NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+        }
+      })
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+      NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
