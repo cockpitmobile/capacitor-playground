@@ -14,7 +14,7 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD']
-  })
+  });
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3000;
   await app.listen(port);
