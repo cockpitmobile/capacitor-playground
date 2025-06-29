@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ImageCroppedEvent,
   ImageCropperComponent,
@@ -7,7 +7,6 @@ import {
   LoadedImage,
 } from 'ngx-image-cropper';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -16,9 +15,7 @@ import { MatButton } from '@angular/material/button';
   imports: [
     CommonModule,
     ImageCropperModule,
-    MatIcon,
     MatButton,
-    NgOptimizedImage,
   ],
   templateUrl: './selfie-modal.component.html',
   styleUrl: './selfie-modal.component.scss',

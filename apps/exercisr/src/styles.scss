@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import './styles/_flex-layout.scss';
-@import './styles/_buttons.scss';
-@import './styles/_width-height.scss';
-@import './styles/_inputs.scss';
+@use './styles/_flex-layout.scss';
+@use './styles/_buttons.scss';
+@use './styles/_width-height.scss';
+@use './styles/_inputs.scss';
 
 * {
   box-sizing: border-box;

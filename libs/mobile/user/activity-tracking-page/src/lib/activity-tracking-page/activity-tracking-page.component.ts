@@ -8,7 +8,6 @@ import {
   Observable,
   Subject,
   takeUntil,
-  tap,
 } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -16,7 +15,6 @@ import {
   TrackingActions,
 } from '@cockpit/mobile/tracking-state';
 import {
-  FeatureComponent,
   GeoJSONSourceComponent,
   LayerComponent,
   MapComponent,
@@ -29,7 +27,6 @@ import {
     CommonModule,
     MatButton,
     MapComponent,
-    FeatureComponent,
     GeoJSONSourceComponent,
     LayerComponent,
   ],
