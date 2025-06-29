@@ -1,34 +1,34 @@
 PODS:
   - Alamofire (5.9.1)
-  - Capacitor (6.1.0):
+  - Capacitor (6.2.1):
     - CapacitorCordova
-  - CapacitorApp (6.0.0):
+  - CapacitorApp (6.0.2):
     - Capacitor
   - CapacitorBlobWriter (0.0.1):
     - Capacitor
     - GCDWebServer (~> 3.0)
-  - CapacitorBrowser (6.0.1):
+  - CapacitorBrowser (6.0.5):
     - Capacitor
-  - CapacitorCamera (6.0.1):
+  - CapacitorCamera (6.1.2):
     - Capacitor
-  - CapacitorCommunitySqlite (6.0.1):
+  - CapacitorCommunitySqlite (6.0.2):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (6.1.0)
-  - CapacitorDevice (6.0.0):
+  - CapacitorCordova (6.2.1)
+  - CapacitorDevice (6.0.2):
     - Capacitor
-  - CapacitorFilesystem (6.0.0):
+  - CapacitorFilesystem (6.0.3):
     - Capacitor
-  - CapacitorLocalNotifications (6.0.0):
+  - CapacitorLocalNotifications (6.1.2):
     - Capacitor
-  - CapacitorNetwork (6.0.1):
+  - CapacitorNetwork (6.0.3):
     - Capacitor
-  - CapacitorPushNotifications (6.0.1):
+  - CapacitorPushNotifications (6.0.4):
     - Capacitor
-  - CapacitorShare (6.0.1):
+  - CapacitorShare (6.0.3):
     - Capacitor
-  - CapawesomeCapacitorLiveUpdate (6.1.0):
+  - CapawesomeCapacitorLiveUpdate (6.8.0):
     - Alamofire (~> 5.9.0)
     - Capacitor
     - SSZipArchive (~> 2.2)
@@ -104,9 +104,9 @@ PODS:
   - SQLCipher/standard (4.5.6):
     - SQLCipher/common
   - SSZipArchive (2.4.3)
-  - TransistorsoftCapacitorBackgroundFetch (6.0.0):
+  - TransistorsoftCapacitorBackgroundFetch (6.0.2):
     - Capacitor
-  - TransistorsoftCapacitorBackgroundGeolocation (6.0.2):
+  - TransistorsoftCapacitorBackgroundGeolocation (6.1.5):
     - Capacitor
     - CocoaLumberjack (~> 3.7.2)
   - ZIPFoundation (0.9.18)
@@ -184,20 +184,20 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
-  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorBlobWriter: 110eeaf80611f19bf01a8a05ff3672149ed0baad
-  CapacitorBrowser: 473c7fd70ddbe541608ff09ec1be14da0078279e
-  CapacitorCamera: 3b77b3e8311b98220de65e63445c0e4d0b30ce3a
-  CapacitorCommunitySqlite: d0b543e12a06ee6fd0dc287c389e6b435ec4acdf
-  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
-  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
-  CapacitorLocalNotifications: 4ab68f0be5f697a579558fadd307d823a9ec1c26
-  CapacitorNetwork: 5c94acfdddc22043f2ffaff224ce9b4aa5a179f0
-  CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
-  CapacitorShare: 02222f2457ff003e642370a9c1ecd101baaa27c8
-  CapawesomeCapacitorLiveUpdate: 0c8085fd7a6e63a4518a2a6f04b86b78e7c2afde
+  Capacitor: c95400d761e376be9da6be5a05f226c0e865cebf
+  CapacitorApp: e1e6b7d05e444d593ca16fd6d76f2b7c48b5aea7
+  CapacitorBlobWriter: d709e5d22ab9989afd730eb4773873d1ded5fd08
+  CapacitorBrowser: b468ac2db928e594b4d319727f3874743f9bcf96
+  CapacitorCamera: 9bc7b005d0e6f1d5f525b8137045b60cffffce79
+  CapacitorCommunitySqlite: 0299d20f4b00c2e6aa485a1d8932656753937b9b
+  CapacitorCordova: 8d93e14982f440181be7304aa9559ca631d77fff
+  CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
+  CapacitorFilesystem: 59270a63c60836248812671aa3b15df673fbaf74
+  CapacitorLocalNotifications: 65d718c32cbcb753697627bea76dd4336ef85dc2
+  CapacitorNetwork: ef75d8208f0974a2de3f98136bf9684524798f5c
+  CapacitorPushNotifications: b3f20973cb167cb8fee622e309ec521134798241
+  CapacitorShare: d2a742baec21c8f3b92b361a2fbd2401cdd8288e
+  CapawesomeCapacitorLiveUpdate: 7198bcfbd0cf2934190ca66b5663df3fb1aa2ea3
   CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
   Firebase: cf09623f98ae25a3ad484e23c7e0e5f464152d80
   FirebaseCore: c43f9f0437b50a965e930cac4ad243200d12a984
@@ -211,10 +211,10 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SQLCipher: 838309284f29953a28ad2e81d87d55ea6b7c74fd
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
-  TransistorsoftCapacitorBackgroundFetch: 1700b75a769dba73879dda6059989f22596e22a0
-  TransistorsoftCapacitorBackgroundGeolocation: e696e0ff6e98d6222a1a3a99fb3b398bdddcad44
+  TransistorsoftCapacitorBackgroundFetch: 224e3bc0456d2a8f09fe283c540df00066645abb
+  TransistorsoftCapacitorBackgroundGeolocation: 719a473d930c8e459bd19c39238fd0be8090073f
   ZIPFoundation: fa9ae5af13b7cf168245f24d1c672a4fb972e37f
 
 PODFILE CHECKSUM: 97b771a882062464e68db97932cc6ba4995ac1f4
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

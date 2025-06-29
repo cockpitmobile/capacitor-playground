@@ -10,11 +10,11 @@ https://nxext.github.io/nx-extensions-ionic/docs/capacitor/overview.html
 
 ## Development Environment Setup
 
-1. Install Node (use nvm - https://formulae.brew.sh/formula/nvm) and use Node v18
+1. Install Node (use nvm - https://formulae.brew.sh/formula/nvm) and use Node v20
 2. Install Android Studio (https://developer.android.com/studio)
 3. Install XCode (https://developer.apple.com/xcode/)
 4. Ask for a `.env` file from a team member
-4. Run `npm install --force` (--force is necessary for now, unfortunately)
+4. Run `npm install`
 5. Run `cd apps/exercisr && npm install`
 6. Run `npm i prisma`
 7. Run `npm run prisma:generate`

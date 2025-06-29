@@ -22,8 +22,7 @@
     [zoom]="zoom"
     [centerWithPanTo]="true"
     [pitch]="pitch"
-    movingMethod="jumpTo"
-    [preserveDrawingBuffer]="true">
+    movingMethod="jumpTo">
     <mgl-geojson-source
       id="route"
       [data]="(geometry$ | async)!"></mgl-geojson-source>
