@@ -19,7 +19,7 @@ export const appRoutes: Route[] = [
           ),
       },
       {
-        path: 'events/:id',
+        path: 'current-event',
         loadComponent: () =>
           import('@cockpit/current-event-page').then(
             (m) => m.CurrentEventPageComponent

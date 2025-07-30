@@ -90,6 +90,9 @@
       "@cockpit/event-selection-list-page": [
         "libs/mobile/pages/event-selection-list/src/index.ts"
       ],
+      "@cockpit/mobile-data-access-app": [
+        "libs/mobile/shared/data-access/app/src/index.ts"
+      ],
       "@cockpit/mobile-data-access-challenges": [
         "libs/mobile/shared/data-access/challenges/src/index.ts"
       ],

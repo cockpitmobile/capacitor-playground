@@ -1,9 +1,14 @@
 .header {
-  height: 50px;
+  height: var(--header-height);
 }
 
 .footer {
-  height: 50px;
+  height: var(--footer-height);
+}
+
+.content {
+  margin-top: var(--header-height);
+  margin-bottom: var(--footer-height);
 }
 
 :host {
