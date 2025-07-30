@@ -112,7 +112,7 @@ export class AppInitEffect {
     () =>
       this._actions$.pipe(
         ofType(TrackingActions.trackedActivityNotFoundInStorage),
-        map(() => this._router.navigate(['/event-list']))
+        map(() => this._router.navigate(['/user/event-list']))
       ),
     { dispatch: false }
   );

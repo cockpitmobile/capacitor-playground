@@ -32,7 +32,7 @@ import { LocalNotificationsEffect } from '@cockpit/mobile/effects/local-notifica
 import { ShareEffects } from '../../../../libs/mobile/effects/share/src/lib/share.effects';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -61,8 +61,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
-      }
+        preset: Aura,
+        options: {
+          darkModeSelector: false,
+        }
+      },
     }),
     provideHttpClient(),
     provideRouterStore(),

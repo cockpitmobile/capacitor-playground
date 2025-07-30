@@ -1,0 +1,33 @@
+<nav class="flex header bg-primary justify-space-between items-center fixed w-full top-0 left-0 right-0 z-50 shadow-md">
+  <i class="pi pi-user ml-4"></i>
+  <div class="text-white text-lg">
+    {{ currentEvent()?.title }}
+  </div>
+  <div class="flex">
+    <i class="pi pi-bell mr-4"></i>
+    <i class="pi pi-bars mr-4"></i>
+  </div>
+</nav>
+
+<main class="flex-1 overflow-y-scroll mt-16 mb-16">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-primary footer">
+  <div class="flex justify-space-between pt-2">
+    <div class="flex flex-col justify-center items-center">
+      <i class="pi pi-home text-white ml-4"></i>
+      <span class="text-white ml-4">Home</span>
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+      <i class="pi pi-calendar text-white ml-4"></i>
+      <span class="text-white ml-4">Record</span>
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+      <i class="pi pi-cog text-white mx-4"></i>
+      <span class="text-white mx-4">Teams</span>
+    </div>
+  </div>
+</footer>

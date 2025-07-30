@@ -2,6 +2,7 @@
 @use './styles/_buttons.scss';
 @use './styles/_width-height.scss';
 @use './styles/_inputs.scss';
+@import "primeicons/primeicons.css";
 
 @tailwind base;
 @tailwind components;
@@ -18,6 +19,7 @@
 html,
 body {
   height: 100%;
+  background-color: whitesmoke;
 }
 
 body {

@@ -7,18 +7,25 @@ export const appRoutes: Route[] = [
       import('@cockpit/mobile/login-page').then((m) => m.LoginComponent),
   },
   {
-    path: 'event-list',
+    path: 'user',
     loadComponent: () =>
-      import('@cockpit/event-selection-list-page').then(
-        (m) => m.EventSelectionListPageComponent
-      ),
-  },
-  {
-    path: 'events/:id',
-    loadComponent: () =>
-      import('@cockpit/current-event-page').then(
-        (m) => m.CurrentEventPageComponent
-      ),
+      import('@cockpit/shell-page').then((m) => m.ShellPageComponent),
+    loadChildren: () => [
+      {
+        path: 'event-list',
+        loadComponent: () =>
+          import('@cockpit/event-selection-list-page').then(
+            (m) => m.EventSelectionListPageComponent
+          ),
+      },
+      {
+        path: 'events/:id',
+        loadComponent: () =>
+          import('@cockpit/current-event-page').then(
+            (m) => m.CurrentEventPageComponent
+          ),
+      },
+    ],
   },
   {
     path: 'test',

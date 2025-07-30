@@ -198,6 +198,7 @@
       "@cockpit/mobile/util/constants": [
         "libs/mobile/util/constants/src/index.ts"
       ],
+      "@cockpit/shell-page": ["libs/mobile/pages/shell/src/index.ts"],
       "@cockpit/snackbar-service": [
         "libs/mobile/shared/data-access/snackbar/src/index.ts"
       ],

@@ -44,6 +44,6 @@ export class EventService {
 
   selectEvent(event: RAAEvent): void {
     this.currentEventId.set(event.id);
-    this._router.navigate(['events', event.id]);
+    this._router.navigate(['user', 'events', event.id]);
   }
 }
