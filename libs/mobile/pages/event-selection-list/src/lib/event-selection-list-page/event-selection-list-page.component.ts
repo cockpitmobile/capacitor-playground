@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EventService } from '@cockpit/mobile-projects-data-access';
 import { CardModule } from 'primeng/card';
 import { RAAEvent } from '@cockpit/mobile/data-models';
+import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
 
 @Component({
   selector: 'lib-event-selection-list-page',
@@ -12,11 +13,14 @@ import { RAAEvent } from '@cockpit/mobile/data-models';
 })
 export class EventSelectionListPageComponent implements OnInit {
   private readonly _eventService = inject(EventService);
+  private readonly _challengesService = inject(ChallengesService);
 
   public readonly events = this._eventService.events;
 
   ngOnInit() {
+    // TODO: Move these somewhere else that makes sense
     this._eventService.getAll().subscribe();
+    this._challengesService.getAll().subscribe();
   }
 
   selectEvent(event: RAAEvent) {

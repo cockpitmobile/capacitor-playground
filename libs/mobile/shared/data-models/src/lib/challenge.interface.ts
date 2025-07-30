@@ -32,4 +32,9 @@ export interface Challenge {
   mandrill_tag: string;
   percent?: number;
   purchase_needs_to_be_made_by?: Date;
+  is_unlocked: boolean;
+  grey_image_link?: string;
+  image_link?: string;
+  unlocked_date?: Date;
+  totalProgress?: number;
 }

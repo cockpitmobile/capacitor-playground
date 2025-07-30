@@ -34,7 +34,9 @@ export class EventService {
             data
               .filter(
                 (event) =>
-                  !!event.cohort_data?.length && !!event.event_badge_logo?.link
+                  !!event.cohort_data?.length &&
+                  !!event.event_badge_logo?.link &&
+                  !!event.animation_body
               )
               .sort((a, b) => a.title.localeCompare(b.title))
           )

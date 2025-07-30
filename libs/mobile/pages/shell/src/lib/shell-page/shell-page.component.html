@@ -1,4 +1,4 @@
-<nav class="flex header bg-primary justify-space-between items-center fixed w-full top-0 left-0 right-0 z-50 shadow-md">
+<nav class="flex header bg-primary justify-space-between items-center fixed w-full top-0 left-0 right-0 z-50 shadow-md text-white">
   <i class="pi pi-user ml-4"></i>
   <div class="text-white text-lg">
     {{ currentEvent()?.title }}
@@ -13,23 +13,23 @@
   <router-outlet></router-outlet>
 </main>
 
-<footer class="fixed bottom-0 left-0 right-0 z-50 bg-primary footer">
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-primary footer text-white">
   <div class="flex justify-space-between pt-2">
     <div class="flex flex-col justify-center items-center">
-      <i class="pi pi-home text-white ml-4"></i>
-      <span class="text-white ml-4">Home</span>
+      <i class="pi pi-home ml-4"></i>
+      <span class="ml-4">Home</span>
     </div>
 
     <div
       class="flex flex-col justify-center items-center"
       (click)="navigateToCurrentEvent()">
-      <i class="pi pi-calendar text-white ml-4"></i>
-      <span class="text-white ml-4">Record</span>
+      <i class="pi pi-calendar ml-4"></i>
+      <span class="ml-4">Record</span>
     </div>
 
     <div class="flex flex-col justify-center items-center">
-      <i class="pi pi-cog text-white mx-4"></i>
-      <span class="text-white mx-4">Teams</span>
+      <i class="pi pi-cog mx-4"></i>
+      <span class="mx-4">Teams</span>
     </div>
   </div>
 </footer>

@@ -1,0 +1,20 @@
+{
+  "name": "event-challenges-page",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/components/event-challenges/src",
+  "prefix": "app",
+  "projectType": "library",
+  "tags": ["scope:frontend"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/mobile/components/event-challenges/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

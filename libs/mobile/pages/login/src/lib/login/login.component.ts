@@ -55,24 +55,6 @@ export class LoginComponent implements OnInit {
   public readonly projects = this._projects.events;
   public readonly challenges = this._challenges.challenges;
 
-  // public readonly _logProjects = effect(() => {
-  //   const projects = this.projects();
-  //   const challenges = this.challenges();
-  //
-  //   const projectsWithChallenges = projects.map((project) => ({
-  //     ...project,
-  //     challenges: challenges.filter(
-  //       (challenge) => challenge.project_id === project.id
-  //     ),
-  //   }));
-  //
-  //   return projectsWithChallenges.sort((a, b) => {
-  //     const aName = a.title.toLowerCase();
-  //     const bName = b.title.toLowerCase();
-  //     return aName.localeCompare(bName);
-  //   });
-  // });
-
   helpHref = signal('');
   code = '';
 

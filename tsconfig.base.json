@@ -87,6 +87,12 @@
         "libs/mobile/effects/in-app-browser/src/index.ts"
       ],
       "@cockpit/effects-login": ["libs/mobile/effects/login/src/index.ts"],
+      "@cockpit/event-challenges": [
+        "libs/mobile/components/event-challenges/src/index.ts"
+      ],
+      "@cockpit/event-goal-animation": [
+        "libs/mobile/components/event-goal-animation/src/index.ts"
+      ],
       "@cockpit/event-selection-list-page": [
         "libs/mobile/pages/event-selection-list/src/index.ts"
       ],

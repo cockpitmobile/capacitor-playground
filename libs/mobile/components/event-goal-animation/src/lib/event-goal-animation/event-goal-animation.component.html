@@ -1,0 +1,8 @@
+@if (animationSvg()) {
+  <ng-container>
+    <div [innerHTML]="animationSvg()"></div>
+  </ng-container>
+} @else if (backupImage()) {
+  <!-- Race Banner Image (if there isn't an animation) -->
+  <img id="raceBannerImage" [src]="backupImage()" class="w-full" />
+}
