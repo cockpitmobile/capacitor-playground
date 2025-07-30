@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { TestActivity } from '@cockpit/mobile/data-models';
+import { Injectable, signal } from '@angular/core';
+import { Activity, TestActivity } from '@cockpit/mobile/data-models';
 import { AppStorageService } from '@cockpit/mobile/storage';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap, tap } from 'rxjs';
 import { HttpService } from '@cockpit/mobile/http';
 import { StorageKey } from '@cockpit/mobile/constants';
 import { HttpParams } from '@angular/common/http';
@@ -15,6 +15,8 @@ export class ActivitiesService {
     private readonly storage: AppStorageService,
     private readonly _http: HttpService
   ) {}
+
+  public readonly userActivities = signal<Activity[]>([]);
 
   createTestActivity(activity: TestActivity): Observable<TestActivity> {
     // queue up the http request to create this activity (in case of being offline)
@@ -39,5 +41,11 @@ export class ActivitiesService {
           )
         )
       );
+  }
+
+  getAllForUser(userId: string): Observable<Activity[]> {
+    return this._http
+      .get<Activity[]>(`/eventresults?user_id=${userId}`)
+      .pipe(tap((data) => this.userActivities.set(data)));
   }
 }

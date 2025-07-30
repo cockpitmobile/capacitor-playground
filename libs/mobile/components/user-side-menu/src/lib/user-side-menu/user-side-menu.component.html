@@ -1,0 +1,51 @@
+<p-drawer
+  #drawer
+  [visible]="isVisible()"
+  (visibleChange)="setSidebarOpen($event)"
+  [style]="{ width: '250px' }"
+  [closable]="false"
+  [blockScroll]="true"
+  position="right">
+  <ng-template #headless>
+    <div class="flex flex-col justify-between h-full p-2 text-primary">
+      <div class="flex flex-col">
+        <div class="flex justify-between items-center w-full mb-8">
+          <span class="headerFont title">Menu</span>
+          <p-button
+            type="button"
+            (click)="toggleSidebar()"
+            icon="pi pi-times"
+            rounded="true"
+            outlined="true"
+            styleClass="h-8 w-8"></p-button>
+        </div>
+
+        @for (item of topMenuItems(); track $index) {
+          <div (click)="item.action()" class="color-primary px-2">
+            <i [class]="item.icon"></i>
+            <span class="ml-2">{{ item.label }}</span>
+          </div>
+
+          @if (!$last) {
+            <p-divider />
+          }
+        }
+      </div>
+
+      <div class="bottomContainer">
+        @for (item of bottomMenuItems(); track $index) {
+          <div (click)="item.action()" class="color-primary px-2">
+            <i [class]="item.icon"></i>
+            <span class="ml-2">{{ item.label }}</span>
+          </div>
+
+          @if (!$last) {
+            <p-divider />
+          }
+        }
+<!--        TODO: IMPLEMENT -->
+        <!--    <div class="headerFont version">{{ buildVersion }}</div>-->
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

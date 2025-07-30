@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -7,7 +7,17 @@ import { Router } from '@angular/router';
 export class AppService {
   private readonly _router = inject(Router);
 
+  public isUserSideMenuVisible = signal(false);
+
   navigateToCurrentEvent() {
     this._router.navigate(['user', 'current-event']);
+  }
+
+  navigateToEvents() {
+    this._router.navigate(['user', 'event-list']);
+  }
+
+  toggleUserSideMenu() {
+    this.isUserSideMenuVisible.update((visible) => !visible);
   }
 }

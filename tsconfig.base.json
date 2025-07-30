@@ -111,6 +111,9 @@
       "@cockpit/mobile-projects-data-access": [
         "libs/mobile/shared/data-access/events/src/index.ts"
       ],
+      "@cockpit/mobile-util-challenges": [
+        "libs/mobile/util/challenges/src/index.ts"
+      ],
       "@cockpit/mobile/activities": [
         "libs/mobile/shared/data-access/activities/src/index.ts"
       ],
@@ -213,6 +216,9 @@
       ],
       "@cockpit/state-in-app-browser": [
         "libs/mobile/state/in-app-browser/src/index.ts"
+      ],
+      "@cockpit/user-side-menu": [
+        "libs/mobile/components/user-side-menu/src/index.ts"
       ],
       "@cockpit/util-device": ["libs/mobile/util/device/src/index.ts"]
     }

@@ -4,6 +4,7 @@ import { EventService } from '@cockpit/mobile-projects-data-access';
 import { EventGoalAnimationComponent } from '@cockpit/event-goal-animation';
 import { EventChallengesComponent } from '@cockpit/event-challenges';
 import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
+import { getChallengeCountdown } from '@cockpit/mobile-util-challenges';
 
 @Component({
   selector: 'lib-current-event-page',
@@ -28,12 +29,12 @@ export class CurrentEventPageComponent implements OnInit {
     const currentEvent = this.currentEvent();
     const challenges = this.challenges();
 
-    const filtered = challenges.filter(
-      (challenge) => challenge.project_id === currentEvent?.id
-    );
-
-    console.log(filtered);
-    return filtered;
+    return challenges
+      .filter((challenge) => challenge.project_id === currentEvent?.id)
+      .map((challenge) => ({
+        ...challenge,
+        messageText: getChallengeCountdown(challenge),
+      }));
   });
 
   ngOnInit() {

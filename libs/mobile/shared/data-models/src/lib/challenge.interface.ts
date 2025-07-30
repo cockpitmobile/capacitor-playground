@@ -37,4 +37,5 @@ export interface Challenge {
   image_link?: string;
   unlocked_date?: Date;
   totalProgress?: number;
+  messageText?: string;
 }

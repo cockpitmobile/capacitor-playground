@@ -5,3 +5,4 @@ export * from './lib/user.interface';
 export * from './lib/login-step.type';
 export * from './lib/project.interface';
 export * from './lib/challenge.interface';
+export * from './lib/activity.interface';

@@ -4,6 +4,7 @@ import { EventService } from '@cockpit/mobile-projects-data-access';
 import { CardModule } from 'primeng/card';
 import { RAAEvent } from '@cockpit/mobile/data-models';
 import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
+import { ActivitiesService } from '@cockpit/mobile/activities';
 
 @Component({
   selector: 'lib-event-selection-list-page',
@@ -14,6 +15,7 @@ import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
 export class EventSelectionListPageComponent implements OnInit {
   private readonly _eventService = inject(EventService);
   private readonly _challengesService = inject(ChallengesService);
+  private readonly _activitesService = inject(ActivitiesService);
 
   public readonly events = this._eventService.events;
 
@@ -21,6 +23,9 @@ export class EventSelectionListPageComponent implements OnInit {
     // TODO: Move these somewhere else that makes sense
     this._eventService.getAll().subscribe();
     this._challengesService.getAll().subscribe();
+    this._activitesService
+      .getAllForUser('0d44cba2-91f7-40f1-8107-353413e44b3d')
+      .subscribe();
   }
 
   selectEvent(event: RAAEvent) {

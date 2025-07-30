@@ -21,16 +21,18 @@
               ? 'none'
               : '1px solid #e2e2e2'
           ">
-          <div *ngIf="!challenge.isPost" class="flex mb-2">
-            <div
-              class="flex text-white rounded px-2"
-              style="background-color: #3f89c1; height: 30px">
-              <div style="font-size: 12px">
-                <!--                TODO: -->
-                <!--                {{ getChallengeCountdown(challenge) }}-->
+          @if (!challenge.isPost) {
+            <div class="flex mb-2">
+              <div
+                class="flex text-white rounded px-2"
+                style="background-color: #3f89c1; height: 30px">
+                <div style="font-size: 12px">
+                  {{ challenge.messageText }}
+                </div>
               </div>
             </div>
-          </div>
+          }
+
           <div style="display: grid; grid-template-columns: 1fr 80px">
             <div
               style="margin-right: 20px"
@@ -71,135 +73,141 @@
               </div>
             </div>
             <div style="position: relative">
-              <img
-                *ngIf="challenge.challenge_type === 'single'"
-                [src]="
-                  !challenge.is_unlocked
-                    ? challenge.grey_image_link
-                    : challenge.image_link
-                "
-                style="
-                  height: 59px;
-                  width: 59px;
-                  position: absolute;
-                  top: 0px;
-                  right: 8px;
-                  z-index: 10;
-                  color: rgba(255, 255, 255, 0.25);
-                " />
-              <div
-                *ngIf="challenge.challenge_type !== 'single'"
-                style="margin-left: -6px; margin-top: -6px">
-                <!--                TODO: IMPLEMENT -->
-                <!--                <app-circle-progress-bar-->
-                <!--                  [radius]="40"-->
-                <!--                  [strokeBackgroundColor]="-->
-                <!--                    mainUtil.lightenDarkenColor(-->
-                <!--                      challenge.isActive && !challenge.is_unlocked-->
-                <!--                        ? challenge.challenge_extra_data.background_color-->
-                <!--                        : '#ffffff',-->
-                <!--                      20-->
-                <!--                    )-->
-                <!--                  "-->
-                <!--                  [strokeProgressColor]="-->
-                <!--                    !(challenge.isActive && !challenge.is_unlocked)-->
-                <!--                      ? challenge.challenge_extra_data.background_color-->
-                <!--                      : '#ffffff'-->
-                <!--                  "-->
-                <!--                  [percent]="challenge.is_unlocked ? 100 : challenge.percent"-->
-                <!--                  [stroke]="4"-->
-                <!--                  [imageWidth]="55"-->
-                <!--                  [imageSrc]="-->
-                <!--                    !challenge.is_unlocked-->
-                <!--                      ? challenge.grey_image_link-->
-                <!--                      : challenge.image_link-->
-                <!--                  ">-->
-                <!--                </app-circle-progress-bar>-->
-              </div>
-              <div
-                *ngIf="challenge.challenge_type === 'timed'"
-                class="flex justify-center text-white">
-                {{
-                  challenge.progress
-                    ?.toFixed(2)
-                    ?.substring(
-                      0,
-                      challenge.progress!.toFixed(2)!.length - 1
-                    ) || 0
-                }}
-                / {{ challenge.totalProgress }}
-              </div>
-              <div
-                *ngIf="
-                  challenge.challenge_type === 'activity' ||
-                  challenge.challenge_type === 'streak'
-                "
-                class="flex justify-center text-white">
-                {{ challenge.progress ? challenge.progress : 0 }} /
-                {{ challenge.totalProgress }}
-              </div>
+              @if (challenge.challenge_type === 'single') {
+                <img
+                  [src]="
+                    !challenge.is_unlocked
+                      ? challenge.grey_image_link
+                      : challenge.image_link
+                  "
+                  style="
+                    height: 59px;
+                    width: 59px;
+                    position: absolute;
+                    top: 0px;
+                    right: 8px;
+                    z-index: 10;
+                    color: rgba(255, 255, 255, 0.25);
+                  " />
+              } @else {
+                <div style="margin-left: -6px; margin-top: -6px">
+                  <!--                TODO: IMPLEMENT -->
+                  <!--                <app-circle-progress-bar-->
+                  <!--                  [radius]="40"-->
+                  <!--                  [strokeBackgroundColor]="-->
+                  <!--                    mainUtil.lightenDarkenColor(-->
+                  <!--                      challenge.isActive && !challenge.is_unlocked-->
+                  <!--                        ? challenge.challenge_extra_data.background_color-->
+                  <!--                        : '#ffffff',-->
+                  <!--                      20-->
+                  <!--                    )-->
+                  <!--                  "-->
+                  <!--                  [strokeProgressColor]="-->
+                  <!--                    !(challenge.isActive && !challenge.is_unlocked)-->
+                  <!--                      ? challenge.challenge_extra_data.background_color-->
+                  <!--                      : '#ffffff'-->
+                  <!--                  "-->
+                  <!--                  [percent]="challenge.is_unlocked ? 100 : challenge.percent"-->
+                  <!--                  [stroke]="4"-->
+                  <!--                  [imageWidth]="55"-->
+                  <!--                  [imageSrc]="-->
+                  <!--                    !challenge.is_unlocked-->
+                  <!--                      ? challenge.grey_image_link-->
+                  <!--                      : challenge.image_link-->
+                  <!--                  ">-->
+                  <!--                </app-circle-progress-bar>-->
+                </div>
+              }
+
+              @if (challenge.challenge_type === 'timed') {
+                <div class="flex justify-center text-white">
+                  {{
+                    challenge.progress
+                      ?.toFixed(2)
+                      ?.substring(
+                        0,
+                        challenge.progress!.toFixed(2)!.length - 1
+                      ) || 0
+                  }}
+                  / {{ challenge.totalProgress }}
+                </div>
+              }
+
+              @if (
+                challenge.challenge_type === 'activity' ||
+                challenge.challenge_type === 'streak'
+              ) {
+                <div class="flex justify-center text-white">
+                  {{ challenge.progress ? challenge.progress : 0 }} /
+                  {{ challenge.totalProgress }}
+                </div>
+              }
             </div>
           </div>
-          <div
-            *ngIf="
-              !challenge.is_unlocked && challenge.challenge_type === 'single'
-            ">
-            <div class="flex justify-between">
-              <!--              TODO: IMPLEMENT -->
-              <!--              (click)="runChallenge(challenge)"-->
+          @if (
+            !challenge.is_unlocked && challenge.challenge_type === 'single'
+          ) {
+            <div>
+              <div class="flex justify-between">
+                <!--              TODO: IMPLEMENT -->
+                <!--              (click)="runChallenge(challenge)"-->
+                <p-button
+                  id="{{ 'challenge-' + challenge.challenge_id }}"
+                  class="greyOutline largeButton rounded mt-6"
+                  [style.color]="
+                    challenge.isActive
+                      ? challenge.challenge_extra_data.background_color
+                      : '#ffffff'
+                  "
+                  [style.backgroundColor]="
+                    challenge.isActive ? 'white' : '#c3c4c1'
+                  "
+                  [style.borderColor]="
+                    challenge.isActive ? 'white' : '#c3c4c1'
+                  ">
+                  {{
+                    challenge.isActive
+                      ? challenge.challenge_extra_data.race_button_active
+                      : challenge.isPost
+                        ? challenge.challenge_extra_data
+                            .race_button_inactive_post
+                        : challenge.challenge_extra_data.race_button_inactive
+                  }}
+                </p-button>
+              </div>
+            </div>
+          }
+
+          @if (challenge.is_unlocked && challenge.challenge_type === 'single') {
+            <div>
+              <!--            TODO: IMPLEMENT -->
+              <!--            (click)="challengeLeaderboard(challenge)"-->
               <p-button
                 id="{{ 'challenge-' + challenge.challenge_id }}"
                 class="greyOutline largeButton rounded mt-6"
-                [style.color]="
-                  challenge.isActive
-                    ? challenge.challenge_extra_data.background_color
-                    : '#ffffff'
+                [style.color]="challenge.challenge_extra_data.background_color"
+                [style.backgroundColor]="'white'"
+                [style.borderColor]="
+                  challenge.challenge_extra_data.background_color
                 "
-                [style.backgroundColor]="
-                  challenge.isActive ? 'white' : '#c3c4c1'
-                "
-                [style.borderColor]="challenge.isActive ? 'white' : '#c3c4c1'">
-                {{
-                  challenge.isActive
-                    ? challenge.challenge_extra_data.race_button_active
-                    : challenge.isPost
-                      ? challenge.challenge_extra_data.race_button_inactive_post
-                      : challenge.challenge_extra_data.race_button_inactive
-                }}
+                >Leaderboard
               </p-button>
             </div>
-          </div>
-          <div
-            *ngIf="
-              challenge.is_unlocked && challenge.challenge_type === 'single'
-            ">
-            <!--            TODO: IMPLEMENT -->
-            <!--            (click)="challengeLeaderboard(challenge)"-->
-            <p-button
-              id="{{ 'challenge-' + challenge.challenge_id }}"
-              class="greyOutline largeButton rounded mt-6"
-              [style.color]="challenge.challenge_extra_data.background_color"
-              [style.backgroundColor]="'white'"
-              [style.borderColor]="
-                challenge.challenge_extra_data.background_color
-              "
-              >Leaderboard
-            </p-button>
-          </div>
-          <div
-            *ngIf="
-              challenge.is_unlocked && challenge.challenge_type !== 'single'
-            "
-            style="font-weight: 600; font-size: 14px; margin-top: 5px"
-            [style.color]="challenge.challenge_extra_data.background_color">
-            <span
-              class="fas fa-check-circle"
-              style="margin-right: 2px; font-size: 15px"
-              [style.color]="
-                challenge.challenge_extra_data.background_color
-              "></span>
-            Completed {{ challenge.unlocked_date | date: 'M/d' }}
-          </div>
+          }
+
+          @if (challenge.is_unlocked && challenge.challenge_type !== 'single') {
+            <div
+              style="font-weight: 600; font-size: 14px; margin-top: 5px"
+              [style.color]="challenge.challenge_extra_data.background_color">
+              <span
+                class="fas fa-check-circle"
+                style="margin-right: 2px; font-size: 15px"
+                [style.color]="
+                  challenge.challenge_extra_data.background_color
+                "></span>
+              Completed {{ challenge.unlocked_date | date: 'M/d' }}
+            </div>
+          }
         </div>
       </div>
     }
