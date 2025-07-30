@@ -7,6 +7,13 @@ export const appRoutes: Route[] = [
       import('@cockpit/mobile/login-page').then((m) => m.LoginComponent),
   },
   {
+    path: 'event-list',
+    loadComponent: () =>
+      import('@cockpit/event-selection-list-page').then(
+        (m) => m.EventSelectionListPageComponent
+      ),
+  },
+  {
     path: 'test',
     loadComponent: () =>
       import('@cockpit/mobile/event-page').then((m) => m.EventPageComponent),

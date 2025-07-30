@@ -18,7 +18,7 @@
   [style.maxHeight]="height">
 </image-cropper>
 
-<button mat-button (click)="crop()">Crop</button>
+<p-button (click)="crop()">Crop</p-button>
 
 <img *ngIf="croppedImage" [src]="croppedImage" width="400px" height="400px" />
 

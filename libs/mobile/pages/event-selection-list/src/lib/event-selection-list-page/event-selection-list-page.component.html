@@ -1,0 +1,7 @@
+<div class="flex flex-col">
+  @for (raaEvent of events(); track raaEvent.id) {
+    <p-card class="mb-4">
+      {{ raaEvent.title }}
+    </p-card>
+  }
+</div>

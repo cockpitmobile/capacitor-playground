@@ -114,3 +114,44 @@ model HabitReward {
   habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
   reward    Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
 }
+
+model Project {
+  id                                    String    @id @default(uuid())
+  title                                 String
+  description                           String?
+  start_date                            DateTime?
+  estimated_end_time                    DateTime?
+  type                                  String
+  is_archived                           Boolean   @default(false)
+  event_badge_logo                      String?
+  race_distance                         Float?
+  has_sent_25                           Boolean   @default(false)
+  has_sent_50                           Boolean   @default(false)
+  has_sent_75                           Boolean   @default(false)
+  has_sent_all                          Boolean   @default(false)
+  race_distance_units                   String?
+  race_primary_color                    String
+  race_secondary_color                  String
+  race_event_type                       String
+  event_details_link                    String?
+  has_notified                          Boolean   @default(false)
+  event_sign_up_link                    String?
+  time_string                           String?
+  config                                Json?
+  race_banner_image_link                String?
+  project_selfie_filter_image_link      String?
+  cohort_data                           Json[]
+  project_notification_info             Json?
+  open_practice_time                    DateTime?
+  next_season_project_id                String?
+  onboarding_image_link                 String?
+  onboarding_background_image_link      String?
+  onboarding_background_image_dark_link String?
+  accepted_activity_types               String[]
+  default_page                          String?
+  new_account_link                      String?
+  app_welcome_text                      String?
+  animation_body                        String?
+  animation_function                    String?
+  wrapup_image_html                     String?
+}

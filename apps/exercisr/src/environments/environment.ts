@@ -1,6 +1,6 @@
 import { Environment } from '@cockpit/mobile/environment';
 
 export const environment: Environment = {
-  apiBaseUrl: 'https://same-sock-production.up.railway.app/api',
+  apiBaseUrl: 'http://localhost:8080',
   production: false,
 };

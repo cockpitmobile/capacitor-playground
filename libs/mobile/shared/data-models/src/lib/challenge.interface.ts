@@ -1,0 +1,35 @@
+export interface Challenge {
+  id?: string;
+  challenge_id?: string;
+  title?: string;
+  start_date?: Date;
+  end_date?: Date;
+  project_id?: string;
+  selfie_filter_image_link?: string;
+  badge_id?: string;
+  badge_url?: string;
+  distance?: number;
+  distance_units?: string;
+  challenge_type?: string;
+  challenge_extra_data?: any;
+  isActive?: boolean;
+  isVisible?: boolean;
+  isPost?: boolean;
+  show_challenge?: boolean;
+  has_result?: boolean;
+  progress?: number;
+  challenge_notification_info?: {
+    body: string;
+    title: string;
+  };
+  is_second_challenge?: boolean;
+  challenge_completion_info: any;
+  challenge_unlock_criteria: any;
+  challenge_is_unlockable: boolean;
+  challenge_unlocked_date?: Date;
+  challenge_notification_time?: Date;
+  mandrill_template: string;
+  mandrill_tag: string;
+  percent?: number;
+  purchase_needs_to_be_made_by?: Date;
+}

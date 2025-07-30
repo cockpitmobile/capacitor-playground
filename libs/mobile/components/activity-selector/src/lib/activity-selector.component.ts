@@ -7,13 +7,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivityType } from '@prisma/client';
-import { MatDivider } from '@angular/material/divider';
 import { ActivityIconComponent } from '@cockpit/mobile/components/activity-icon';
+import { Divider } from 'primeng/divider';
 
 @Component({
   selector: 'cockpit-activity-selector',
   standalone: true,
-  imports: [CommonModule, MatDivider, ActivityIconComponent],
+  imports: [CommonModule, Divider, ActivityIconComponent],
   templateUrl: './activity-selector.component.html',
   styleUrl: './activity-selector.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

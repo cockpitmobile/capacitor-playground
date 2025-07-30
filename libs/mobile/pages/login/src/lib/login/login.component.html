@@ -21,16 +21,14 @@
               type="email"
               required
               (keydown)="keydown($event, 'email')" />
-            <button
+            <p-button
               id="submit"
-              class="buttonFilled big-button"
-              mat-button
+              class="buttonFilled big-button login-button"
               [style.backgroundColor]="secondaryColor$ | async"
               [style.borderColor]="secondaryColor$ | async"
-              style="font-size: 18px; width: 50%; margin-bottom: 32px"
               (click)="checkEmail()">
               <div style="margin-top: -3px">Continue</div>
-            </button>
+            </p-button>
           </div>
         </ng-container>
       }
@@ -46,25 +44,20 @@
           </div>
 
           <div class="w-100 h-100 flex flex-col align-center">
-            <button
-              class="buttonFilled big-button"
-              mat-button
+            <p-button
+              class="buttonFilled big-button login-button"
               [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async"
-              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              [style.borderColor]="secondaryColor$ | async">
               <div style="margin-top: -3px" (click)="emailCode()">
                 Email me a login code
               </div>
-            </button>
+            </p-button>
 
-            <button
-              class="buttonFilled big-button"
-              mat-button
-              id="have-login-code-btn">
+            <p-button class="buttonFilled big-button" id="have-login-code-btn">
               <div style="margin-top: -3px" (click)="hasLoginCode()">
                 I have a login code
               </div>
-            </button>
+            </p-button>
 
             <a (click)="backToLogin()" class="accountSeason">Cancel</a>
           </div>
@@ -80,25 +73,23 @@
               Welcome, {{ emailFormCtrl.value }}. We'll create a new account for
               you.
             </p>
-            <mat-checkbox
+            <p-checkbox
               class="w-100"
               id="event-updates-ctrl"
               [formControl]="sendEventUpdatesCtrl"
               >Send me event updates
-            </mat-checkbox>
+            </p-checkbox>
           </div>
 
           <div class="w-100 h-100 flex flex-col align-center">
-            <button
-              class="buttonFilled big-button"
-              mat-button
+            <p-button
+              class="buttonFilled big-button login-button"
               [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async"
-              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              [style.borderColor]="secondaryColor$ | async">
               <div style="margin-top: -3px" (click)="createNewAccount()">
                 Create new account
               </div>
-            </button>
+            </p-button>
 
             <a (click)="backToLogin()" class="accountSeason"
               >Try a different email</a
@@ -136,14 +127,12 @@
               required
               (keydown)="keydown($event, 'code')" />
 
-            <button
-              class="buttonFilled big-button"
-              mat-button
+            <p-button
+              class="buttonFilled big-button login-button"
               [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async"
-              style="font-size: 18px; width: 60%; margin-bottom: 16px">
+              [style.borderColor]="secondaryColor$ | async">
               <div style="margin-top: -3px" (click)="checkCode()">Login</div>
-            </button>
+            </p-button>
 
             <a (click)="backToLogin()" class="accountSeason">Cancel</a>
           </div>

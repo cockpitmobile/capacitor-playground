@@ -27,7 +27,6 @@
           "apps/exercisr/src/assets"
         ],
         "styles": [
-          "@angular/material/prebuilt-themes/pink-bluegrey.css",
           "apps/exercisr/src/styles.scss",
           "maplibre-gl/dist/maplibre-gl.css"
         ],

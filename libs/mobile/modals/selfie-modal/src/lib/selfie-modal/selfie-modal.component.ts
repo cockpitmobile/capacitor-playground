@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ImageCroppedEvent,
@@ -6,21 +12,17 @@ import {
   ImageCropperModule,
   LoadedImage,
 } from 'ngx-image-cropper';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatButton } from '@angular/material/button';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'cockpit-selfie-modal',
   standalone: true,
-  imports: [
-    CommonModule,
-    ImageCropperModule,
-    MatButton,
-  ],
+  imports: [CommonModule, ImageCropperModule, Button],
   templateUrl: './selfie-modal.component.html',
   styleUrl: './selfie-modal.component.scss',
 })
-export class SelfieModalComponent {
+export class SelfieModalComponent implements OnInit {
   croppedImage?: string;
   croppedBlob?: Blob;
 
@@ -50,9 +52,11 @@ export class SelfieModalComponent {
   selfieFilterIndex = 0;
   savedFile?: Blob;
 
+  public readonly data: { src: any; file: any } = this.config.data;
+
   constructor(
-    public dialog: MatDialogRef<SelfieModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { src: any; file: any },
+    public dialog: DynamicDialogRef<SelfieModalComponent>,
+    public config: DynamicDialogConfig,
     private changeDetector: ChangeDetectorRef
     // private userService: UserService,
     // public mainUtil: MainUtil,

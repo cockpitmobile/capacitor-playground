@@ -10,25 +10,25 @@ import {
   selfieRequested,
   selfieUploaded,
 } from '@cockpit/mobile/selfies-state';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PhotoMethodPickerComponent } from '@cockpit/mobile/photo-method-picker';
 import { Camera, CameraResultType } from '@capacitor/camera';
-import { MatDialog } from '@angular/material/dialog';
 import { SelfieModalComponent } from '@cockpit/mobile/selfie-modal';
 import { HttpService } from '@cockpit/mobile/http';
+import { DialogService } from 'primeng/dynamicdialog';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SelfiesEffects {
   requestSelfie$ = createEffect(() =>
     this._actions.pipe(
       ofType(selfieRequested),
       switchMap(({ title, id, image_type }) =>
-        this._bottomSheet
+        this._dialog
           .open(PhotoMethodPickerComponent, {
             data: { title },
           })
-          .afterDismissed()
-          .pipe(
+          .onClose.pipe(
             map(({ type }) =>
               type === 'camera'
                 ? selfieMethodPickedCamera({
@@ -118,8 +118,7 @@ export class SelfiesEffects {
                   .open(SelfieModalComponent, {
                     data: { src: blob, file: blob },
                   })
-                  .afterClosed()
-                  .pipe(
+                  .onClose.pipe(
                     map((result) =>
                       photoCropped({ photo: result, id, image_type })
                     )
@@ -236,9 +235,8 @@ export class SelfiesEffects {
   // });
 
   constructor(
+    private readonly _dialog: DialogService,
     private readonly _actions: Actions,
-    private readonly _bottomSheet: MatBottomSheet,
-    private readonly _dialog: MatDialog,
     private readonly _http: HttpService
   ) {}
 }

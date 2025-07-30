@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import {
   ActivitiesApiActions,
@@ -11,7 +10,6 @@ import {
   networkIsConnectedSelector,
   networkIsSyncingSelector,
 } from '@cockpit/mobile/network-state';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { selfieRequested } from '@cockpit/mobile/selfies-state';
 import { ActivitySelectorComponent } from '@cockpit/mobile/components/activity-selector';
 import {
@@ -20,14 +18,16 @@ import {
 } from '@cockpit/mobile/state/global';
 import { LocalNotificationsActions } from '@cockpit/mobile/state/local-notifications';
 import { ShareActions } from '@cockpit/mobile/state/share';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'cockpit-event-page',
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatProgressSpinner,
+    ButtonModule,
+    ProgressSpinnerModule,
     ActivitySelectorComponent,
   ],
   templateUrl: './event-page.component.html',

@@ -23,7 +23,6 @@ import { TrackingEffects } from '@cockpit/mobile/tracking-effects';
 import { networkReducer } from '@cockpit/mobile/network-state';
 import { NetworkSyncEffect } from '@cockpit/mobile/network-sync';
 import { SelfiesEffects } from '@cockpit/mobile/selfies-effects';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { loginReducer } from '@cockpit/mobile/state/login';
 import { LoginEffects } from '@cockpit/effects-login';
 import { InAppBrowserEffects } from '@cockpit/effects-in-app-browser';
@@ -31,6 +30,9 @@ import { globalReducer } from '@cockpit/mobile/state/global';
 import { provideAngularSvgIcon } from 'angular-svg-icon';
 import { LocalNotificationsEffect } from '@cockpit/mobile/effects/local-notifications';
 import { ShareEffects } from '../../../../libs/mobile/effects/share/src/lib/share.effects';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -54,9 +56,14 @@ export function initDatabase(sqlite: SQLiteService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(MatBottomSheetModule),
+    DialogService,
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
     provideHttpClient(),
     provideRouterStore(),
     provideStore({

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import {
   combineLatest,
   interval,
@@ -19,13 +18,14 @@ import {
   LayerComponent,
   MapComponent,
 } from '@maplibre/ngx-maplibre-gl';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'cockpit-activity-tracking-page',
   standalone: true,
   imports: [
     CommonModule,
-    MatButton,
+    Button,
     MapComponent,
     GeoJSONSourceComponent,
     LayerComponent,

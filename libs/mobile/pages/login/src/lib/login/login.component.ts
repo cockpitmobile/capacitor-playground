@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
@@ -15,13 +15,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
 import { SnackbarService } from '@cockpit/snackbar-service';
 import { InAppBrowserActions } from '@cockpit/state-in-app-browser';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
 import { getHelpLinkFromDeviceAndAppInfo } from '@cockpit/util-device';
+import { EventService } from '@cockpit/mobile-projects-data-access';
+import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
+import { Button } from 'primeng/button';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
   selector: 'cockpit-login',
@@ -29,9 +31,9 @@ import { getHelpLinkFromDeviceAndAppInfo } from '@cockpit/util-device';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCheckbox,
+    Checkbox,
     FormsModule,
-    MatButton,
+    Button,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -39,6 +41,8 @@ import { getHelpLinkFromDeviceAndAppInfo } from '@cockpit/util-device';
 export class LoginComponent implements OnInit {
   private readonly _store = inject(Store);
   private readonly _snackbar = inject(SnackbarService);
+  private readonly _projects = inject(EventService);
+  private readonly _challenges = inject(ChallengesService);
 
   readonly primaryColor$ = this._store.select(currentSeasonPrimaryColor);
   readonly secondaryColor$ = this._store.select(currentSeasonSecondaryColor);
@@ -47,6 +51,27 @@ export class LoginComponent implements OnInit {
     currentSeasonOnboardingImageLink
   );
   readonly currentStep$ = this._store.select(loginStep);
+
+  public readonly projects = this._projects.events;
+  public readonly challenges = this._challenges.challenges;
+
+  // public readonly _logProjects = effect(() => {
+  //   const projects = this.projects();
+  //   const challenges = this.challenges();
+  //
+  //   const projectsWithChallenges = projects.map((project) => ({
+  //     ...project,
+  //     challenges: challenges.filter(
+  //       (challenge) => challenge.project_id === project.id
+  //     ),
+  //   }));
+  //
+  //   return projectsWithChallenges.sort((a, b) => {
+  //     const aName = a.title.toLowerCase();
+  //     const bName = b.title.toLowerCase();
+  //     return aName.localeCompare(bName);
+  //   });
+  // });
 
   helpHref = signal('');
   code = '';
@@ -128,7 +153,7 @@ export class LoginComponent implements OnInit {
   checkEmail() {
     const email = this.emailFormCtrl.value;
     if (!this.emailFormCtrl.valid) {
-      this._snackbar.open('Please enter a valid email address');
+      // this._snackbar.open('Please enter a valid email address');
       return;
     }
 
@@ -246,7 +271,7 @@ export class LoginComponent implements OnInit {
 
   checkCode() {
     if (!this.code) {
-      this._snackbar.open('Please enter an access code');
+      // this._snackbar.open('Please enter an access code');
     }
 
     // this.mainUtil.isLoading = { message: 'Checking code' };

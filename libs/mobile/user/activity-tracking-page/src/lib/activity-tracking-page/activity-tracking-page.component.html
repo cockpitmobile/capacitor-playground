@@ -7,9 +7,9 @@
     align-items: center;
   ">
   <div style="display: flex; flex-direction: column; height: 20%">
-    <button mat-flat-button color="primary" style="width: 50%" (click)="stop()">
+    <p-button (click)="stop()" class="half-width">
       Stop Tracking
-    </button>
+    </p-button>
 
     <div>Duration: {{ duration$ | async }}</div>
   </div>

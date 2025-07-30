@@ -84,8 +84,20 @@
         "libs/mobile/effects/in-app-browser/src/index.ts"
       ],
       "@cockpit/effects-login": ["libs/mobile/effects/login/src/index.ts"],
+      "@cockpit/event-selection-list-page": [
+        "libs/mobile/pages/event-selection-list/src/index.ts"
+      ],
+      "@cockpit/mobile-data-access-challenges": [
+        "libs/mobile/shared/data-access/challenges/src/index.ts"
+      ],
       "@cockpit/mobile-data-access-users": [
         "libs/mobile/shared/data-access/users/src/index.ts"
+      ],
+      "@cockpit/mobile-page-event-selection-list": [
+        "libs/mobile/pages/event-selection-list/src/index.ts"
+      ],
+      "@cockpit/mobile-projects-data-access": [
+        "libs/mobile/shared/data-access/events/src/index.ts"
       ],
       "@cockpit/mobile/activities": [
         "libs/mobile/shared/data-access/activities/src/index.ts"

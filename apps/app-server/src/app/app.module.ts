@@ -23,6 +23,7 @@ import { ApiControllersAdminRewardsModule } from '@cockpit/api-controllers-admin
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { ApiDataAccessCacheModule } from '@cockpit/api/data-access/cache-service';
+import { ProjectsControllerModule } from '../../../../libs/api/controllers/projects/projectsControllerModule';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ApiDataAccessCacheModule } from '@cockpit/api/data-access/cache-service
     ApiControllersRewardsModule,
     ApiControllersAdminRewardsModule,
     ApiDataAccessCacheModule,
+    ProjectsControllerModule,
     JwtModule.register({
       global: true,
       secret: JWT_CONSTANTS.secret,

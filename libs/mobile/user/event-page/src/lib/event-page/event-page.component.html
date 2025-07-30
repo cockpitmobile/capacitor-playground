@@ -3,34 +3,18 @@
   <div style="display: flex">
     @if (isSyncing$ | async) {
       <span>Syncing Changes</span>
-      <mat-spinner diameter="5"></mat-spinner>
+      <p-progress-spinner diameter="5"></p-progress-spinner>
     }
   </div>
 </div>
 <div style="display: flex; flex-direction: column; align-items: center">
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="start()"
-    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
-    Start Tracking
-  </button>
+  <p-button (click)="start()" class="half-button"> Start Tracking </p-button>
 
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="share()"
-    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
-    Test Share
-  </button>
+  <p-button (click)="share()" class="half-button"> Test Share </p-button>
 
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="requestLocalNotifications()"
-    style="width: 50%; margin-top: 16px; margin-bottom: 16px">
+  <p-button class="half-button" (click)="requestLocalNotifications()">
     Request Local Notifications
-  </button>
+  </p-button>
 
   <div style="width: 100%">
     <cockpit-activity-selector
@@ -52,13 +36,9 @@
     }
 
     @if (!activity.image) {
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="requestPhoto(activity.id)"
-        style="width: 50%; margin-top: 16px">
+      <p-button class="half-button" (click)="requestPhoto(activity.id)">
         Request Photo For Activity {{ activity.id }}
-      </button>
+      </p-button>
     }
   }
 </div>

@@ -3,3 +3,5 @@ export * from './lib/tracked-activity.interface';
 export * from './lib/photo-info.interface';
 export * from './lib/user.interface';
 export * from './lib/login-step.type';
+export * from './lib/project.interface';
+export * from './lib/challenge.interface';
