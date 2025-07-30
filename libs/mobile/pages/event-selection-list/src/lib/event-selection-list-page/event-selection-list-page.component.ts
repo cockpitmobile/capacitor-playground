@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventService } from '@cockpit/mobile-projects-data-access';
 import { CardModule } from 'primeng/card';
+import { RAAEvent } from '@cockpit/mobile/data-models';
 
 @Component({
   selector: 'lib-event-selection-list-page',
@@ -16,5 +17,9 @@ export class EventSelectionListPageComponent implements OnInit {
 
   ngOnInit() {
     this._eventService.getAll().subscribe();
+  }
+
+  selectEvent(event: RAAEvent) {
+    this._eventService.selectEvent(event);
   }
 }

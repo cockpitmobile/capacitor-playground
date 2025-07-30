@@ -14,6 +14,13 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'events/:id',
+    loadComponent: () =>
+      import('@cockpit/current-event-page').then(
+        (m) => m.CurrentEventPageComponent
+      ),
+  },
+  {
     path: 'test',
     loadComponent: () =>
       import('@cockpit/mobile/event-page').then((m) => m.EventPageComponent),

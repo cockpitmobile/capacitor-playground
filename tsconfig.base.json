@@ -80,6 +80,9 @@
       ],
       "@cockpit/api/habits": ["libs/api/controllers/habits/src/index.ts"],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
+      "@cockpit/current-event-page": [
+        "libs/mobile/pages/current-event/src/index.ts"
+      ],
       "@cockpit/effects-in-app-browser": [
         "libs/mobile/effects/in-app-browser/src/index.ts"
       ],
