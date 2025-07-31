@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppService {
   private readonly _router = inject(Router);
@@ -19,6 +19,10 @@ export class AppService {
 
   navigateToTeams() {
     this._router.navigate(['user', 'teams']);
+  }
+
+  navigateToExplore() {
+    this._router.navigate(['user', 'explore']);
   }
 
   toggleUserSideMenu() {

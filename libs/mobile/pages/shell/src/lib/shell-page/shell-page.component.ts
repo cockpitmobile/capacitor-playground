@@ -7,7 +7,6 @@ import { UserSideMenuComponent } from '@cockpit/user-side-menu';
 import { BottomNavIconComponent } from '@cockpit/bottom-nav-icon';
 import { Store } from '@ngrx/store';
 import { selectUrl } from '@cockpit/mobile/network-state';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lib-shell-page',
@@ -40,7 +39,6 @@ export class ShellPageComponent {
 
   public readonly isOnTeamsPage = computed(() => {
     const url = this.currentUrl();
-    console.log('Current URL:', url);
     return url?.includes('teams') || false;
   });
 
@@ -50,6 +48,10 @@ export class ShellPageComponent {
 
   navigateToTeams() {
     this._appService.navigateToTeams();
+  }
+
+  navigateToExplore() {
+    this._appService.navigateToExplore();
   }
 
   toggleSideBar() {

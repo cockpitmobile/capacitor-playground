@@ -19,6 +19,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'explore',
+        loadComponent: () =>
+          import('@cockpit/event-explore-page').then(
+            (m) => m.EventExplorePageComponent
+          ),
+      },
+      {
         path: 'current-event',
         loadComponent: () =>
           import('@cockpit/current-event-page').then(

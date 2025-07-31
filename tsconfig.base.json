@@ -96,6 +96,9 @@
       "@cockpit/event-disclaimer": [
         "libs/mobile/components/event-disclaimer/src/index.ts"
       ],
+      "@cockpit/event-explore-page": [
+        "libs/mobile/pages/event-explore/src/index.ts"
+      ],
       "@cockpit/event-goal-animation": [
         "libs/mobile/components/event-goal-animation/src/index.ts"
       ],

@@ -25,7 +25,7 @@ export class EventGoalAnimationComponent {
 
   animationSvg = computed<SafeHtml | undefined>(() => {
     const eventInfo = this.eventInfo();
-    return eventInfo.animation_body && eventInfo.animation_function
+    return eventInfo?.animation_body && eventInfo?.animation_function
       ? this._domSanitizer.bypassSecurityTrustHtml(eventInfo.animation_body)
       : undefined;
   });
@@ -34,7 +34,7 @@ export class EventGoalAnimationComponent {
   animationFunc = computed<Function | undefined>(() => {
     const eventInfo = this.eventInfo();
 
-    return eventInfo.animation_function
+    return eventInfo?.animation_function
       ? new Function('n', eventInfo.animation_function)
       : undefined;
   });
@@ -42,7 +42,7 @@ export class EventGoalAnimationComponent {
   backupImage = computed(() => {
     const eventInfo = this.eventInfo();
 
-    return eventInfo.race_banner_image_link
+    return eventInfo?.race_banner_image_link
       ? `${eventInfo.race_banner_image_link}?${new Date().getTime()}`
       : '';
   });
