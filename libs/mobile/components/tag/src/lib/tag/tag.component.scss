@@ -1,0 +1,21 @@
+.teamTagContainer {
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 3px 5px;
+  &.inverted {
+    padding: 1px 8px;
+  }
+  .teamTagIcon {
+    font-size: 12px;
+    margin-right: 5px;
+    &.inverted {
+      font-size: 15px;
+    }
+  }
+  .teamTag {
+    font-size: 10px;
+    &.inverted {
+      font-size: 12px;
+    }
+  }
+}

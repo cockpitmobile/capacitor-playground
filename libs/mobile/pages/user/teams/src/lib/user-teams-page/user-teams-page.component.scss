@@ -1,0 +1,52 @@
+.teamListInfoContainer {
+  margin-left: 10px;
+  font-weight: 600;
+  overflow: hidden;
+  .teamListName {
+    text-overflow: ellipsis;
+    word-wrap: none;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .teamListNotifications {
+    height: 8px;
+    width: 8px;
+    border-radius: 8px;
+  }
+  .finishersMembersContainer{
+    font-size: 13px;
+    margin-top: 5px;
+    .finishers {
+      font-weight: 600;
+      color: #424242;
+    }
+    .members {
+      color: #a0a19e;
+    }
+  }
+}
+.memberTagContainer {
+  margin-top: 5px;
+  overflow: visible;
+  .memberCount {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: -2px
+  }
+  .teamTag {
+    margin-top: -2px;
+  }
+}
+.viewTeamButton {
+  width: 80px;
+  border-radius: 25px;
+  margin-top: 10px;
+  .viewTeamButtonText {
+    margin-top: -4px;
+  }
+}
+.contactForTeamContainer {
+  text-align: center;
+  margin-top: 15px;
+  padding-bottom: 15px;
+}

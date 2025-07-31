@@ -1,6 +1,6 @@
-<nav class="flex header bg-primary justify-space-between items-center fixed w-full top-0 left-0 right-0 z-50 shadow-md text-white">
-  <i class="pi pi-user ml-4"></i>
-  <div class="text-white text-lg">
+<nav
+  class="flex header bg-primary justify-space-between items-center fixed w-full top-0 left-0 right-0 z-50 shadow-md text-white">
+  <div class="text-white text-lg flex-1 ml-4">
     {{ currentEvent()?.title }}
   </div>
   <div class="flex">
@@ -13,23 +13,70 @@
   <router-outlet></router-outlet>
 </main>
 
-<footer class="fixed bottom-0 left-0 right-0 z-50 bg-primary footer text-white">
-  <div class="flex justify-space-between pt-2">
-    <div class="flex flex-col justify-center items-center">
-      <i class="pi pi-home ml-4"></i>
-      <span class="ml-4">Home</span>
-    </div>
-
+<footer
+  class="fixed bottom-0 left-0 right-0 z-50 bg-white footer flex justify-around top-elevated">
+  @if (currentEvent()?.event_details_link) {
+    <!--    TODO: -->
+    <!--    (click)="refreshExplore(); changeTab(2);"-->
+    <!--    EXPLORE   -->
     <div
-      class="flex flex-col justify-center items-center"
-      (click)="navigateToCurrentEvent()">
-      <i class="pi pi-calendar ml-4"></i>
-      <span class="ml-4">Record</span>
+      class="flex justify-center items-center px-2"
+      style="position: relative; font-size: 13px; height: 40px">
+      <div class="mr-2" style="height: 20px; width: 20px; margin-bottom: -2px">
+        <app-bottom-nav-icon
+          [type]="isOnExplorePage() ? 'explore' : 'exploreOutline'"
+          [color]="
+            isOnExplorePage() ? 'var(--p-primary-color)' : '#666666'
+          "></app-bottom-nav-icon>
+      </div>
+      <div
+        [style.color]="isOnExplorePage() ? 'var(--p-primary-color)' : '#666666'"
+        class="mt-1 text-center"
+        style="font-size: 16px; font-family: 'Miriam Libre', sans-serif">
+        Explore
+      </div>
     </div>
+  }
 
-    <div class="flex flex-col justify-center items-center">
-      <i class="pi pi-cog mx-4"></i>
-      <span class="mx-4">Teams</span>
+  <!--  EVENT -->
+  <div
+    class="flex justify-center items-center px-2"
+    (click)="navigateToCurrentEvent()"
+    style="position: relative; font-size: 13px; height: 40px">
+    <div class="mr-2" style="height: 25px; width: 20px; margin-bottom: -2px">
+      <app-bottom-nav-icon
+        [type]="isOnCurrentEventPage() ? 'race' : 'raceOutline'"
+        [color]="
+          isOnCurrentEventPage() ? 'var(--p-primary-color)' : '#666666'
+        "></app-bottom-nav-icon>
+    </div>
+    <div
+      class="mt-1 text-center"
+      [style.color]="
+        isOnCurrentEventPage() ? 'var(--p-primary-color)' : '#666666'
+      "
+      style="font-size: 16px; font-family: 'Miriam Libre', sans-serif">
+      Record
+    </div>
+  </div>
+
+  <!--  TEAMS -->
+  <div
+    class="flex justify-center items-center px-2"
+    (click)="navigateToTeams()"
+    style="position: relative; font-size: 13px; height: 40px">
+    <div class="mr-2" style="height: 20px; width: 20px; margin-bottom: -2px">
+      <app-bottom-nav-icon
+        [type]="isOnTeamsPage() ? 'team' : 'teamOutline'"
+        [color]="
+          isOnTeamsPage() ? 'var(--p-primary-color)' : '#666666'
+        "></app-bottom-nav-icon>
+    </div>
+    <div
+      class="mt-1 text-center"
+      [style.color]="isOnTeamsPage() ? 'var(--p-primary-color)' : '#666666'"
+      style="font-size: 16px; font-family: 'Miriam Libre', sans-serif">
+      Teams
     </div>
   </div>
 </footer>

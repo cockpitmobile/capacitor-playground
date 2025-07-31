@@ -1,7 +1,7 @@
 {
   "name": "event-page",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/user/event-page/src",
+  "sourceRoot": "libs/mobile/user/event-page/src",
   "prefix": "cockpit",
   "tags": [
     "scope:frontend"

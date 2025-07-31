@@ -1,7 +1,7 @@
 {
   "name": "mobile-projects-data-access",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/mobile/shared/data-access/projects/src",
+  "sourceRoot": "libs/mobile/shared/data-access/events/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": ["scope:frontend", "type:data-access"],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/mobile/shared/data-access/projects/jest.config.ts"
+        "jestConfig": "libs/mobile/shared/data-access/events/jest.config.ts"
       }
     },
     "lint": {

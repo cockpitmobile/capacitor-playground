@@ -1,0 +1,20 @@
+<div class="bg-white p-4" style="font-size: 18px">
+  <div style="font-weight: 600">
+    How does the
+    {{ eventInfo().race_event_type === 'cumulative' ? 'challenge' : 'race' }}
+    work?
+  </div>
+  @if (eventInfo().config?.how_description) {
+    <div
+      [innerHTML]="eventInfo().config!.how_description"
+      style="margin-top: 7px; font-size: 13px"></div>
+  } @else {
+    <div style="margin-top: 7px; font-size: 13px">
+      To track your activity, you'll choose the activity tracking app that's
+      right for you. We recommend choosing whichever method you're most used to
+      as location tracking can vary by device and app. You can try out the
+      tracking process as many times as you like before the season using the
+      <b>Practice</b> button above.
+    </div>
+  }
+</div>

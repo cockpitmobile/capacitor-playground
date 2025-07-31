@@ -1,0 +1,50 @@
+@if (team().race_team_extra_info?.race_team_tag) {
+  <div
+    class="flex align-center"
+    [class]="invertedColor() ? 'teamTagContainer inverted' : 'teamTagContainer'"
+    [style.marginLeft]="marginLeft()"
+    [style.backgroundColor]="
+      !invertedColor()
+        ? !team().race_team_extra_info.accent_color
+          ? 'var(--primary-color)'
+          : team().race_team_extra_info.accent_color
+        : 'white'
+    "
+    [style.color]="invertedColor() ? textColor() : 'white'">
+    @if (
+      team().race_team_extra_info.race_team_tag === 'Team workouts' ||
+      team().race_team_extra_info.race_team_tag === 'Giveaways'
+    ) {
+      <span
+        [style.color]="
+          invertedColor()
+            ? textColor() === '#ffffff'
+              ? accentColor()
+              : textColor()
+            : 'white'
+        "
+        class="{{
+          'teamTagIcon ' +
+            (invertedColor() ? 'inverted' : '') +
+            ' fas fa-' +
+            team().race_team_extra_info.race_team_tag ===
+          'Team workouts'
+            ? 'dumbbell'
+            : 'gift'
+        }}">
+      </span>
+    }
+
+    <span
+      [class]="invertedColor() ? 'teamTag inverted' : 'teamTag'"
+      [style.color]="
+        invertedColor()
+          ? textColor() === '#ffffff'
+            ? accentColor()
+            : textColor()
+          : 'white'
+      ">
+      {{ team().race_team_extra_info.race_team_tag.toUpperCase() }}
+    </span>
+  </div>
+}

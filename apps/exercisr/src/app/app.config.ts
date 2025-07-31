@@ -17,7 +17,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { activitiesReducer } from '@cockpit/mobile/activities-state';
 import { trackingReducer } from '@cockpit/mobile/tracking-state';
 import { ActivitiesEffects } from '@cockpit/mobile/activities-effects';
-import { provideRouterStore } from '@ngrx/router-store';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { AppInitEffect } from '@cockpit/mobile/app-init-effects';
 import { TrackingEffects } from '@cockpit/mobile/tracking-effects';
 import { networkReducer } from '@cockpit/mobile/network-state';
@@ -75,6 +75,7 @@ export const appConfig: ApplicationConfig = {
       network: networkReducer,
       login: loginReducer,
       global: globalReducer,
+      router: routerReducer,
     }),
     provideEffects(
       AppInitEffect,

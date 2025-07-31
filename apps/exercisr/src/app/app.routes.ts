@@ -25,6 +25,13 @@ export const appRoutes: Route[] = [
             (m) => m.CurrentEventPageComponent
           ),
       },
+      {
+        path: 'teams',
+        loadComponent: () =>
+          import('@cockpit/user-teams-page').then(
+            (m) => m.UserTeamsPageComponent
+          ),
+      },
     ],
   },
   {

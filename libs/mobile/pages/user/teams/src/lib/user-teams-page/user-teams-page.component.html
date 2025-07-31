@@ -1,0 +1,232 @@
+<div style="display: grid; overflow: hidden; grid-template-rows: 1fr">
+  <div id="raceTeamScroll" class="bg-gray overflow-auto scroll-smooth">
+    <div
+      class="p-4 bg-gray"
+      id="teams"
+      style="height: 60px; border-bottom: 1px solid #dedede">
+      <div style="font-weight: 600">Teams</div>
+    </div>
+
+    <!--    USER TEAMS-->
+    @if (userTeams().length) {
+      <div>
+        @for (team of userTeams(); track team.team.id) {
+          <!--          TODO:   -->
+          <!--          (click)="viewTeam(team)"-->
+          <div
+            class="flex justify-between items-stretch bg-white p-4"
+            style="border-bottom: 1px solid #dedede">
+            <div
+              style="
+                overflow: hidden;
+                display: grid;
+                grid-template-columns: 45px 1fr;
+              ">
+              @if (team.team.team_image) {
+                <div
+                  class="flex flex-col justify-center items-stretch color-primary"
+                  style="
+                    border-radius: 35px;
+                    border: 1px solid;
+                    height: 45px;
+                    width: 45px;
+                    overflow: hidden;
+                    margin-top: 5px;
+                  "
+                  [style.color]="
+                    !team.team.race_team_extra_info ||
+                    !team.team.race_team_extra_info.accent_color
+                      ? 'var(--p-primary-color)'
+                      : team.team.race_team_extra_info.accent_color
+                  ">
+                  <img
+                    [src]="team.team.team_image"
+                    [alt]="team.team.name"
+                    style="height: 65px; width: 65px" />
+                </div>
+              } @else {
+                <div
+                  class="flex items-center justify-center"
+                  style="
+                    border: 1px solid;
+                    border-radius: 30px;
+                    width: 45px;
+                    height: 45px;
+                  "
+                  [style.color]="
+                    !team.team.race_team_extra_info ||
+                    !team.team.race_team_extra_info.accent_color
+                      ? 'var(--p-primary-color)'
+                      : team.team.race_team_extra_info.accent_color
+                  ">
+                  <span
+                    style="font-size: 25px"
+                    class="{{ 'fas fa-' + team.team.icon }}"
+                    [style.color]="
+                      !team.team.race_team_extra_info ||
+                      !team.team.race_team_extra_info.accent_color
+                        ? 'var(--p-primary-color)'
+                        : team.team.race_team_extra_info.accent_color
+                    "></span>
+                </div>
+              }
+
+              <div class="teamListInfoContainer flex align-center">
+                <div class="flex">
+                  <div
+                    class="teamListName"
+                    [style.color]="
+                      !team.team.race_team_extra_info ||
+                      !team.team.race_team_extra_info.accent_color
+                        ? 'var(--p-primary-color)'
+                        : team.team.race_team_extra_info.accent_color
+                    ">
+                    {{ team.team.name }}
+                  </div>
+                  <!--                  TODO: -->
+                  <!--                  <div-->
+                  <!--                    *ngIf="hasNewNotifications(team)"-->
+                  <!--                    class="teamListNotifications"-->
+                  <!--                    [style.backgroundColor]="-->
+                  <!--                      mainUtil.headerBackgroundColor-->
+                  <!--                    "></div>-->
+                </div>
+                <div class="finishersMembersContainer flex">
+                  <app-tag [team]="team" [marginLeft]="'10px'" />
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!--    TODO: -->
+    <div class="p-3">
+      <div class="p-5">
+        <div>
+          We know you're active in multiple circles, so you can create and join
+          multiple teams.
+        </div>
+      </div>
+      <div
+        class="p-3 overflow-hidden"
+        style="display: grid; grid-template-columns: 1fr 1fr">
+        <!--        TODO: (click)="createTeam()"-->
+        <p-button
+          class="bg-primary text-white rounded mr-1 text-center"
+          id="createTeam"
+          label="Create Team">
+        </p-button>
+        <!--        TODO: (click)="joinTeamDialog()"-->
+        <p-button
+          id="joinTeam"
+          class="bg-primary text-white rounded mr-1 text-center"
+          label="Join Team">
+        </p-button>
+      </div>
+    </div>
+
+    <!--    FEATURED TEAMS -->
+    @if (featuredTeams().length) {
+      <div>
+        <div
+          class="p-4 bg-gray"
+          id="featuredTeams"
+          style="height: 60px; border-bottom: 1px solid #dedede">
+          <div style="font-weight: 600">Featured Teams</div>
+        </div>
+        @for (team of featuredTeams(); track team.team.id) {
+          <div>
+            @if (!team.team.isMember) {
+              <div
+                class="bg-white p-5"
+                style="
+                  display: grid;
+                  grid-template-columns: 85px 1fr;
+                  border-bottom: 1px solid #dedede;
+                ">
+                <div
+                  class="flex items-center overflow-hidden"
+                  style="
+                    border: 1px solid;
+                    border-radius: 85px;
+                    width: 85px;
+                    height: 85px;
+                  "
+                  [style.borderColor]="
+                    !team.team.race_team_extra_info ||
+                    !team.team.race_team_extra_info.accent_color
+                      ? 'var(--p-primary-color)'
+                      : team.team.race_team_extra_info.accent_color
+                  ">
+                  @if (team.team.team_image) {
+                    <img
+                      [src]="team.team.team_image"
+                      style="height: 85px; width: 85px" />
+                  } @else {
+                    <span
+                      style="font-size: 37px"
+                      class="{{ 'fas fa-' + team.team.icon }}"
+                      [style.color]="
+                        !team.team.race_team_extra_info ||
+                        !team.team.race_team_extra_info.accent_color
+                          ? 'var(--p-primary-color)'
+                          : team.team.race_team_extra_info.accent_color
+                      "></span>
+                  }
+                </div>
+                <div style="margin-left: 15px">
+                  <div
+                    style="font-weight: 600; font-size: 18px"
+                    class="headerFont">
+                    {{ team.team.name }}
+                  </div>
+                  <div class="memberTagContainer flex">
+                    <div class="memberCount">
+                      {{
+                        team.memberCount +
+                          (team.memberCount === 1 ? ' Member' : ' Members')
+                      }}
+                    </div>
+                    <app-tag [team]="team.team" marginLeft="10px" />
+                  </div>
+                  <!--                  TODO: -->
+                  <!--                  (click)="viewTeam(team)">-->
+                  <p-button
+                    class="viewTeamButton text-white rounded"
+                    [style.backgroundColor]="
+                      !team.team.race_team_extra_info ||
+                      !team.team.race_team_extra_info.accent_color
+                        ? 'var(--p-primary-color)'
+                        : team.team.race_team_extra_info.accent_color
+                    "
+                    [style.borderColor]="
+                      !team.team.race_team_extra_info ||
+                      !team.team.race_team_extra_info.accent_color
+                        ? 'var(--p-primary-color)'
+                        : team.team.race_team_extra_info.accent_color
+                    ">
+                    <span class="viewTeamButtonText">View</span>
+                  </p-button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <div
+          class="contactForTeamContainer flex flex-col justify-center items-center">
+          <div>Not seeing a team you'd like to join?</div>
+          <p-button class="bg-primary text-white rounded mt-2 text-center">
+            <a
+              style="text-decoration: none; color: white"
+              href="mailto:hello@nationwiderun.org?subject=Team Suggestion&body=What team would you like to see?">
+              Contact Us!</a
+            >
+          </p-button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

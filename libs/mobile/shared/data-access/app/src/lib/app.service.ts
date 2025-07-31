@@ -17,6 +17,10 @@ export class AppService {
     this._router.navigate(['user', 'event-list']);
   }
 
+  navigateToTeams() {
+    this._router.navigate(['user', 'teams']);
+  }
+
   toggleUserSideMenu() {
     this.isUserSideMenuVisible.update((visible) => !visible);
   }

@@ -1,0 +1,20 @@
+{
+  "name": "bottom-nav-icon",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mobile/components/bottom-nav-icon/src",
+  "prefix": "app",
+  "projectType": "library",
+  "tags": ["scope:frontend"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/mobile/components/bottom-nav-icon/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

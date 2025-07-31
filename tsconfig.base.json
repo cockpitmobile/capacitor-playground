@@ -80,6 +80,9 @@
       ],
       "@cockpit/api/habits": ["libs/api/controllers/habits/src/index.ts"],
       "@cockpit/api/models": ["libs/api/models/src/index.ts"],
+      "@cockpit/bottom-nav-icon": [
+        "libs/mobile/components/bottom-nav-icon/src/index.ts"
+      ],
       "@cockpit/current-event-page": [
         "libs/mobile/pages/current-event/src/index.ts"
       ],
@@ -89,6 +92,9 @@
       "@cockpit/effects-login": ["libs/mobile/effects/login/src/index.ts"],
       "@cockpit/event-challenges": [
         "libs/mobile/components/event-challenges/src/index.ts"
+      ],
+      "@cockpit/event-disclaimer": [
+        "libs/mobile/components/event-disclaimer/src/index.ts"
       ],
       "@cockpit/event-goal-animation": [
         "libs/mobile/components/event-goal-animation/src/index.ts"
@@ -101,6 +107,9 @@
       ],
       "@cockpit/mobile-data-access-challenges": [
         "libs/mobile/shared/data-access/challenges/src/index.ts"
+      ],
+      "@cockpit/mobile-data-access-teams": [
+        "libs/mobile/shared/data-access/teams/src/index.ts"
       ],
       "@cockpit/mobile-data-access-users": [
         "libs/mobile/shared/data-access/users/src/index.ts"
@@ -217,9 +226,11 @@
       "@cockpit/state-in-app-browser": [
         "libs/mobile/state/in-app-browser/src/index.ts"
       ],
+      "@cockpit/tag": ["libs/mobile/components/tag/src/index.ts"],
       "@cockpit/user-side-menu": [
         "libs/mobile/components/user-side-menu/src/index.ts"
       ],
+      "@cockpit/user-teams-page": ["libs/mobile/pages/user/teams/src/index.ts"],
       "@cockpit/util-device": ["libs/mobile/util/device/src/index.ts"]
     }
   },
