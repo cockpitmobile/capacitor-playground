@@ -1,0 +1,144 @@
+<!--TODO: Remove method invocations in template-->
+<div
+  *ngIf="selectProgressBadge(badgeSection()); let badge"
+  class="individualLifetimeBadgeProgress">
+  <div class="lifetimeBadgeTopHalf flex" (click)="openBadge(badge, badge)">
+    <div class="flex justify-center items-center">
+      <div
+        class="badgeImageContainer flex justify-center items-center"
+        [style.backgroundColor]="
+          hasBadgeStarted(badge) ? primaryColor() : '#d5d6d4'
+        ">
+        <img
+          class="badgeImage"
+          [class.grayscale]="!badge.unlocked_date"
+          [src]="badge.image_link" />
+      </div>
+    </div>
+    <div
+      class="badgeInformationContainer flex flex-col justify-between items-start">
+      <div>
+        <div class="badgeTitle">
+          {{ badge.name }}
+        </div>
+        <div class="badgeDescription">
+          <!--          TODO: -->
+          <!--          {{ this.mainUtil.getBadgeDescription(badge) }}-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      badge.challenge_type !== 'single' &&
+      badge.badge_badge_type !== 'single_distance' &&
+      !$any(badgeSection()).event_scavenger_hunt_title
+    ">
+    <div
+      *ngIf="!(badge.badge_reward_info && badge.badge_reward_info.activities)"
+      class="lifetimeBadgeMiddle">
+      <div class="badgeUserInfo" fxLayout="column" fxLayoutAlign="start end">
+        <div class="badgeProgressVal">
+          {{
+            getProgressValue(badge) +
+              ' / ' +
+              getBadgeRewardValue(badge) +
+              ' ' +
+              getBadgeValueUnits(badge)
+          }}
+        </div>
+        <div class="badgeProgressBar">
+          <div
+            class="badgeProgressBarValue"
+            style="background-color: white"
+            [style.width.%]="
+              getProgressPercent(badge) + 0.75 > 100
+                ? 100
+                : !getProgressPercent(badge)
+                  ? 0
+                  : getProgressPercent(badge) + 0.75
+            "></div>
+          <div
+            class="badgeProgressBarValue"
+            [style.backgroundColor]="primaryColor()"
+            [style.width.%]="getProgressPercent(badge)"></div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="badge.badge_reward_info && badge.badge_reward_info.activities"
+      style="margin-top: -10px">
+      <div
+        *ngFor="let activity of badge.badge_reward_info.activities"
+        class="lifetimeBadgeMiddle"
+        style="margin-top: 30px">
+        <div class="badgeUserInfo" fxLayout="column" fxLayoutAlign="start">
+          <div
+            class="badgeProgressVal"
+            fxLayout="row"
+            fxLayoutAlign="space-between">
+            <div style="font-size: 14px">{{ getActivityName(activity) }}</div>
+            <div>
+              {{
+                getProgressForActivity(badge, activity) +
+                  ' ' +
+                  getBadgeValueUnits(badge)
+              }}
+            </div>
+          </div>
+          <div class="badgeProgressBar">
+            <div
+              class="badgeProgressBarValue"
+              style="background-color: white"
+              [style.width.%]="
+                getProgressPercentForActivity(badge, activity) + 0.75 > 100
+                  ? 100
+                  : !getProgressPercentForActivity(badge, activity)
+                    ? 0
+                    : getProgressPercentForActivity(badge, activity) + 0.75
+              "></div>
+            <div
+              class="badgeProgressBarValue"
+              [style.backgroundColor]="primaryColor()"
+              [style.width.%]="
+                getProgressPercentForActivity(badge, activity)
+              "></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="lifetimeBadgeBottomHalf flex flex-wrap"
+    *ngIf="
+      !$any(badgeSection()).badge_group_id &&
+      badge.badge_badge_type !== 'active_days'
+    ">
+    <div
+      *ngFor="let groupBadge of $any(badgeSection()).badges"
+      class="badgeTiers">
+      <img
+        (click)="openBadge(groupBadge, badge)"
+        [style.filter]="getBadgeBrightness(badge, groupBadge)"
+        [src]="groupBadge.image_link"
+        class="badgeTierImage" />
+    </div>
+  </div>
+  <!--  <div-->
+  <!--    *ngIf="-->
+  <!--      badge.badge_badge_type === 'active_days' &&-->
+  <!--      this.season &&-->
+  <!--      this.season.sweepstakes_info &&-->
+  <!--      this.season.sweepstakes_info.terms_conditions_link-->
+  <!--    "-->
+  <!--    class="flex mt-2"-->
+  <!--    (click)="openSweepstakes()">-->
+  <!--    <img-->
+  <!--      fxFlexAlign="center"-->
+  <!--      src="../../../assets/ticket_color.png"-->
+  <!--      style="height: 23px; margin-right: 8px" />-->
+  <!--    <div fxFlexAlign="center" style="font-size: 14px">-->
+  <!--      {{ ticketTotal }} ticket{{ ticketTotal === 1 ? '' : 's' }} earned-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>

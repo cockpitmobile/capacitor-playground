@@ -1,0 +1,28 @@
+.badgeCountContainer {
+  margin-top: 25px;
+  height: 102px;
+  width: 102px;
+  position: relative;
+  .badgeCount {
+    font-family: 'Barlow', sans-serif !important;
+    font-size: 38px;
+    font-weight: bold;
+    color: white;
+    z-index: 1;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  .badgeLogo {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: -18px
+  }
+}
+
+.lifetimeBadgeProgressContainer {
+  width: 100%;
+  overflow-y: auto;
+}

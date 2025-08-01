@@ -4,39 +4,6 @@ import { StorageKey } from '@cockpit/mobile/constants';
 import { Capacitor } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
 
-// import {
-//   createRxDatabase,
-//   addRxPlugin,
-//   RxDatabase,
-//   RxCollection,
-//   RxJsonSchema,
-//   RxDocument,
-// } from 'rxdb';
-// import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
-// import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
-// import { TestActivityCollection, testActivitySchema } from '@cockpit/mobile/data-models';
-
-// let database: MyDatabase;
-
-// async function _createDb(): Promise<MyDatabase> {
-//   addRxPlugin(RxDBDevModePlugin);
-//
-//   const db: MyDatabase = await createRxDatabase({
-//     name: 'testdb',                   // <- name
-//     storage: getRxStorageDexie(),       // <- RxStorage
-//
-//     eventReduce: true,                 // <- eventReduce (performance optimizations)
-//   });
-//
-//   await db.addCollections({
-//     test_activities: {
-//       schema: testActivitySchema
-//     }
-//   });
-//
-//   return db;
-// }
-
 @Injectable({
   providedIn: 'root',
 })
@@ -81,9 +48,3 @@ export class AppStorageService {
     localStorage.setItem(key, JSON.stringify(value));
   }
 }
-
-// export type MyDatabaseCollections = {
-//   test_activities: TestActivityCollection
-// }
-//
-// export type MyDatabase = RxDatabase<MyDatabaseCollections>;

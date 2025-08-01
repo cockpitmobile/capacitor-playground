@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { EventService } from '@cockpit/mobile-projects-data-access';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UsersService } from '@cockpit/mobile-data-access-users';
 
 @Component({
   selector: 'app-event-explore-page',
@@ -18,11 +19,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class EventExplorePageComponent {
   private readonly _eventsService = inject(EventService);
   private readonly _sanitizer = inject(DomSanitizer);
+  private readonly _userService = inject(UsersService);
 
   public readonly currentEvent = this._eventsService.currentEvent;
+  public readonly currentUser = this._userService.currentUser;
 
   public readonly sanitizedLink = computed(() => {
     const eventInfo = this.currentEvent();
+    const user = this.currentUser();
     // let device;
     // if (this.device.model && this.device.manufacturer) {
     //   device = `${this.device.model} ${this.device.manufacturer}`;
@@ -31,7 +35,7 @@ export class EventExplorePageComponent {
     //   }
     // }
     // TODO: check for sanitized link
-    if (eventInfo?.event_details_link) {
+    if (eventInfo?.event_details_link && user?.id) {
       // + '&build_version=' + this.mainUtil.buildVersion + '&os=' + this.deviceDetectorService.os + '&app_version=' + (this.mainUtil.isIOS ? WebVersion.iosVersion : WebVersion.androidVersion)
       //         + (device ? '&device=' + device : '')
       // this.sanitizedLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.project.event_details_link + '?user_id=' + this.userService.currentUser.id +
@@ -41,7 +45,7 @@ export class EventExplorePageComponent {
       return this._sanitizer.bypassSecurityTrustResourceUrl(
         eventInfo.event_details_link +
           '?user_id=' +
-          '0d44cba2-91f7-40f1-8107-353413e44b3d' +
+          user.id +
           '&project_id=' +
           eventInfo.id
       );

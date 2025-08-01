@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { TeamsService } from '@cockpit/mobile-data-access-teams';
 import { TagComponent } from '@cockpit/tag';
 import { Button } from 'primeng/button';
+import { UsersService } from '@cockpit/mobile-data-access-users';
 
 @Component({
   selector: 'app-user-teams-page',
@@ -18,14 +19,17 @@ import { Button } from 'primeng/button';
 })
 export class UserTeamsPageComponent implements OnInit {
   private readonly _teamsService = inject(TeamsService);
+  private readonly _userService = inject(UsersService);
 
   public readonly userTeams = this._teamsService.userTeams;
   public readonly featuredTeams = this._teamsService.featuredTeams;
+  public readonly currentUser = this._userService.currentUser;
 
   ngOnInit() {
-    this._teamsService
-      .getForUser('0d44cba2-91f7-40f1-8107-353413e44b3d')
-      .subscribe();
+    const user = this._userService.currentUser();
+    if (user) {
+      this._teamsService.getForUser(user.id).subscribe();
+    }
     this._teamsService.getFeatured().subscribe();
   }
 }

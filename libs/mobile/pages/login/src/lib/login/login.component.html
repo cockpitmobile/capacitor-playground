@@ -6,7 +6,8 @@
         <ng-container>
           <img id="onboarding-image" [src]="onboardingImage$ | async" />
 
-          <div class="flex-col align-center justify-center w-100 h-100">
+          <div
+            class="flex-col align-center justify-center w-100 h-100 items-center">
             <div class="flex align-center text" style="font-size: 20px">
               {{ welcomeText$ | async }}
             </div>
@@ -24,14 +25,13 @@
             <p-button
               id="submit"
               class="buttonFilled big-button login-button"
-              [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async"
               (click)="checkEmail()">
               <div style="margin-top: -3px">Continue</div>
             </p-button>
           </div>
         </ng-container>
       }
+
       @case ('hasEmail') {
         <ng-container>
           <div class="login-section-header">
@@ -44,10 +44,7 @@
           </div>
 
           <div class="w-100 h-100 flex flex-col align-center">
-            <p-button
-              class="buttonFilled big-button login-button"
-              [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async">
+            <p-button class="buttonFilled big-button login-button">
               <div style="margin-top: -3px" (click)="emailCode()">
                 Email me a login code
               </div>
@@ -82,10 +79,7 @@
           </div>
 
           <div class="w-100 h-100 flex flex-col align-center">
-            <p-button
-              class="buttonFilled big-button login-button"
-              [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async">
+            <p-button class="buttonFilled big-button login-button">
               <div style="margin-top: -3px" (click)="createNewAccount()">
                 Create new account
               </div>
@@ -126,12 +120,8 @@
               id="code-ctrl"
               required
               (keydown)="keydown($event, 'code')" />
-
-            <p-button
-              class="buttonFilled big-button login-button"
-              [style.backgroundColor]="secondaryColor$ | async"
-              [style.borderColor]="secondaryColor$ | async">
-              <div style="margin-top: -3px" (click)="checkCode()">Login</div>
+            <p-button class="buttonFilled big-button login-button">
+              <div style="margin-top: -3px" (click)="login()">Login</div>
             </p-button>
 
             <a (click)="backToLogin()" class="accountSeason">Cancel</a>

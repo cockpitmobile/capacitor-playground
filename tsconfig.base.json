@@ -108,8 +108,14 @@
       "@cockpit/mobile-data-access-app": [
         "libs/mobile/shared/data-access/app/src/index.ts"
       ],
+      "@cockpit/mobile-data-access-badges": [
+        "libs/mobile/shared/data-access/badges/src/index.ts"
+      ],
       "@cockpit/mobile-data-access-challenges": [
         "libs/mobile/shared/data-access/challenges/src/index.ts"
+      ],
+      "@cockpit/mobile-data-access-login": [
+        "libs/mobile/shared/data-access/login/src/index.ts"
       ],
       "@cockpit/mobile-data-access-teams": [
         "libs/mobile/shared/data-access/teams/src/index.ts"
@@ -230,6 +236,7 @@
         "libs/mobile/state/in-app-browser/src/index.ts"
       ],
       "@cockpit/tag": ["libs/mobile/components/tag/src/index.ts"],
+      "@cockpit/user-badges": ["libs/mobile/pages/user-badges/src/index.ts"],
       "@cockpit/user-side-menu": [
         "libs/mobile/components/user-side-menu/src/index.ts"
       ],

@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
@@ -20,29 +20,22 @@ import { InAppBrowserActions } from '@cockpit/state-in-app-browser';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
 import { getHelpLinkFromDeviceAndAppInfo } from '@cockpit/util-device';
-import { EventService } from '@cockpit/mobile-projects-data-access';
-import { ChallengesService } from '@cockpit/mobile-data-access-challenges';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
+import { LoginService } from '@cockpit/mobile-data-access-login';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'cockpit-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    Checkbox,
-    FormsModule,
-    Button,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, Checkbox, FormsModule, Button],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   private readonly _store = inject(Store);
   private readonly _snackbar = inject(SnackbarService);
-  private readonly _projects = inject(EventService);
-  private readonly _challenges = inject(ChallengesService);
+  private readonly _loginService = inject(LoginService);
 
   readonly primaryColor$ = this._store.select(currentSeasonPrimaryColor);
   readonly secondaryColor$ = this._store.select(currentSeasonSecondaryColor);
@@ -52,9 +45,6 @@ export class LoginComponent implements OnInit {
   );
   readonly currentStep$ = this._store.select(loginStep);
 
-  public readonly projects = this._projects.events;
-  public readonly challenges = this._challenges.challenges;
-
   helpHref = signal('');
   code = '';
 
@@ -63,10 +53,6 @@ export class LoginComponent implements OnInit {
   sendEventUpdatesCtrl = new FormControl(true);
 
   ngOnInit() {
-    // this.mainUtil.showSafeArea = false;
-    // this.statusBar.show();
-
-    // TODO: Apple privacy manifest requirements: https://capacitorjs.com/docs/apis/device#deviceinfo
     Promise.all([Device.getInfo(), App.getInfo()]).then(([device, app]) =>
       this.helpHref.set(getHelpLinkFromDeviceAndAppInfo(device, app))
     );
@@ -104,7 +90,7 @@ export class LoginComponent implements OnInit {
       event.preventDefault();
       switch (type) {
         case 'code':
-          this.checkCode();
+          this.login();
           break;
         case 'email':
           this.checkEmail();
@@ -149,142 +135,33 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // let response;
-    //   if (this.code) {
-    //     response = await this.userService.authenticate('', this.code.toUpperCase().trim())
-    //       .pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
-    //         console.log(error);
-    //         this.mainUtil.handleError(error);
-    //       });
-    //   }
-    //   if (!response || !response.user || !response.user.has_authenticated) {
-    //     this.mainUtil.isLoading = false;
-    //     if (response.user && response.projects && !response.user.has_authenticated) {
-    //       this.userService.currentUser = response.user;
-    //       this.userService.currentUser.worker_projects = response.projects;
-    //     }
-    //     return false;
-    //   }
-    // this.userService.currentUser = response.user;
-    //
-    // if (this.userService.currentUser.is_participant) {
-    //   try {
-    //     const x = await forkJoin([
-    //       this.userService.getAppSwitches(),
-    //       this.petService.getPetsForOwner(this.userService.currentUser.id),
-    //       this.userService.getUsersUpcomingPlans(this.userService.currentUser.id),
-    //       this.userService.getUnreadNotifications(this.userService.currentUser.id),
-    //       this.userService.getUserUnlockedBadges(this.userService.currentUser.id),
-    //       this.userService.getUserTickets(this.userService.currentUser.id),
-    //     ]).pipe(timeout(this.mainUtil.timeoutLimit)).toPromise();
-    //     const userInfo = x[0];
-    //     const plans = x[2];
-    //     this.raceTeamService.userPlans = plans.user_plans;
-    //     this.raceTeamService.userPlans.forEach(element => {
-    //       element.RaceTeamMember = plans.race_team_members.find(r => r.race_team_id === element.race_team_id);
-    //     });
-    //     const notifications = x[3];
-    //     this.userService.currentUser.unread_notifications = notifications.notifications;
-    //     this.userService.currentUser.unlocked_badges = x[4].unlocked_badges;
-    //     this.userUtil.setCurrentUserTickets(x[5].tickets);
-    //     this.userService.currentUser.appSwitch = userInfo;
-    //     this.userService.currentUser.worker_projects = response.projects;
-    //     await this.mainUtil.sortProjects();
-    //     await this.mainUtil.setParticipantAndDates();
-    //     this.mainUtil.setProjectTimesAccordingToTimezones();
-    //
-    //     try {
-    //       (window as any).plugins.appsFlyer.logEvent('af_login', { email: this.userService.currentUser.email, user_id: this.userService.currentUser.id, isProduction: environment.production }, () => { console.log('SUCCESS!!'); }, (err) => { console.log('ERROR'); console.log(err); });
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //
-    //     try {
-    //       (window as any).facebookConnectPlugin.logEvent('login', {}, 0, () => console.log('FB EVENT SUCCESS'), fbErr => { console.log('FB EVENT ERROR'); console.error(fbErr); });
-    //     } catch (err) {
-    //       console.error(err);
-    //     }
-    //   } catch (error) {
-    //     this.mainUtil.handleError(error);
-    //     this.mainUtil.isLoading = false;
-    //     return false;
-    //   }
-    // } else {
-    //   let companyId = localStorage.getItem(this.userService.currentUser.id + '-companyId');
-    //   if (!companyId || companyId.length === 0) {
-    //     companyId = this.userService.currentUser.companies[0].id;
-    //     localStorage.setItem(this.userService.currentUser.id + '-companyId', companyId);
-    //   }
-    //   const userInfo = await forkJoin([
-    //     this.companyService.getCompany(companyId),
-    //     this.projectService.getProjectsForCompanyUser(this.userService.currentUser.id, companyId),
-    //     this.userService.getUserUnlockedBadges(this.userService.currentUser.id)
-    //   ]).pipe(timeout(this.mainUtil.timeoutLimit)).toPromise().catch((error) => {
-    //     this.mainUtil.handleError(error);
-    //   });
-    //   if (!userInfo) {
-    //     this.mainUtil.isLoading = false;
-    //     return false;
-    //   }
-    //
-    //   this.companyService.currentCompany = userInfo[0];
-    //   this.userService.currentUser.worker_projects = userInfo[1].projects;
-    //   await this.mainUtil.setParticipantAndDates();
-    //   await this.localDbService.storeCompanyInformation(this.companyService.currentCompany);
-    // }
-    // let savedCompanyId = localStorage.getItem(this.userService.currentUser.id + '-companyId');
-    // if (!savedCompanyId) {
-    //   savedCompanyId = this.userService.currentUser.companies.length ? this.userService.currentUser.companies[0].id : '0000';
-    // }
-    // await this.localDbService.storeProjects(this.userService.currentUser.worker_projects, savedCompanyId);
-    // await this.localDbService.storeUserInformation(this.userService.currentUser);
-    //
-    // this.mainUtil.sendGoogleAnalyticsEvent('SignIn_Login');
-    // document.getElementById('body').classList.add('dailyDistanceInputs');
-    // this.router.navigateByUrl('user').then(() => {
-    //   this.mainUtil.isLoading = false;
-    //   this.dialogsUtil.checkNotifications();
-    //   this.mainUtil.showSafeArea = true;
-    // }).catch(() => {
-    //   this.mainUtil.isLoading = false;
-    // });
-    // return true;
-  }
+    const email = this.emailFormCtrl.value;
+    if (email && this.code) {
+      this._loginService
+        .authenticate('', this.code.toUpperCase())
+        .pipe(
+          tap((result) => {
+            console.log(result);
+          })
+        )
+        .subscribe();
 
-  checkCode() {
-    if (!this.code) {
-      // this._snackbar.open('Please enter an access code');
+      // TODO:
+      //     await this.mainUtil.sortProjects();
+      //     await this.mainUtil.setParticipantAndDates();
+      //     this.mainUtil.setProjectTimesAccordingToTimezones();
+      //     try {
+      //       (window as any).plugins.appsFlyer.logEvent('af_login', { email: this.userService.currentUser.email, user_id: this.userService.currentUser.id, isProduction: environment.production }, () => { console.log('SUCCESS!!'); }, (err) => { console.log('ERROR'); console.log(err); });
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
+      //
+      //     try {
+      //       (window as any).facebookConnectPlugin.logEvent('login', {}, 0, () => console.log('FB EVENT SUCCESS'), fbErr => { console.log('FB EVENT ERROR'); console.error(fbErr); });
+      //     } catch (err) {
+      //       console.error(err);
+      //     }
     }
-
-    // this.mainUtil.isLoading = { message: 'Checking code' };
-    //   const passcodeInformation = await this.userService
-    //     .getPasscodeInformation(this.code.toUpperCase().trim())
-    //     .pipe(timeout(this.mainUtil.timeoutLimit))
-    //     .toPromise()
-    //     .catch((error) => {
-    //       this.mainUtil.handleError(error);
-    //     });
-    //   if (!passcodeInformation) {
-    //     this.mainUtil.isLoading = false;
-    //     return;
-    //   }
-    //   if (passcodeInformation.isUserCode) {
-    //     this.router
-    //       .navigate(['UserSetup', passcodeInformation.userId])
-    //       .then(() => {
-    //         this.mainUtil.showSafeArea = true;
-    //         this.mainUtil.isLoading = false;
-    //       })
-    //       .catch(() => {
-    //         this.mainUtil.isLoading = false;
-    //       });
-    //     this.mainUtil.sendGoogleAnalyticsEvent('Passcode_SubmitUserCode');
-    //   } else {
-    //     this.mainUtil.isLoading = false;
-    //     this.mainUtil.showSnackbar(
-    //       `That passcode does not exist. If you don't have a code or you don't have an account, select the corresponding option.`
-    //     );
-    //   }
   }
 
   sendCodeForNewFlow() {

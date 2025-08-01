@@ -25,6 +25,14 @@ export class AppService {
     this._router.navigate(['user', 'explore']);
   }
 
+  navigateToLogin() {
+    this._router.navigate(['/login']);
+  }
+
+  navigateToBadges() {
+    this._router.navigate(['user', 'badges']);
+  }
+
   toggleUserSideMenu() {
     this.isUserSideMenuVisible.update((visible) => !visible);
   }

@@ -12,7 +12,7 @@ import {
 import { from, map, switchMap, tap } from 'rxjs';
 import { StorageKey } from '@cockpit/mobile/constants';
 import { TrackingActions } from '@cockpit/mobile/tracking-state';
-import { CurrentTrackedActivity } from '@cockpit/mobile/data-models';
+import { CurrentTrackedActivity, User } from '@cockpit/mobile/data-models';
 import { TrackingService } from '@cockpit/mobile/tracking';
 import { NetworkService } from '@cockpit/mobile/network';
 import { ActivityTypesService } from '@cockpit/mobile/data-access/activity-types';
@@ -20,6 +20,8 @@ import { GlobalActions } from '@cockpit/mobile/state/global';
 import { ActivityType } from '@prisma/client';
 import { LiveUpdate } from '@capawesome/capacitor-live-update';
 import { PushNotifications } from '@capacitor/push-notifications';
+import { AppService } from '@cockpit/mobile-data-access-app';
+import { UsersService } from '@cockpit/mobile-data-access-users';
 
 @Injectable()
 export class AppInitEffect {
@@ -112,7 +114,20 @@ export class AppInitEffect {
     () =>
       this._actions$.pipe(
         ofType(TrackingActions.trackedActivityNotFoundInStorage),
-        map(() => this._router.navigate(['/user/event-list']))
+        switchMap(() =>
+          this._storage.getData<User>(StorageKey.USER).pipe(
+            tap((user) => {
+              if (user) {
+                this._userService.setUser(user);
+              }
+            }),
+            tap((user) =>
+              user
+                ? this._appService.navigateToEvents()
+                : this._appService.navigateToLogin()
+            )
+          )
+        )
       ),
     { dispatch: false }
   );
@@ -156,6 +171,8 @@ export class AppInitEffect {
     private readonly _router: Router,
     private readonly _storage: AppStorageService,
     private readonly _tracking: TrackingService,
-    private readonly _network: NetworkService
+    private readonly _network: NetworkService,
+    private readonly _appService: AppService,
+    private readonly _userService: UsersService
   ) {}
 }

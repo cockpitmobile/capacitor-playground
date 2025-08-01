@@ -1,0 +1,119 @@
+<div
+  style="
+    display: grid;
+    grid-template-rows: 51px 1fr;
+    overflow: hidden;
+    height: 100%;
+  ">
+  <!-- Header Tabs -->
+  <div
+    class="flex justify-between"
+    style="
+      padding: 0px 30px;
+      height: 51px;
+      background-color: #f4f4f4;
+      border-bottom: 1px solid #f0f0f0;
+    ">
+    <div
+      (click)="changeTab(0)"
+      [style.color]="selectedTab() === 0 ? '#000000' : '#808080'"
+      [style.borderBottom]="selectedTab() === 0 ? '2px solid #000000' : ''"
+      style="font-weight: 600; height: 50px"
+      class="flex justify-center items-center">
+      <div [style.marginBottom]="selectedTab() === 0 ? '-2px' : ''">
+        Lifetime
+      </div>
+    </div>
+    <div
+      (click)="changeTab(1)"
+      [style.color]="selectedTab() === 1 ? '#000000' : '#808080'"
+      [style.borderBottom]="selectedTab() === 1 ? '2px solid #000000' : ''"
+      style="font-weight: 600; height: 50px"
+      class="flex justify-center items-center">
+      <div [style.marginBottom]="selectedTab() === 1 ? '-2px' : ''">
+        Seasonal
+      </div>
+    </div>
+    <div
+      (click)="changeTab(2)"
+      [style.color]="selectedTab() === 2 ? '#000000' : '#808080'"
+      [style.borderBottom]="selectedTab() === 2 ? '2px solid #000000' : ''"
+      style="font-weight: 600; height: 50px"
+      class="flex justify-center items-center">
+      <div [style.marginBottom]="selectedTab() === 2 ? '-2px' : ''">
+        Collection
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Pages -->
+  <div class="overflow-auto">
+    @if (selectedTab() === 0) {
+      <ng-container *ngTemplateOutlet="lifetimeTemplate"></ng-container>
+    } @else if (selectedTab() === 1) {
+      <ng-container *ngTemplateOutlet="seasonalTemplate"></ng-container>
+    } @else if (selectedTab() === 2) {
+      <ng-container *ngTemplateOutlet="collectionTemplate"></ng-container>
+    }
+  </div>
+</div>
+
+<ng-template #lifetimeTemplate>
+  @for (group of badgeGroups(); track group.id) {
+    @if (group.name && group.badges && group.badge_group_type) {
+      <app-user-badge-section
+        [badgeSection]="group"
+        primaryColor="var(--p-primary-color)"></app-user-badge-section>
+    }
+  }
+
+  @for (badge of lifetimeBadges(); track badge.id) {
+    <app-user-badge-section
+      [badgeSection]="badge"
+      primaryColor="var(--p-primary-color)"></app-user-badge-section>
+  }
+</ng-template>
+
+<ng-template #seasonalTemplate>
+  <!--  <div *ngFor="let season of seasons" style="border-bottom: 1px solid #dedede">-->
+  <!--    <app-season-badge-progress-->
+  <!--      *ngIf="season && season.config && !season.config.hide_badge_progress"-->
+  <!--      [season]="season"-->
+  <!--      [title]="season.title"></app-season-badge-progress>-->
+  <!--  </div>-->
+  <!--  <div *ngIf="!hasDailyDistanceSeason()" style="margin: 20px">-->
+  <!--    No Daily Distance seasons completed yet-->
+  <!--  </div>-->
+</ng-template>
+
+<ng-template #collectionTemplate>
+  <!--  <div fxLayout="column" style="border-bottom: 1px solid #dedede">-->
+  <!--    <div-->
+  <!--      *ngIf="userService.currentUser.unlocked_badges.length > 0"-->
+  <!--      fxFlexAlign="center"-->
+  <!--      class="badgeCountContainer">-->
+  <!--      <div class="badgeCount" fxLayout="row" fxLayoutAlign="center">-->
+  <!--        <div-->
+  <!--          fxFlexAlign="center"-->
+  <!--          [style.fontFamily]="'\'Barlow\', sans-serif !important'">-->
+  <!--          {{ userService.currentUser.unlocked_badges.length }}-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <app-svg-->
+  <!--        class="badgeLogo"-->
+  <!--        [style.color]="mainUtil.headerBackgroundColor"-->
+  <!--        [link]="'icon/badge-star.svg#badge-star'"-->
+  <!--        [width]="'102px'"-->
+  <!--        [height]="'102px'"></app-svg>-->
+  <!--    </div>-->
+  <!--    <div-->
+  <!--      style="font-weight: 600; margin-top: 10px; margin-bottom: 25px"-->
+  <!--      fxFlexAlign="center">-->
+  <!--      Badges earned-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  <app-profile-badge-container-->
+  <!--    [user]="this.userService.currentUser"-->
+  <!--    [isLifetimeBadges]="true">-->
+  <!--  </app-profile-badge-container>-->
+</ng-template>

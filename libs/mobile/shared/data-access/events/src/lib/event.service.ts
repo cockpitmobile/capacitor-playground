@@ -26,6 +26,7 @@ export class EventService {
   });
 
   getAll(): Observable<RAAEvent[]> {
+    // TODO: Storage
     return this._http
       .get<RAAEvent[]>(`/projects`)
       .pipe(
@@ -46,6 +47,10 @@ export class EventService {
 
   selectEvent(event: RAAEvent): void {
     this.currentEventId.set(event.id);
+    document.documentElement.style.setProperty(
+      `--p-primary-color`,
+      event.race_primary_color!
+    );
     this._router.navigate(['user', 'current-event']);
   }
 }

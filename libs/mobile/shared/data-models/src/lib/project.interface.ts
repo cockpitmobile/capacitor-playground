@@ -1,3 +1,19 @@
+import { Badge, BadgeGroup } from './badge.interface';
+import { Challenge } from './challenge.interface';
+import { Activity } from './activity.interface';
+
+export interface ProjectParticipant {
+  id: string;
+  project_id: string;
+  user_id: string;
+  project_goal_distance: number;
+  project_goal_distance_units: string;
+  cohort_index?: number;
+  cohort_start_date?: Date;
+  cohort_end_date?: Date;
+  has_seen_goal_confirmation?: boolean;
+}
+
 export interface RAAEvent {
   scavengerHunts?: any;
   id?: string;
@@ -30,8 +46,12 @@ export interface RAAEvent {
   onboarding_background_image_link?: string;
   onboarding_background_image_dark_link?: string;
   race_event_type?: string;
+  badge_groups?: Array<BadgeGroup>;
   event_details_link?: string;
   event_sign_up_link?: string;
+  // event_distances?: Array<EventDistance>;
+  event_results?: Array<Activity>;
+  gallery_results?: Array<Activity>;
   open_practice_time?: Date;
   config?: {
     distance_string?: string;
@@ -51,7 +71,9 @@ export interface RAAEvent {
     hide_badge_progress?: boolean;
     hide_goal_editing?: boolean;
   };
+  challenges?: Array<Challenge>;
   project_selfie_filter_image_link?: string;
+  ProjectParticipant?: ProjectParticipant;
   project_notification_info?: {
     body: string;
     title: string;
@@ -62,6 +84,7 @@ export interface RAAEvent {
     cohort_end_date: Date;
   }>;
   next_season_project_id?: string;
+  badges?: Array<Badge>;
   sweepstakes_info?: {
     prizes_link?: string;
     terms_conditions_link?: string;

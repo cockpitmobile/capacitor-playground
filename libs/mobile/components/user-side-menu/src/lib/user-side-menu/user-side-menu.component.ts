@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Drawer } from 'primeng/drawer';
 import { AppService } from '@cockpit/mobile-data-access-app';
@@ -55,7 +60,7 @@ export class UserSideMenuComponent {
       label: 'Logout',
       icon: 'pi pi-sign-out',
       action: () => this.logout(),
-    }
+    },
   ]);
 
   toggleSidebar() {
@@ -82,7 +87,7 @@ export class UserSideMenuComponent {
   }
 
   openBadgeProgress() {
-    //   TODO: IMPLEMENT
+    this._appService.navigateToBadges();
     this.toggleSidebar();
   }
 

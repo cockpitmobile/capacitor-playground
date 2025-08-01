@@ -1,0 +1,98 @@
+.lifetimeBadgeProgressContainer {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.grayscale {
+  filter: gray;
+  -webkit-filter: grayscale(100%)
+}
+
+.individualLifetimeBadgeProgress {
+  min-height: 100px;
+  width: 100%;
+  border-bottom: 1px solid #dedede;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
+
+  .lifetimeBadgeTopHalf {
+    flex: 2;
+
+    .badgeImageContainer {
+      height: 90px;
+      width: 70px;
+      border-radius: 10px;
+
+      .badgeImage {
+        width: 55px;
+        height: 55px;
+      }
+    }
+
+    .badgeInformationContainer {
+      width: 100%;
+      min-height: 85px;
+      margin-left: 10px;
+      .badgeTitle {
+        font-weight: 600;
+      }
+
+      .badgeDescription {
+        width: 100%;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .lifetimeBadgeMiddle {
+    width: 100%;
+    height: auto;
+
+    .badgeUserInfo {
+      width: 100%;
+      margin-top: 10px;
+
+      .badgeProgressBar {
+        height: 5px;
+        width: 100%;
+        background-color: #c8c8c8;
+        border-radius: 5px;
+        position: relative;
+
+        .badgeProgressBarValue {
+          height: 5px;
+          width: 0%;
+          border-radius: 5px;
+          position: absolute;
+        }
+      }
+
+      .badgeProgressVal {
+        color: rgb(154, 155, 152);
+        line-height: 0.9;
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .lifetimeBadgeBottomHalf {
+    flex: 1;
+    padding-top: 10px;
+    overflow-x: auto;
+
+    .badgeTiers {
+      height: 30px;
+      width: 30px;
+      margin-right: 5px;
+      display: flex;
+      align-items: center;
+
+      .badgeTierImage {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+}
