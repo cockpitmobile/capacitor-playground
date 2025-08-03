@@ -35,6 +35,10 @@ export class AppService {
     this._router.navigate(['user', 'badges']);
   }
 
+  navigateToSettings() {
+    this._router.navigate(['user', 'settings']);
+  }
+
   toggleUserSideMenu() {
     this.isUserSideMenuVisible.update((visible) => !visible);
   }
@@ -43,5 +47,27 @@ export class AppService {
     // TODO: Need to also clear data loaded in memory
     this._storage.clearData().subscribe();
     this._router.navigate(['/login']);
+  }
+
+  getIfDisplayReleaseNotes() {
+    // TODO: use storage service
+    const shouldShow = localStorage.getItem('show-release-notes');
+    if (!shouldShow) {
+      // TODO:
+      // this.setIfDisplayReleaseNotes('true');
+      return true;
+    }
+    return shouldShow === 'true';
+  }
+
+  getIfAutoImportStrava() {
+    // TODO: use storage service
+    const shouldShow = localStorage.getItem('auto-import-strava');
+    if (!shouldShow) {
+      // TODO:
+      // this.setAutoImportStrava('true');
+      return true;
+    }
+    return shouldShow === 'true';
   }
 }

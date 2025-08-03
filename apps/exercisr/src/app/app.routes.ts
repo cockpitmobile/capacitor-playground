@@ -44,6 +44,13 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('@cockpit/user-badges').then((m) => m.UserBadgesPageComponent),
       },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('@cockpit/user-settings-page').then(
+            (m) => m.UserSettingsPageComponent
+          ),
+      },
     ],
   },
   {

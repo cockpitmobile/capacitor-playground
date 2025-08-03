@@ -237,6 +237,9 @@
       ],
       "@cockpit/tag": ["libs/mobile/components/tag/src/index.ts"],
       "@cockpit/user-badges": ["libs/mobile/pages/user-badges/src/index.ts"],
+      "@cockpit/user-settings-page": [
+        "libs/mobile/pages/user-settings/src/index.ts"
+      ],
       "@cockpit/user-side-menu": [
         "libs/mobile/components/user-side-menu/src/index.ts"
       ],

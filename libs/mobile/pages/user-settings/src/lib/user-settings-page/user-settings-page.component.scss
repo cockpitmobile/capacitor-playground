@@ -1,0 +1,44 @@
+.host {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sectionContainer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid #e2e2e2;
+  .sectionTitleContainer {
+    margin-bottom: 16px;
+    &.noMargin {
+      margin-bottom: 0;
+    }
+    .sectionTitle {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .sectionDescription {
+      font-size: 13px;
+    }
+  }
+}
+
+.settingContainer {
+  margin-top: 16px;
+  &.noMargin {
+    margin-top: 0;
+  }
+  .settingTitle {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .settingDescription {
+    font-size: 13px;
+    &.slider {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.newParagraph {
+  margin-top: 10px;
+}

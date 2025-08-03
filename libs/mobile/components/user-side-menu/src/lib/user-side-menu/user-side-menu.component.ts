@@ -97,7 +97,7 @@ export class UserSideMenuComponent {
   }
 
   openSettings() {
-    //   TODO: IMPLEMENT
+    this._appService.navigateToSettings();
     this.toggleSidebar();
   }
 

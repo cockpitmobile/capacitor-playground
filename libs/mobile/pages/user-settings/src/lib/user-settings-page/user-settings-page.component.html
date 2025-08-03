@@ -1,0 +1,295 @@
+<div class="host" [formGroup]="form">
+  <div class="sectionContainer">
+    <div class="sectionTitleContainer">
+      <div class="sectionTitle">General Settings</div>
+      <div class="sectionDescription">Control general app functionality.</div>
+    </div>
+    <div class="settingContainer noMargin">
+      <div class="flex justify-between">
+        <span class="settingTitle">Show release notes</span>
+        <p-toggleswitch
+          formControlName="shouldDisplayReleaseNotes"></p-toggleswitch>
+      </div>
+      <div class="settingDescription">
+        Release notes show all the exciting changes our team has made to the app
+        with each new update.
+      </div>
+    </div>
+    <div class="settingContainer">
+      <div class="flex justify-between">
+        <span class="settingTitle">Auto import Strava activities</span>
+        <p-toggleswitch formControlName="autoImportStrava"></p-toggleswitch>
+      </div>
+      <div class="settingDescription">
+        Get notified in app whenever you have new Strava activities to import.
+      </div>
+    </div>
+    <div class="settingContainer">
+      <div class="flex justify-between">
+        <span class="settingTitle">Use robot voice for in-app tracker</span>
+        <p-toggleswitch formControlName="useRoboVoice"></p-toggleswitch>
+      </div>
+      <div class="settingDescription">
+        Change the default human voice that plays during tracking to the robot
+        voice.
+      </div>
+    </div>
+    <div class="settingContainer">
+      <div class="flex justify-between">
+        <span class="settingTitle">Reminders</span>
+        <p-toggleswitch
+          [ngModel]="reminderSettingsTemp().isToggled"
+          [ngModelOptions]="{ standalone: true }"
+          (onChange)="toggleReminders($event)"></p-toggleswitch>
+      </div>
+      <div class="settingDescription">
+        Push notifications that remind you to log your activity at a time that
+        works best with your schedule.
+      </div>
+      <!--      TODO: -->
+      <!--      <div-->
+      <!--        *ngIf="reminderSettingsTemp.isToggled"-->
+      <!--        fxLayout="row"-->
+      <!--        fxLayoutAlign="space-between"-->
+      <!--        style="margin-top: 8px">-->
+      <!--        <div-->
+      <!--          *ngFor="let reminder of reminderSettingsTemp.reminders; let i = index"-->
+      <!--          fxLayout="column"-->
+      <!--          fxLayoutAlign="center">-->
+      <!--          <div fxFlexAlign="center" style="font-size: 14px">-->
+      <!--            {{ reminder.title }}-->
+      <!--          </div>-->
+      <!--          <mat-checkbox-->
+      <!--            color="primary"-->
+      <!--            style="margin-left: 5px"-->
+      <!--            [(ngModel)]="reminder.isToggled"></mat-checkbox>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <mat-form-field-->
+      <!--        *ngIf="reminderSettingsTemp.isToggled"-->
+      <!--        (click)="reminderTimeInput.click()"-->
+      <!--        [class.isIOSSafari]="mainUtil.isIOS || mainUtil.isSafari"-->
+      <!--        appearance="outline"-->
+      <!--        style="width: 100%; margin-top: 16px; margin-bottom: -20px">-->
+      <!--        <mat-label>Time</mat-label>-->
+      <!--        <input-->
+      <!--          #reminderTimeInput-->
+      <!--          autocomplete="off"-->
+      <!--          readonly="true"-->
+      <!--          mode="12h"-->
+      <!--          matTimepicker-->
+      <!--          matInput-->
+      <!--          [(ngModel)]="reminderSettingsTemp.time" />-->
+      <!--      </mat-form-field>-->
+    </div>
+    <div class="settingContainer">
+      <span class="settingTitle">Selfie saving</span>
+      <div class="settingDescription slider">
+        Your selfies can be saved right after creating them from the tracker
+        form.
+      </div>
+      <!--      TODO: -->
+      <!--      <app-slider-bar-->
+      <!--        [itemList]="selfieSaveItemList"-->
+      <!--        [sliderId]="'0'"-->
+      <!--        [tempItem]="selfieSaveSelection"-->
+      <!--        (selectedItem)="selfieSaveSelection = $event"-->
+      <!--        [isSlideDialog]="true"-->
+      <!--        [afterSlide]="afterSlide"></app-slider-bar>-->
+    </div>
+  </div>
+  <div class="flex flex-col justify-start items-stretch">
+    <div class="sectionContainer">
+      <div class="sectionTitleContainer">
+        <div class="sectionTitle">Privacy Settings</div>
+        <div class="sectionDescription">
+          Control what you share with the community.
+        </div>
+      </div>
+      <div class="settingContainer">
+        <span class="settingTitle">Selfie sharing</span>
+        <div class="settingDescription slider">
+          Your selfies can be shared with the Run Across America community
+          including featured teams, limited to your private teams, or kept
+          private to you.
+        </div>
+        <!--        TODO: -->
+        <!--        <app-slider-bar-->
+        <!--          [itemList]="selfieSettings"-->
+        <!--          [sliderId]="'1'"-->
+        <!--          [tempItem]="form.value.selfie_privacy_setting"-->
+        <!--          (selectedItem)="changeSelfieSetting($event)"-->
+        <!--          [isSlideDialog]="true"-->
+        <!--          [afterSlide]="afterSlide"></app-slider-bar>-->
+      </div>
+      <div class="settingContainer">
+        <span class="settingTitle">Activity sharing</span>
+        <div class="settingDescription slider">
+          Your activities can be shared with featured teams, limited to your
+          private teams, or kept private to you.
+        </div>
+        <!--        TODO: -->
+        <!--        <app-slider-bar-->
+        <!--          [itemList]="runSettings"-->
+        <!--          [sliderId]="'2'"-->
+        <!--          [tempItem]="form.value.race_share_setting"-->
+        <!--          (selectedItem)="changeRunSetting($event)"-->
+        <!--          [isSlideDialog]="true"-->
+        <!--          [afterSlide]="afterSlide"></app-slider-bar>-->
+      </div>
+      <div class="settingContainer">
+        <span class="settingTitle">Achievement sharing</span>
+        <div class="settingDescription slider">
+          Your achievements can be shared with featured teams, limited to your
+          private teams, or kept private to you.
+        </div>
+        <!--        TODO: -->
+        <!--        <app-slider-bar-->
+        <!--          [itemList]="runSettings"-->
+        <!--          [sliderId]="'3'"-->
+        <!--          [tempItem]="form.value.achievement_share_setting"-->
+        <!--          (selectedItem)="changeAchievementSetting($event)"-->
+        <!--          [isSlideDialog]="true"-->
+        <!--          [afterSlide]="afterSlide"></app-slider-bar>-->
+      </div>
+    </div>
+    <div class="sectionContainer">
+      <div class="sectionTitleContainer">
+        <div class="sectionTitle">Notification Settings</div>
+        <div class="sectionDescription">
+          <span
+            >Notifications keep you updated on the season and on social activity
+            in your teams. To customize what you receive for individual teams
+            look for the
+          </span>
+          <i
+            class="fa fa-notification"
+            [style.color]="'var(--p-primary-color)'"></i>
+          <span> icon on your team's page.</span>
+        </div>
+      </div>
+      <div class="settingContainer">
+        <div class="flex justify-between">
+          <span class="settingTitle">Season notifications</span>
+          <p-toggleswitch
+            formControlName="raceAnnouncements"
+            (click)="checkPermissions('season')">
+          </p-toggleswitch>
+        </div>
+        <div class="settingDescription">
+          Reminders when it's time to start, and other important announcements.
+        </div>
+      </div>
+      <div class="settingContainer">
+        <div class="flex justify-between">
+          <span class="settingTitle">Comment notifications</span>
+          <p-toggleswitch
+            formControlName="comment_notifications_enabled"
+            (click)="checkPermissions('comments')">
+          </p-toggleswitch>
+        </div>
+        <div class="settingDescription">
+          Notifications for comments on your activities and comments in threads
+          you are apart of.
+        </div>
+      </div>
+    </div>
+    <div class="sectionContainer">
+      <div class="sectionTitleContainer">
+        <div class="sectionTitle">Team Settings</div>
+        <div class="sectionDescription">
+          Control how you interact with teams.
+        </div>
+      </div>
+      <div class="settingContainer">
+        <div class="flex justify-between">
+          <span class="settingTitle">Team goal expired alert</span>
+          <p-toggleswitch
+            formControlName="teamGoal"
+            (click)="setAlerts('teamGoal')">
+          </p-toggleswitch>
+        </div>
+        <div class="settingDescription">
+          Alert to notify you when your private team goal has expired.
+        </div>
+      </div>
+    </div>
+    <div class="sectionContainer">
+      <div class="sectionTitleContainer">
+        <div class="sectionTitle">Email Settings</div>
+        <div class="sectionDescription">
+          Email notifications keep you updated on your season progress and
+          activities. Select what you'd like us to notify you about.
+        </div>
+      </div>
+      <!-- <div class="settingContainer">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <span fxFlex="85" class="settingTitle">Set all emails</span>
+          <button mat-button (click)="setAllEmails(true)"
+            class="primaryFilled smallButton" style="border-radius: 30px 0px 0px 30px; border-right: 1px solid white;">On</button>
+          <button mat-button (click)="setAllEmails(false)"
+            class="primaryFilled smallButton" style="border-radius: 0px 30px 30px 0px; border-left: 1px solid white;">Off</button>
+        </div>
+      </div> -->
+      <!-- Emails for badges: check BE before release to see if we are sending this email type -->
+      <!--      <div class="settingContainer">-->
+      <!--        <div fxLayout="row" fxLayoutAlign="space-between">-->
+      <!--          <span fxFlex="85" class="settingTitle">Badge Earned Email</span>-->
+      <!--          <mat-slide-toggle-->
+      <!--            color="primary"-->
+      <!--            formControlName="badge_email_setting"-->
+      <!--            (click)="setEmails('badge')">-->
+      <!--          </mat-slide-toggle>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!-- Emails for challenge open: check BE before release to see if we are sending this email type -->
+      <!-- <div class="settingContainer">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <span fxFlex="85" class="settingTitle">Challenge Open Email</span>
+          <mat-slide-toggle fxFlexAlign="end" color="primary" formControlName="challenge_email_setting"
+            (click)="setEmails('challenge')">
+          </mat-slide-toggle>
+        </div>
+      </div> -->
+      <!-- Emails for race progress: check BE before release to see if we are sending this email type -->
+      <!--      <div class="settingContainer">-->
+      <!--        <div fxLayout="row" fxLayoutAlign="space-between">-->
+      <!--          <span fxFlex="85" class="settingTitle">Season Progress Email</span>-->
+      <!--          <mat-slide-toggle-->
+      <!--            fxFlexAlign="end"-->
+      <!--            color="primary"-->
+      <!--            formControlName="race_progress_email_setting"-->
+      <!--            (click)="setEmails('race-progress')">-->
+      <!--          </mat-slide-toggle>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!-- Emails for goal progress: check BE before release to see if we are sending this email type -->
+      <!-- <div class="settingContainer">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <span fxFlex="85" class="settingTitle">Goal Progress Email</span>
+          <mat-slide-toggle fxFlexAlign="end" color="primary" formControlName="goal_progress_email_setting"
+            (click)="setEmails('goal-progress')">
+          </mat-slide-toggle>
+        </div>
+      </div> -->
+    </div>
+    <div class="sectionContainer">
+      <div class="sectionTitleContainer noMargin">
+        <span class="sectionTitle">Safety Information</span>
+        <div class="sectionDescription">
+          You are responsible for safe activity and route. This is not a closed
+          course and <b>your safety is more important than your time.</b>
+        </div>
+        <div class="sectionDescription newParagraph">
+          Event organizers, Run Across America, and its partners are not
+          responsible for any liabilities or your safety.
+        </div>
+        <div class="sectionDescription newParagraph">
+          Understand that location services may not be accurate. We will do our
+          best to track your route, but location services may not work indoors
+          or in an erratic route.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
