@@ -102,7 +102,7 @@ export class UserSideMenuComponent {
   }
 
   logout() {
-    //   TODO: IMPLEMENT
+    this._appService.logout();
     this.toggleSidebar();
   }
 }

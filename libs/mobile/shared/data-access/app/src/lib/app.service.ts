@@ -1,11 +1,13 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppStorageService } from '@cockpit/mobile/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   private readonly _router = inject(Router);
+  private readonly _storage = inject(AppStorageService);
 
   public isUserSideMenuVisible = signal(false);
 
@@ -35,5 +37,11 @@ export class AppService {
 
   toggleUserSideMenu() {
     this.isUserSideMenuVisible.update((visible) => !visible);
+  }
+
+  logout() {
+    // TODO: Need to also clear data loaded in memory
+    this._storage.clearData().subscribe();
+    this._router.navigate(['/login']);
   }
 }
