@@ -13,4 +13,5 @@ export enum StorageKey {
   PROJECT_BADGES = 'project-badges',
   USER_UNLOCKED_BADGES = 'user-unlocked-badges',
   BADGE_GROUPS = 'badge-groups',
+  USER_PETS = 'user-pets',
 }

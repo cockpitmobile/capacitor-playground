@@ -51,6 +51,13 @@ export const appRoutes: Route[] = [
             (m) => m.UserSettingsPageComponent
           ),
       },
+      {
+        path: 'pets',
+        loadComponent: () =>
+          import('@cockpit/user-pets-page').then(
+            (m) => m.UserPetsPageComponent
+          ),
+      },
     ],
   },
   {

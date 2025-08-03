@@ -8,3 +8,4 @@ export * from './lib/challenge.interface';
 export * from './lib/activity.interface';
 export * from './lib/team.interface';
 export * from './lib/badge.interface';
+export * from './lib/pet.interface';

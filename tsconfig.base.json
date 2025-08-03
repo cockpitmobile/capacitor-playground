@@ -117,6 +117,9 @@
       "@cockpit/mobile-data-access-login": [
         "libs/mobile/shared/data-access/login/src/index.ts"
       ],
+      "@cockpit/mobile-data-access-pets": [
+        "libs/mobile/shared/data-access/pets/src/index.ts"
+      ],
       "@cockpit/mobile-data-access-teams": [
         "libs/mobile/shared/data-access/teams/src/index.ts"
       ],
@@ -131,6 +134,12 @@
       ],
       "@cockpit/mobile-util-challenges": [
         "libs/mobile/util/challenges/src/index.ts"
+      ],
+      "@cockpit/mobile-util-pets": [
+        "libs/mobile/shared/utils/pets/src/index.ts"
+      ],
+      "@cockpit/mobile-utils-dates": [
+        "libs/mobile/shared/utils/dates/src/index.ts"
       ],
       "@cockpit/mobile/activities": [
         "libs/mobile/shared/data-access/activities/src/index.ts"
@@ -237,6 +246,7 @@
       ],
       "@cockpit/tag": ["libs/mobile/components/tag/src/index.ts"],
       "@cockpit/user-badges": ["libs/mobile/pages/user-badges/src/index.ts"],
+      "@cockpit/user-pets-page": ["libs/mobile/pages/user-pets/src/index.ts"],
       "@cockpit/user-settings-page": [
         "libs/mobile/pages/user-settings/src/index.ts"
       ],

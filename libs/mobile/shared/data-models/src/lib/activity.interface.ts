@@ -26,7 +26,7 @@ export interface Activity {
   image_time?: Date;
   is_image_approved?: boolean;
   is_shared_with_teams?: boolean;
-  time_completed_at?: Date;
+  time_completed_at: Date;
   is_manual?: boolean;
   is_practice?: boolean;
   user_location_poly?: string;

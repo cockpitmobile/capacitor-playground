@@ -43,7 +43,11 @@ export class ShellPageComponent {
   });
 
   navigateToCurrentEvent() {
-    this._appService.navigateToCurrentEvent();
+    if (this.currentEvent()) {
+      this._appService.navigateToCurrentEvent();
+    } else {
+      this._appService.navigateToEvents();
+    }
   }
 
   navigateToTeams() {

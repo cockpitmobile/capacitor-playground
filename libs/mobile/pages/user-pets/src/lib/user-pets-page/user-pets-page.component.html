@@ -1,0 +1,153 @@
+<div class="petsDialogContainer">
+  <div class="flex flex-col items-center">
+    <div class="addPetsContainer flex justify-center">
+      <p-button
+        class="primaryOutline smallButton addPetsButton rounded"
+        (click)="createPet()"
+        [style.backgroundColor]="'var(--p-primary-color)'"
+        [style.borderColor]="'var(--p-primary-color)'">
+        Create a new pet
+      </p-button>
+    </div>
+    <div class="searchPetsText">Or search by pet code:</div>
+    <div class="findPetsInputContainer flex">
+      <input
+        class="findPetsInput mr-1"
+        id="petSearch"
+        (keydown)="onKeyDown($event)" />
+      <p-button
+        class="primaryOutline smallButton searchPetsButton rounded"
+        (click)="searchPets()"
+        [style.backgroundColor]="'var(--p-primary-color)'"
+        [style.borderColor]="'var(--p-primary-color)'">
+        <div class="flex justify-center">
+          <div class="headerFont">Search</div>
+        </div>
+      </p-button>
+    </div>
+    <div class="foundPetContainer">
+      <!--      TODO: -->
+      <!--      <div *ngIf="petSearchResult" class="foundPet">-->
+      <!--        <ng-container-->
+      <!--          *ngTemplateOutlet="-->
+      <!--              petTemplate;-->
+      <!--              context: { pet: petSearchResult, addPet: true }-->
+      <!--            "></ng-container>-->
+      <!--      </div>-->
+    </div>
+  </div>
+  @for (pet of pets(); track pet.id) {
+    <div class="petContainer">
+      @if (pet.pet_photo_link) {
+        <!--        TODO: -->
+        <!--        (click)="dialogsUtil.viewPhoto(pet.pet_photo_link)"-->
+        <img [src]="pet.pet_photo_link" class="petPhoto" />
+      } @else {
+        <img
+          src="../../../assets/sideMenuIcons/menu-pets-black.svg"
+          class="petPhoto noPhoto" />
+      }
+
+      <div class="flex justify-between items-center nameEditContainer">
+        <div class="flex flex-col">
+          <span class="name">{{ pet.pet_name }}</span>
+          <!--          TODO: -->
+          <!--          (click)="mainUtil.copyToClipboard(pet.pet_code, 'pet code')"-->
+          <span class="petcode"> Pet code: {{ pet.pet_code }} </span>
+        </div>
+        <!--        TODO: -->
+        <!--        <button-->
+        <!--          *ngIf="addPet"-->
+        <!--          mat-button-->
+        <!--          class="primaryOutline smallButton"-->
+        <!--          style="color: white"-->
+        <!--          (click)="addUserAsOwner()"-->
+        <!--          [style.backgroundColor]="mainUtil.headerBackgroundColor"-->
+        <!--          [style.borderColor]="mainUtil.headerBackgroundColor">-->
+        <!--          <div fxLayout="row" fxLayoutAlign="center">-->
+        <!--            <div class="headerFont" fxFlexAlign="center">Add</div>-->
+        <!--          </div>-->
+        <!--        </button>-->
+        <!--        <div-->
+        <!--          *ngIf="!addPet"-->
+        <!--          [matMenuTriggerFor]="petMenu"-->
+        <!--          fxLayout="row"-->
+        <!--          fxLayoutAlign="center"-->
+        <!--          fxFlexAlign="center"-->
+        <!--          class="editPetIconContainer">-->
+        <!--          <mat-icon fxFlexAlign="center" class="editPetIcon">edit</mat-icon>-->
+        <!--        </div>-->
+        <!--        <mat-menu #petMenu="matMenu">-->
+        <!--          <button mat-menu-item (click)="editPet(pet)">-->
+        <!--            <mat-icon>edit</mat-icon>-->
+        <!--            <span>Edit</span>-->
+        <!--          </button>-->
+        <!--          <button mat-menu-item (click)="removeOwnership(pet)">-->
+        <!--            <mat-icon>delete</mat-icon>-->
+        <!--            <span>Remove Ownership</span>-->
+        <!--          </button>-->
+        <!--        </mat-menu>-->
+      </div>
+      <div class="statsContainer flex flex-col">
+        <div class="statContainer">
+          <span class="statTitle">Total distance:</span>
+          <!--          TODO: -->
+          <!--          mainUtil.isMiles
+                ? (pet.pet_total_distance_kms / 1.60934)
+                    .toFixed(2)
+                    .substring(
+                      0,
+                      (pet.pet_total_distance_kms / 1.60934).toFixed(2).length -
+                        1
+                    )
+                :-->
+          <!--          mainUtil.isMiles ? 'Mi' : -->
+          <span class="headerFont stat"
+            >{{ pet.pet_total_distance_kms }} {{ 'Km' }}</span
+          >
+        </div>
+        <div class="statContainer">
+          <span class="statTitle">Total time:</span>
+          <span class="headerFont stat">{{ pet.pet_total_time }}</span>
+        </div>
+        <div class="statTitle activity">Activity trend:</div>
+        <div class="flex justify-between">
+          @for (activeDay of pet.activeDays; track activeDay.id) {
+            <div class="flex flex-col items-center">
+              <div
+                class="dayTitle"
+                [style.color]="
+                  activeDay.isToday ? 'var(--p-primary-color)' : '#b3b4b1'
+                ">
+                {{ activeDay.title }}
+              </div>
+              <div
+                class="activeDay"
+                [style.backgroundColor]="
+                  activeDay.isFilled ? 'white' : '#e1e3e0'
+                "
+                [style.height]="
+                  activeDay.isFuture && !activeDay.isToday ? '5px' : '15px'
+                "
+                [style.width]="
+                  activeDay.isFuture && !activeDay.isToday ? '5px' : '15px'
+                "
+                [style.marginTop]="
+                  activeDay.isFuture && !activeDay.isToday ? '6px' : '0px'
+                "
+                [style.marginBottom]="
+                  activeDay.isFuture && !activeDay.isToday ? '4px' : '0px'
+                ">
+                @if (activeDay.isFilled) {
+                  <i
+                    class="fa fa-check checkmarkCircle"
+                    [style.color]="'var(--p-primary-color)'"></i>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

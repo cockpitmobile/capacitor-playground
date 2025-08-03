@@ -82,7 +82,7 @@ export class UserSideMenuComponent {
   }
 
   openPets() {
-    //   TODO: IMPLEMENT
+    this._appService.navigateToPets();
     this.toggleSidebar();
   }
 

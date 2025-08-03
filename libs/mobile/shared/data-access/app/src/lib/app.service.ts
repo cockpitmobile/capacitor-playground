@@ -39,6 +39,10 @@ export class AppService {
     this._router.navigate(['user', 'settings']);
   }
 
+  navigateToPets() {
+    this._router.navigate(['user', 'pets']);
+  }
+
   toggleUserSideMenu() {
     this.isUserSideMenuVisible.update((visible) => !visible);
   }
