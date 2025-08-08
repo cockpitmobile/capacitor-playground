@@ -1,1 +1,268 @@
-<p>UserProfilePage works!</p>
+<div class="host">
+  <div class="profileHeaderContainer">
+    <!--    TODO: -->
+    <!--    [style.backgroundColor]="
+        !picture &&
+        this.mainUtil.getDefaultProfileImageColor(
+          this.userService.currentUser.first_name
+        )
+      "-->
+    <div
+      class="profilePhotoContainer flex flex-col justify-center items-stretch">
+      @if (picture()) {
+        <img
+          alt="Profile Picture"
+          [src]="profilePicture()"
+          class="profilePhoto" />
+      } @else {
+        <span class="fas fa-running noPhoto self-center"></span>
+      }
+
+      @if (borderColor()) {
+        <div class="border" [style.borderColor]="borderColor()"></div>
+      }
+
+      <i class="editIcon fa fa-pencil"></i>
+      <!--      TODO: -->
+      <!--      <mat-menu #profilePictureMenu="matMenu">-->
+      <!--        <button mat-menu-item (click)="addProfilePhoto('gallery')">-->
+      <!--          <mat-icon>file_upload</mat-icon>-->
+      <!--          <span>Upload photo</span>-->
+      <!--        </button>-->
+      <!--        <button mat-menu-item (click)="addProfilePhoto('picture')">-->
+      <!--          <mat-icon>add_a_photo</mat-icon>-->
+      <!--          <span>Take photo</span>-->
+      <!--        </button>-->
+      <!--        <button-->
+      <!--          mat-menu-item-->
+      <!--          [disabled]="!this.userService.currentUser.profile_photo_link"-->
+      <!--          (click)="-->
+      <!--            dialogsUtil.viewPhoto(-->
+      <!--              this.userService.currentUser.profile_photo_link-->
+      <!--            )-->
+      <!--          ">-->
+      <!--          <mat-icon>photo</mat-icon>-->
+      <!--          <span>View photo</span>-->
+      <!--        </button>-->
+      <!--        <button-->
+      <!--          mat-menu-item-->
+      <!--          (click)="deleteProfilePicture()"-->
+      <!--          [disabled]="!this.userService.currentUser.profile_photo_link">-->
+      <!--          <mat-icon>delete</mat-icon>-->
+      <!--          <span>Delete photo</span>-->
+      <!--        </button>-->
+      <!--      </mat-menu>-->
+    </div>
+    <div class="flex flex-col ml-5" style="font-weight: 600">
+      <span class="username">{{ currentUser()?.username }}</span>
+      <div class="flex">
+        <div class="name">
+          {{ currentUser()?.first_name }}
+          {{ currentUser()?.last_name }}
+        </div>
+        @if (currentUser()?.raa_team_tag) {
+          <img
+            class="raaTeamLogo"
+            src="../../../assets/icon/circle-r-blue.svg"
+            alt="" />
+        }
+      </div>
+      <div style="color: #a0a19e; font-size: 14px">
+        {{ profileInfo() }}
+      </div>
+      @if (currentUser()?.has_annual_pass || currentUser()?.raa_team_tag) {
+        <span
+          class="tag"
+          [style.backgroundColor]="
+            currentUser()?.has_annual_pass ? ddRed() : raaBlue()
+          ">
+          {{
+            currentUser()?.has_annual_pass
+              ? 'ANNUAL MEMBER'
+              : currentUser()?.raa_team_tag?.toUpperCase()
+          }}
+        </span>
+      }
+    </div>
+    <div
+      (click)="openSettings()"
+      class="editProfileIconContainer flex justify-center items-center">
+      <i class="editProfileIcon fa fa-pencil"></i>
+    </div>
+  </div>
+  <!--  TODO: -->
+  <!--  <app-svg-->
+  <!--    *ngIf="!atTopOfPage"-->
+  <!--    class="scrollIcon"-->
+  <!--    (click)="mainUtil.scrollToTopOfElement('scrollProfile')"-->
+  <!--    [style.color]="mainUtil.headerBackgroundColor"-->
+  <!--    [link]="'icon/scroll-icon.svg#scroll-icon'"-->
+  <!--    [width]="'36px'"-->
+  <!--    [height]="'36px'"></app-svg>-->
+  <!--  infiniteScroll
+    [scrollWindow]="false"
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1"
+    (scroll)="checkScroll($event)"
+    (scrolled)="scroll()"-->
+  <div
+    id="scrollProfile"
+    class="overflow-y-auto overflow-x-hidden scroll-smooth">
+    <!--    TODO: -->
+    <!--    (click)="dialogsUtil.openStreakCalenderDialog(streak, activeDays)"-->
+    <div
+      style="padding: 20px 25px 20px 25px; display: grid"
+      [style.gridTemplateColumns]="
+        streak() < 1 ? '1fr' : streak() > 9 ? '1fr 100px' : '1fr 90px'
+      ">
+      <div>
+        <div style="font-weight: 600">Activity trend</div>
+        <div style="margin-bottom: 10px; font-size: 14px">
+          {{
+            streak() === 0
+              ? 'Log activity each day to build a streak.'
+              : !hasRunToday
+                ? 'Log activity today to continue your streak.'
+                : 'Come back tomorrow to continue your streak.'
+          }}
+        </div>
+        <div class="flex justify-between">
+          <div
+            *ngFor="let streakDay of streakDays"
+            class="flex flex-col items-center justify-center">
+            <div
+              class="streakDay"
+              [style.color]="
+                streakDay.isToday ? 'var(--p-primary-color)' : '#b3b4b1'
+              ">
+              {{ streakDay.title }}
+            </div>
+            <div
+              [style.backgroundColor]="streakDay.isFilled ? 'white' : '#e1e3e0'"
+              style="border-radius: 17px"
+              [style.height]="
+                streakDay.isFuture && !streakDay.isToday ? '7px' : '17px'
+              "
+              [style.width]="
+                streakDay.isFuture && !streakDay.isToday ? '7px' : '17px'
+              "
+              [style.marginTop]="
+                streakDay.isFuture && !streakDay.isToday ? '6px' : '0px'
+              "
+              [style.marginBottom]="
+                streakDay.isFuture && !streakDay.isToday ? '4px' : '0px'
+              ">
+              <i
+                *ngIf="streakDay.isFilled"
+                class="checkmarkCircle fa fa-check-circle"
+                [style.color]="'var(--p-primary-color)'">
+                check_circle
+              </i>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if (streak() >= 1) {
+        <div class="relative">
+          <!--          TODO: -->
+          <!--        <app-streak-animation-->
+          <!--          style="position: absolute; top: -15px; right: -30px"-->
+          <!--          [size]="'large'"-->
+          <!--          [streak]="streak"-->
+          <!--          [id]="'profile'"-->
+          <!--          [isPaused]="!streakIncreasedToday"></app-streak-animation>-->
+        </div>
+      }
+    </div>
+    <div style="padding: 20px 25px; border-top: 1px solid #e6e6e6">
+      <!--      TODO: -->
+      <!--      <app-activity-stats-->
+      <!--        [isPreview]="true"-->
+      <!--        (click)="viewActivityStats()"></app-activity-stats>-->
+    </div>
+
+    <!--    Top Stats -->
+    <div id="topStats" class="topStats">
+      <div class="statContainer left flex flex-col items-center justify-center">
+        <div class="statTitle">TOTAL DISTANCE</div>
+        @if (totalDistanceRun() === undefined) {
+          <div>
+            <p-progressSpinner />
+          </div>
+        } @else {
+          <div class="headerFont stat" [style.color]="'var(--p-primary-color)'">
+            {{
+              totalDistanceRun()!
+                .toFixed(2)
+                .substring(0, totalDistanceRun()!.toFixed(2).length - 1)
+            }}
+            {{ isMiles() ? 'Mi' : 'Km' }}
+          </div>
+        }
+      </div>
+
+      <div class="statContainer flex flex-col items-center justify-center">
+        <div class="statTitle">AVERAGE PACE</div>
+        @if (averagePace() === undefined) {
+          <div>
+            <p-progressSpinner />
+          </div>
+        } @else {
+          <div class="headerFont stat" [style.color]="'var(--p-primary-color)'">
+            {{ averagePace() }}/{{ isMiles() ? 'Mi' : 'Km' }}
+          </div>
+        }
+      </div>
+
+      <div class="statContainer left flex flex-col items-center justify-center">
+        <div class="statTitle">TOTAL ACTIVE MINUTES</div>
+        @if (totalActiveMinutes() === undefined) {
+          <div>
+            <p-progressSpinner />
+          </div>
+        } @else {
+          <div class="headerFont stat" [style.color]="'var(--p-primary-color)'">
+            {{ totalActiveMinutes() }} min
+          </div>
+        }
+      </div>
+
+      <div class="statContainer flex flex-col items-center justify-center">
+        <div class="statTitle">AVERAGE MINUTES PER ACTIVITY</div>
+        @if (averageMinutesPerActivity() === undefined) {
+          <div>
+            <p-progressSpinner />
+          </div>
+        } @else {
+          <div class="headerFont stat" [style.color]="'var(--p-primary-color)'">
+            {{ averageMinutesPerActivity() }} min
+          </div>
+        }
+      </div>
+    </div>
+    <!--    TODO: -->
+    <!--    <app-profile-badge-container-->
+    <!--      [user]="this.userService.currentUser"></app-profile-badge-container>-->
+    <div class="dividerContainer flex items-center">
+      <span class="dividerText">Activity list</span>
+    </div>
+    @if (feedItems().length > 0) {
+      <div>
+        <!--        TODO: -->
+        <!--      <app-feed-item-->
+        <!--        *ngFor="let feedItem of feedItems"-->
+        <!--        [style.backgroundColor]="'white'"-->
+        <!--        (openMap)="open($event)"-->
+        <!--        [activity]="feedItem"-->
+        <!--        (setRuns)="setFeed()"-->
+        <!--        [isActivityList]="true"-->
+        <!--        [isProfile]="true">-->
+        <!--      </app-feed-item>-->
+      </div>
+    }
+
+    @if (feedItems().length === 0) {
+      <div class="m-5">No activities yet</div>
+    }
+  </div>
+</div>

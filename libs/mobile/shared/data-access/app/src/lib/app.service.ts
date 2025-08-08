@@ -10,6 +10,7 @@ export class AppService {
   private readonly _storage = inject(AppStorageService);
 
   public isUserSideMenuVisible = signal(false);
+  public readonly isMiles = signal(false);
 
   navigateToCurrentEvent() {
     this._router.navigate(['user', 'current-event']);

@@ -1,0 +1,283 @@
+.host {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  .profileHeaderContainer {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 75px 1fr 38px;
+    position: relative;
+    overflow-x: hidden;
+    .profilePhotoContainer {
+      border-radius: 40px;
+      height: 75px;
+      width: 75px;
+      position: relative;
+      .noPhoto {
+        font-size: 45px;
+        color: white;
+      }
+      .profilePhoto {
+        height: 75px;
+        border-radius: 40px;
+      }
+      .border {
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        height: 83px;
+        width: 83px;
+        border: 4px solid;
+        border-radius: 50%;
+      }
+      .editIcon {
+        background-color: rgb(160, 161, 158);
+        color: white;
+        position: absolute;
+        right: -3px;
+        bottom: -3px;
+        padding: 3px;
+        border-radius: 20px;
+        font-size: 14px;
+        border: 2px solid white;
+      }
+    }
+    .editProfileIconContainer {
+      height: 38px;
+      border: 2px solid #a0a19e;
+      border-radius: 30px;
+      padding: 5px;
+      .editProfileIcon {
+        color: #a0a19e;
+      }
+    }
+  }
+}
+
+.scrollIcon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+  border: 2px solid #cacaca;
+  background-color: #e6e6e6;
+  border-radius: 50%;
+  z-index: 3;
+  transform: rotate(180deg);
+}
+
+//.elevated {
+//  @include mat-elevation(1);
+//  transition: left 0.5s;
+//}
+//
+//.elevatedImg {
+//  @include mat-elevation(3);
+//}
+
+.badge {
+  width: 65%;
+  height: auto;
+  display: block;
+  max-width: 200px;
+  position: relative;
+  animation: badgespin 24s ease-in-out;
+  animation-iteration-count: infinite;
+  overflow: visible;
+  transform: rotateX(-8deg) rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.badge img {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+}
+
+.badge img#badgedepth {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform: translateZ(-15px) scale(1.02);
+  opacity: 0.7;
+  filter: brightness(2);
+}
+
+.badge img#badgeshine {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform: translateZ(1px);
+  opacity: 0.25;
+  filter: brightness(3);
+  clip-path: polygon(100% 0%, 100% 50%, 50% 100%, 0% 100%);
+  clip-path: polygon(150% 50%, 150% 10%, 100% 150%, 50% 150%);
+  animation: shine 5s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes badgespin {
+  0% {
+    transform: rotateX(-5deg) rotateY(15deg);
+  }
+  13% {
+    transform: rotateX(-2.5deg) rotateY(-15deg);
+  }
+  25% {
+    transform: rotateX(0deg) rotateY(15deg);
+  }
+  37% {
+    transform: rotateX(2.5deg) rotateY(-15deg);
+  }
+  50% {
+    transform: rotateX(5deg) rotateY(15deg);
+  }
+  63% {
+    transform: rotateX(2.5deg) rotateY(-15deg);
+  }
+  75% {
+    transform: rotateX(0deg) rotateY(15deg);
+  }
+  87% {
+    transform: rotateX(-2.5deg) rotateY(-15deg);
+  }
+  100% {
+    transform: rotateX(-5deg) rotateY(15deg);
+  }
+}
+
+@keyframes shine {
+  0% {
+    clip-path: polygon(150% 50%, 150% 100%, 100% 150%, 50% 150%);
+  }
+  /*20%{
+	  clip-path: polygon(100% 0%, 100% 50%, 50% 100%, 0% 100%);
+	}*/
+  30% {
+    clip-path: polygon(100% -100%, 100% 0%, 0% 100%, -100% 100%);
+  }
+  45% {
+    clip-path: polygon(0% -100%, 0% 0%, 0% 0%, -100% 0%);
+  }
+  100% {
+    clip-path: polygon(0% -100%, 0% 0%, 0% 0%, -100% 0%);
+  }
+}
+
+.streakDay {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.checkmarkCircle {
+  font-size: 20px;
+  margin-left: -2px;
+  margin-top: -1px;
+}
+
+.topStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #e6e6e6;
+  .statContainer {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e6e6e6;
+    &.left {
+      border-right: 1px solid #e6e6e6;
+    }
+  }
+  .statTitle {
+    color: #a0a19e;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  .stat {
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+.dividerContainer {
+  background-color: #f6f6f6;
+  padding: 10px 25px;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
+  height: 60px;
+  .dividerText {
+    font-weight: 600
+  }
+}
+
+.circleLogosContainer {
+  height: 40px;
+  .circleLogo {
+    width: 40px;
+    height: 40px;
+    &.left {
+      margin-right: 10px
+    }
+    &.gray {
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+  }
+}
+
+.pastRaces {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e6e6e6;
+  .title {
+    font-weight: 600;
+  }
+  .chevronIcon {
+    font-size: 40px;
+    color: #a0a19e;
+    margin-top: -16px;
+  }
+}
+
+.spinner {
+  width: auto;
+  height: auto;
+  position: inherit;
+}
+
+.name {
+  font-size: 18px;
+}
+
+.raaTeamLogo {
+  height: 18px;
+  width: 18px;
+  margin-left: 8px;
+}
+
+.tag {
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 3px 5px;
+  display: flex;
+  margin-top: 5px;
+}
+
+.username {
+  color: #a0a19e;
+  font-size: 14px;
+}

@@ -129,6 +129,9 @@
       "@cockpit/mobile-page-event-selection-list": [
         "libs/mobile/pages/event-selection-list/src/index.ts"
       ],
+      "@cockpit/mobile-pipe-safe-resource": [
+        "libs/mobile/pipes/safe-resource/src/index.ts"
+      ],
       "@cockpit/mobile-projects-data-access": [
         "libs/mobile/shared/data-access/events/src/index.ts"
       ],
@@ -137,6 +140,9 @@
       ],
       "@cockpit/mobile-util-pets": [
         "libs/mobile/shared/utils/pets/src/index.ts"
+      ],
+      "@cockpit/mobile-utils-colors": [
+        "libs/mobile/shared/utils/colors/src/index.ts"
       ],
       "@cockpit/mobile-utils-dates": [
         "libs/mobile/shared/utils/dates/src/index.ts"

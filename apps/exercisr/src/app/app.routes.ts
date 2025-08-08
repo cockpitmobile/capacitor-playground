@@ -72,6 +72,13 @@ export const appRoutes: Route[] = [
             (m) => m.UserActivityStatsPageComponent
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('@cockpit/user-profile-page').then(
+            (m) => m.UserProfilePageComponent
+          ),
+      },
     ],
   },
   {
