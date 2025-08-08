@@ -1,0 +1,453 @@
+<!-- PREVIEW PAGE -->
+@if (isPreview() && data()) {
+  <div class="previewPageContainer">
+    <div class="previewPageContainerInner">
+      @for (entry of data(); track entry.id) {
+        <div
+          *ngFor="let entry of data(); let i = index"
+          class="flex mr-1 items-end">
+          <div
+            [style.backgroundColor]="
+              i !== data.length - 1
+                ? getOpacityColor()
+                : 'var(--p-primary-color)'
+            "
+            style="border-radius: 20px; width: 100%"
+            [style.height]="entry.percent"></div>
+        </div>
+      }
+    </div>
+    <div class="flex flex-col ml-2 self-center" style="height: 40px">
+      <div class="thisMonthContainer">ACTIVITY STATS</div>
+      <div class="distanceRowContainer flex items-center">
+        <div
+          class="headerFont headerContainer mr-2"
+          style="font-size: 15px"
+          [style.color]="'var(--p-primary-color)'">
+          {{ month?.toUpperCase() }}
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "></div>
+        <div
+          class="headerFont headerContainer"
+          style="font-size: 15px"
+          [style.color]="'var(--p-primary-color)'">
+          {{ data().length > 0 ? data()[data().length - 1].distance : 0
+          }}{{ this.isMiles ? 'Mi' : 'Km' }}
+        </div>
+        <div class="divider"></div>
+        <div
+          class="headerFont headerContainer"
+          style="font-size: 15px"
+          [style.color]="'var(--p-primary-color)'">
+          {{ data().length > 0 ? data()[data().length - 1].time : '0h' }}
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center">
+      <i class="fa fa-chevron-right"></i>
+    </div>
+  </div>
+}
+
+<!-- FULL PAGE -->
+@if (!isPreview() && data()) {
+  <div class="h-full overflow-y-auto" (scroll)="checkScroll()">
+    <div
+      id="filter"
+      style="
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        padding: 5px 0px 15px 25px;
+        border-bottom: 1px solid #d4d4d4;
+        background-color: #f6f6f6;
+      ">
+      <p-button
+        (click)="toggleFilter()"
+        class="smallButton darkGreyFilled rounded mt-2">
+        Filter
+      </p-button>
+      @if (!(season.length === 0 && activity.length === 0)) {
+        <div class="filterChipsContainer flex">
+          <div style="display: inline-block">
+            <div
+              class="filterChipContainer p-1 pl-3"
+              [style.backgroundColor]="'var(--p-primary-color)'">
+              <div class="ellipsis" style="max-width: 100px; font-weight: 600">
+                @for (chip of season; track $index) {
+                  <span *ngFor="let chip of season; let i = index">
+                    {{
+                      chip?.config?.race_animation_name
+                        ? chip.config!.race_animation_name
+                        : chip.title
+                    }}{{ $index === season.length - 1 ? '' : ', ' }}
+                  </span>
+                }
+              </div>
+              <div class="p-1" (click)="clearSeasons()">
+                <i class="text-white mr-1 fa fa-close"></i>
+              </div>
+            </div>
+          </div>
+          <div style="display: inline-block">
+            <div
+              class="filterChipContainer p-1 pl-3"
+              [style.backgroundColor]="'var(--p-primary-color)'">
+              <div class="ellipsis" style="max-width: 100px; font-weight: 600">
+                @for (chip of activity; track $index) {
+                  <span>
+                    {{ chip.name
+                    }}{{ $index === activity.length - 1 ? '' : ', ' }}
+                  </span>
+                }
+              </div>
+              <div class="p-1" (click)="clearActivities()">
+                <i class="text-white mr-1 fa fa-close"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    @if (showFilter) {
+      <div style="background-color: #ebebeb">
+        <div class="flex items-end p-4">
+          <div (click)="showFilter = false">
+            <i class="closeButton fa fa-close"></i>
+          </div>
+        </div>
+        <div class="h-full p-4">
+          <div class="flex justify-between items-stretch">
+            <div style="color: #808080; font-size: 13px; font-weight: 600">
+              SEASON
+            </div>
+            <div
+              style="
+                color: #808080;
+                font-size: 13px;
+                text-decoration: underline;
+              "
+              (click)="clearSeasons()">
+              Clear
+            </div>
+          </div>
+          <div class="flex flex-wrap">
+            @for (season of seasons; track $index) {
+              <div>
+                <div class="mr-5 mt-1" (click)="toggleSeason(season)">
+                  <p-checkbox [ngModel]="isSeasonSelected(season)">
+                    {{
+                      season.config?.race_animation_name
+                        ? season.config!.race_animation_name
+                        : season.title
+                    }}</p-checkbox
+                  >
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        <div class="h-full p-4">
+          <div class="flex justify-between items-stretch">
+            <div style="color: #808080; font-size: 13px; font-weight: 600">
+              ACTIVITY TYPE
+            </div>
+            <div
+              style="
+                color: #808080;
+                font-size: 13px;
+                text-decoration: underline;
+              "
+              (click)="clearActivities()">
+              Clear
+            </div>
+          </div>
+          <div class="flex flex-wrap">
+            @for (activity of completedActivityTypes; track $index) {
+              <div class="mr-5 mt-1" (click)="toggleActivity(activity)">
+                <p-checkbox [ngModel]="isActivitySelected(activity)">
+                  {{ activity.name }}</p-checkbox
+                >
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <div style="padding: 20px 25px">
+      <div>
+        <div class="number" style="font-size: 50px; font-weight: 800">
+          {{ graphDistance }}
+        </div>
+        <div
+          class="flex"
+          style="font-size: 14px; color: #8d8e8f"
+          (click)="switchUnits()">
+          {{ isMiles ? 'Mile' : 'Kilometer'
+          }}{{ graphDistance === 1 ? '' : 's' }}
+          <i
+            class="fa fa-sync"
+            style="
+              font-size: 15px;
+              color: #8d8e8f;
+              margin-left: 5px;
+              margin-top: 3px;
+            "></i>
+        </div>
+      </div>
+      <div class="flex w-full mt-5 mb-5">
+        <div>
+          <div class="number" style="font-size: 20px; font-weight: 600">
+            {{ graphActivities }}
+          </div>
+          <div style="font-size: 14px; color: #8d8e8f">
+            {{ graphActivityType }}
+          </div>
+        </div>
+        <div style="margin-left: 40px">
+          <div class="number" style="font-size: 20px; font-weight: 600">
+            {{ graphPace
+            }}<span style="font-size: 14px">/{{ isMiles ? 'mi' : 'km' }}</span>
+          </div>
+          <div style="font-size: 14px; color: #8d8e8f">Avg pace</div>
+        </div>
+        <div style="margin-left: 40px">
+          <div class="number" style="font-size: 20px; font-weight: 600">
+            {{ graphTime }}
+          </div>
+          <div style="font-size: 14px; color: #8d8e8f">Time</div>
+        </div>
+      </div>
+      <div id="graphDiv">
+        <div
+          [style.paddingRight]="!isScaleLeft ? '20px' : '0px'"
+          [style.paddingLeft]="isScaleLeft ? '20px' : '0px'">
+          <div class="displayContainer">
+            <div class="topscaleContainerOutter" style="pointer-events: none">
+              <div
+                class="topscaleContainerInner"
+                style="
+                  position: absolute;
+                  top: 2px;
+                  color: #a0a19e;
+                  font-size: 11px;
+                "
+                [style.left]="isScaleLeft ? '' : '100%'"
+                [style.right]="isScaleLeft ? '100%' : ''">
+                {{ topScale }}
+              </div>
+            </div>
+            <div
+              class="middle midScaleContainerOutter"
+              style="pointer-events: none">
+              <div
+                class="midScaleContainerInner"
+                [style.left]="isScaleLeft ? '' : '100%'"
+                [style.right]="isScaleLeft ? '100%' : ''">
+                {{ midScale }}
+              </div>
+            </div>
+            <div class="gridDisplay">
+              @for (entry of data(); track $index) {
+                <div
+                  class="flex items-end"
+                  (click)="selectMonth($index)"
+                  style="margin-left: 3px; margin-right: 3px">
+                  <div
+                    [style.backgroundColor]="'var(--p-primary-color)'"
+                    [style.opacity]="
+                      !selectedMonthIndex && selectedMonthIndex !== 0
+                        ? 1
+                        : selectedMonthIndex === $index
+                          ? 1
+                          : 0.6
+                    "
+                    style="border-radius: 50px; width: 100%; z-index: 2"
+                    [style.height]="entry.percent"></div>
+                </div>
+              }
+            </div>
+            <div class="gridDisplay" style="height: 20px">
+              @for (entry of data(); track $index) {
+                <div
+                  (click)="selectMonth($index)"
+                  class="flex"
+                  style="margin-left: 3px; margin-right: 3px">
+                  <div
+                    style="
+                      font-size: 10px;
+                      color: #a0a19e;
+                      margin-left: 2px;
+                      z-index: 2;
+                    ">
+                    {{ entry.monthString }}
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          @if (selectedMonthIndex !== -1) {
+            <div style="margin-top: 20px; margin-bottom: 10px">
+              <div class="monthYearContainer">{{ month }} {{ year }}</div>
+              <div class="flex mt-1 items-center" style="margin-bottom: -7px">
+                <div class="headerFont headerContainer">
+                  {{
+                    data().length > 0
+                      ? data()[
+                          selectedMonthIndex || selectedMonthIndex === 0
+                            ? selectedMonthIndex
+                            : data().length - 1
+                        ].distance
+                      : 0
+                  }}{{ this.isMiles ? 'Mi' : 'Km' }}
+                </div>
+                <div class="divider"></div>
+                <div class="headerFont headerContainer">
+                  {{
+                    data().length > 0
+                      ? data()[
+                          selectedMonthIndex || selectedMonthIndex === 0
+                            ? selectedMonthIndex
+                            : data().length - 1
+                        ].time
+                      : '0h'
+                  }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: #f7f8f9; padding: 20px 25px">
+      <div style="margin-bottom: 20px; font-weight: 600">Personal bests</div>
+      <div
+        class="flex justify-between"
+        style="
+          border-radius: 10px;
+          background-color: white;
+          padding: 20px;
+          margin-bottom: 10px;
+        ">
+        <div>
+          <div style="font-weight: 600">Farthest season</div>
+          <div style="color: #afb0b1; font-size: 14px; margin-top: 5px">
+            {{ farthestSeason }}
+          </div>
+        </div>
+        <div
+          class="flex justify-center items-center"
+          style="
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+          ">
+          @if (farthestSeasonImage) {
+            <img
+              class="badgeNotificationImg"
+              [src]="farthestSeasonImage"
+              style="width: 50px; height: 50px; object-fit: cover" />
+          }
+        </div>
+      </div>
+      <div
+        class="flex justify-between"
+        style="
+          border-radius: 10px;
+          background-color: white;
+          padding: 20px;
+          margin-bottom: 10px;
+        ">
+        <div>
+          <div style="font-weight: 600">Longest streak</div>
+          <div style="color: #afb0b1; font-size: 14px; margin-top: 5px">
+            {{ longestStreak }}
+          </div>
+        </div>
+        <!--        TODO: -->
+        <!--        <app-streak-animation-->
+        <!--          style="-->
+        <!--            height: 50px;-->
+        <!--            width: 50px;-->
+        <!--            margin-top: -46px;-->
+        <!--            margin-right: 36px;-->
+        <!--          "-->
+        <!--          [size]="'large'"-->
+        <!--          [streak]="longestStreakNumber"-->
+        <!--          [id]="'stats'">-->
+        <!--        </app-streak-animation>-->
+      </div>
+      <div
+        class="flex justify-between"
+        style="border-radius: 10px; background-color: white; padding: 20px">
+        <div>
+          <div style="font-weight: 600">Farthest activity</div>
+          <div style="color: #afb0b1; font-size: 14px; margin-top: 5px">
+            {{ farthestActivity }}
+          </div>
+        </div>
+        <!--        TODO: -->
+        <!--        <app-activity-icon-->
+        <!--          class="activityIcon"-->
+        <!--          style="margin-right: 5px"-->
+        <!--          [type]="farthestActivityType ? farthestActivityType : 'walk'"-->
+        <!--          [height]="'40px'"-->
+        <!--          [width]="'40px'"-->
+        <!--          [color]="mainUtil.headerBackgroundColor">-->
+        <!--        </app-activity-icon>-->
+      </div>
+    </div>
+    <div
+      style="background-color: #f7f8f9; padding: 20px 25px; padding-top: 0px">
+      <div style="margin-bottom: 20px; font-weight: 600">Lifetime totals</div>
+      <div style="border-radius: 10px; background-color: white; padding: 20px">
+        <div style="display: grid; grid-template-columns: 60% 40%">
+          <div style="font-weight: 600; font-size: 14px">
+            <div>Distance</div>
+            <div>
+              <span class="number" style="font-weight: 800; font-size: 30px">{{
+                lifetimeDistance
+              }}</span
+              >{{ isMiles ? 'mi' : 'km' }}
+            </div>
+          </div>
+          <div style="font-weight: 600; font-size: 14px">
+            <div>Active time</div>
+            <div>
+              <span class="number" style="font-weight: 800; font-size: 30px">{{
+                lifetimeTime
+              }}</span
+              >{{ lifetimeTimeUnits }}
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 60% 40%;
+            margin-top: 20px;
+          ">
+          <div style="font-weight: 600; font-size: 14px">
+            <div>Seasons</div>
+            <div class="number" style="font-weight: 800; font-size: 30px">
+              {{ lifetimeSeasons }}
+            </div>
+          </div>
+          <div style="font-weight: 600; font-size: 14px">
+            <div>Badges earned</div>
+            <div class="number" style="font-weight: 800; font-size: 30px">
+              {{ lifetimeBadgesEarned }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

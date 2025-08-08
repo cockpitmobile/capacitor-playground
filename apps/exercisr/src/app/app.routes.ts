@@ -58,6 +58,20 @@ export const appRoutes: Route[] = [
             (m) => m.UserPetsPageComponent
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('@cockpit/user-profile-page').then(
+            (m) => m.UserProfilePageComponent
+          ),
+      },
+      {
+        path: 'activity-stats',
+        loadComponent: () =>
+          import('@cockpit/user-activity-stats-page').then(
+            (m) => m.UserActivityStatsPageComponent
+          ),
+      },
     ],
   },
   {

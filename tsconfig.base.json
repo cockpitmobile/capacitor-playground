@@ -245,8 +245,14 @@
         "libs/mobile/state/in-app-browser/src/index.ts"
       ],
       "@cockpit/tag": ["libs/mobile/components/tag/src/index.ts"],
+      "@cockpit/user-activity-stats-page": [
+        "libs/mobile/pages/user-activity-stats/src/index.ts"
+      ],
       "@cockpit/user-badges": ["libs/mobile/pages/user-badges/src/index.ts"],
       "@cockpit/user-pets-page": ["libs/mobile/pages/user-pets/src/index.ts"],
+      "@cockpit/user-profile-page": [
+        "libs/mobile/pages/user-profile/src/index.ts"
+      ],
       "@cockpit/user-settings-page": [
         "libs/mobile/pages/user-settings/src/index.ts"
       ],

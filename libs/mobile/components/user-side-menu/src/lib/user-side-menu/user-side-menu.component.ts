@@ -72,7 +72,7 @@ export class UserSideMenuComponent {
   }
 
   openProfile() {
-    //   TODO: IMPLEMENT
+    this._appService.navigateToProfile();
     this.toggleSidebar();
   }
 
@@ -92,7 +92,7 @@ export class UserSideMenuComponent {
   }
 
   viewActivityStats() {
-    //   TODO: IMPLEMENT
+    this._appService.navigateToActivityStats();
     this.toggleSidebar();
   }
 

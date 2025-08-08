@@ -1,0 +1,175 @@
+
+.number {
+  font-family: "Open Sanss";
+}
+
+.host {
+  left: 0;
+  right: 0;
+}
+
+.middle {
+  top: calc((100% - 20px) / 2);
+}
+
+.filterContainer {
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+  display: grid;
+  height: 60px;
+  grid-template-columns: 80px 1fr;
+  width: 100vw;
+  padding: 0px 28px;
+  background-color: #f6f6f6;
+  margin-bottom: 15px;
+}
+
+.filterButton {
+  border-radius: 100vh;
+  padding: 5px;
+  font-weight: 600;
+  margin-right: 7px;
+  &.available {
+    color: gray;
+    border: 2px dashed gray;
+  }
+  &.chosen {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    color: white;
+  }
+}
+
+.titleContainer {
+  font-size: 17px;
+  font-weight: 600;
+  height: 20px;
+  width: 100%;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.activityListContainer {
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-left: 10px;
+  padding-right: 15px;
+}
+
+.filterTitle {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.filterName {
+  margin-left: 7px;
+  font-size: 13px;
+}
+
+.previewPageContainer {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  height: 50px;
+}
+
+.previewPageContainerInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.thisMonthContainer {
+  color: #a0a19e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.distanceRowContainer {
+  margin-top: 5px;
+  margin-bottom: -7px;
+}
+
+.headerContainer {
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.divider {
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #c3c4c1;
+  width: 1px;
+}
+
+.chevronIcon {
+  font-size: 40px;
+  color: #a0a19e;
+  margin-top: -12px;
+}
+
+.displayContainer {
+  display: grid;
+  grid-template-rows: 1fr 20px;
+  height: 250px;
+  position: relative;
+}
+
+.monthYearContainer {
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.topscaleContainerOutter {
+  border-top: 1px dotted #c3c4c1;
+  z-index: 3;
+  position: absolute;
+  top: -3px;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.topscaleContainerInner {
+  position: absolute;
+  top: 2px;
+  color: #a0a19e;
+  font-size: 11px;
+}
+
+.midScaleContainerOutter {
+  border-top: 1px dotted #c3c4c1;
+  z-index: 3;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.midScaleContainerInner {
+  position: absolute;
+  top: 2px;
+  color: #a0a19e;
+  font-size: 11px;
+}
+
+.gridDisplay {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.filterChipsContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-left: 10px;
+  padding-right: 15px;
+}
+
+.filterChipContainer {
+  margin-top: 10px;
+  display: flex;
+  margin-right: 10px;
+  border-radius: 20px;
+  height: 33px;
+  color: white;
+}

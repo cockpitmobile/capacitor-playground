@@ -33,4 +33,39 @@ export class UsersService {
       })
     );
   }
+
+  getUserStatsSeasonActivityType(
+    userId: string,
+    activityTypes: string[],
+    projectIds: string[] = []
+  ): Observable<{
+    total_distance_mi: number;
+    total_distance_km: number;
+    activity_count: number;
+    total_minutes: number;
+    average_pace_mi: number;
+    average_pace_km: number;
+    monthly_data: {
+      complete_time: Date;
+      distance: number;
+      minutes: number;
+    }[];
+  }> {
+    return this._http.post(`/users/${userId}/stats/seasonactivitytype`, {
+      activity_types: activityTypes,
+      project_ids: projectIds,
+    });
+  }
+
+  getUserStatsLifetime(userId: string): Observable<{
+    total_distance_mi: number;
+    total_distance_km: number;
+    total_minutes: number;
+    longest_streak: any;
+    farthest_activity: any;
+    farthest_season: any;
+    activities: string[];
+  }> {
+    return this._http.post(`/users/${userId}/stats/lifetime`, {});
+  }
 }

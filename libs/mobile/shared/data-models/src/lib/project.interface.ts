@@ -16,7 +16,7 @@ export interface ProjectParticipant {
 
 export interface RAAEvent {
   scavengerHunts?: any;
-  id?: string;
+  id: string;
   title: string;
   badge_id?: string;
   creation_date?: Date;
